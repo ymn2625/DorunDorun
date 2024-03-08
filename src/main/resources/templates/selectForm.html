@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>selectForm</title>
+</head>
+<body>
+<form action="/member/select_update" method="post">
+    선호지역 1:<input type="text" name="memberAddr1" th:value="${member.memberAddr1}" id="memberAddr1" placeholder="주소">
+    <input type="button" onclick="sample6_execDaumPostcode1()" value="선호지역 등록"><br>
+    <input type="hidden" name="memberX1" id="memberX1" th:value="${member.memberX1}">
+    <input type="hidden" name="memberY1" id="memberY1" th:value="${member.memberY1}">
+
+    선호지역 2:<input type="text" name="memberAddr2" id="memberAddr2" th:value="${member.memberAddr2}" placeholder="주소">
+    <input type="button" onclick="sample6_execDaumPostcode2()" value="선호지역 등록"><br>
+    <input type="hidden" name="memberX2" id="memberX2" th:value="${member.memberX2}">
+    <input type="hidden" name="memberY2" id="memberY2" th:value="${member.memberY2}">
+
+    선호지역 3:<input type="text" name="memberAddr3" id="memberAddr3" th:value="${member.memberAddr3}" placeholder="주소">
+    <input type="button" onclick="sample6_execDaumPostcode3()" value="선호지역 등록"><br>
+    <input type="hidden" name="memberX3" id="memberX3" th:value="${member.memberX3}">
+    <input type="hidden" name="memberY3" id="memberY3" th:value="${member.memberY3}">
+
+    <input type="submit" onclick="confirm('정말로 수정하시겠습니까?')" value="저장">
+    <input type="reset" onclick="window.location.back()" value="취소">
+</form>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=xqihmrgc2i&submodules=geocoder"></script>
+<script>
+    function sample6_execDaumPostcode1() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var addr = ''; // 주소 변수
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+
+                // 주소 정보를 해당 필드에 넣는다.
+                document.getElementById("memberAddr1").value = addr;
+                //위도경도를 해당 필드에 넣는다.
+                naver.maps.Service.geocode({address: addr }, function(status, response) {
+                    if (status === naver.maps.Service.Status.ERROR) {
+                        return alert('Something wrong!');
+                    }
+
+                    // 성공 시의 response 처리
+
+                    let x = response.result.items[0].point.x;
+                    let y = response.result.items[0].point.y;
+
+                    document.getElementById('memberX1').value=x;
+                    document.getElementById('memberY1').value=y;
+
+                });
+            }
+        }).open();
+    }
+    function sample6_execDaumPostcode2() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var addr = ''; // 주소 변수
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+
+                // 주소 정보를 해당 필드에 넣는다.
+                document.getElementById("memberAddr2").value = addr;
+                //위도경도를 해당 필드에 넣는다.
+                naver.maps.Service.geocode({address: addr }, function(status, response) {
+                    if (status === naver.maps.Service.Status.ERROR) {
+                        return alert('Something wrong!');
+                    }
+
+                    // 성공 시의 response 처리
+
+                    let x = response.result.items[0].point.x;
+                    let y = response.result.items[0].point.y;
+
+                    document.getElementById('memberX2').value=x;
+                    document.getElementById('memberY2').value=y;
+
+                });
+            }
+        }).open();
+    }
+    function sample6_execDaumPostcode3() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var addr = ''; // 주소 변수
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+
+                // 주소 정보를 해당 필드에 넣는다.
+                document.getElementById("memberAddr3").value = addr;
+                //위도경도를 해당 필드에 넣는다.
+                naver.maps.Service.geocode({address: addr }, function(status, response) {
+                    if (status === naver.maps.Service.Status.ERROR) {
+                        return alert('Something wrong!');
+                    }
+
+                    // 성공 시의 response 처리
+
+                    let x = response.result.items[0].point.x;
+                    let y = response.result.items[0].point.y;
+
+                    document.getElementById('memberX3').value=x;
+                    document.getElementById('memberY3').value=y;
+
+                });
+            }
+        }).open();
+    }
+</script>
+</body>
+</html>

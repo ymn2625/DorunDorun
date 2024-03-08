@@ -1,0 +1,162 @@
+body {
+  width: 350px;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  padding: 40px;
+  margin: 0;
+  overflow-y: scroll;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 80px;
+}
+
+.right {
+  display: inline-flex;
+}
+
+#icon {
+  width: 100px;
+  height: 80px;
+}
+
+.map {
+  border-radius: 12px;
+  border-color: #31c7cf;
+  padding: 8px;
+  font-weight: bold;
+}
+
+#alert {
+  width: 40px;
+  height: 40px;
+  margin-left: 15px;
+}
+
+.img {
+  width: 70px;
+  height: 70px;
+  background-color: lightgray;
+  border-radius: 8px;
+}
+
+.crewList {
+  margin-top: 20px;
+}
+.crewinfo,
+.crewinfo a {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  max-height: 70px;
+}
+.text {
+  height: 70px;
+  overflow: hidden;
+  font-size: 14px;
+  width: 250px;
+  margin-left: 20px;
+  color: black;
+}
+
+.text h3 {
+  font-weight: bold;
+  margin-bottom: 3px;
+}
+
+h2 {
+  margin-top: 40px;
+  margin-bottom: 0;
+}
+
+h3 {
+  margin: 0 auto;
+  padding: 0;
+}
+
+.text h3,
+.text p {
+  margin: 1px;
+  margin-bottom: 0;
+}
+
+.text p {
+  margin-left: 2px;
+}
+
+.info {
+  display: flex;
+  justify-content: space-around;
+  margin-left: -10px;
+  margin-top: 10px;
+  color: gray;
+}
+
+a {
+  text-decoration: none;
+}
+
+.menu-container {
+  margin-bottom: 80px;
+}
+
+.menu {
+  width: 430px;
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  justify-content: space-around;
+}
+
+.home,
+.crew,
+.placemap,
+.chat,
+.profile {
+  display: inline-table;
+}
+
+.crew {
+  width: 86px;
+  height: 80px;
+  margin: 0;
+  padding: 0;
+  background-color: white;
+  align-items: center;
+  text-align: center;
+  border: 0;
+  border-radius: 10px 10px 0 0;
+  box-shadow: 3px 3px 3px black;
+}
+
+.home,
+.placemap,
+.chat,
+.profile {
+  width: 86px;
+  height: 80px;
+  margin: 0;
+  padding: 0;
+  background-color: #31c7cf;
+  align-items: center;
+  text-align: center;
+  border: 0;
+  border-radius: 10px 10px 0 0;
+  box-shadow: 3px 3px 3px black;
+}
+
+.menu img {
+  margin-top: 15px;
+  filter: drop-shadow(2px 2px 2px #084b4e);
+}
+
+.menu h6 {
+  color: white;
+  text-shadow: 1px 1px 1px #084b4e;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>dorundorun</title>
+
+    <link rel="stylesheet" href="/css/main.css" />
+  </head>
+  <body>
+    <div class="header">
+      <a href="/"
+        ><img src="/img/dorundorun.png" alt="icon" id="icon"
+      /></a>
+      <div class="right">
+        <div class="map">독산동</div>
+        <img src="/img/alert.png" alt="alert" id="alert" />
+      </div>
+    </div>
+
+    <div class="top">
+      <a href="hotCrew.html" class="title">지금 핫🔥한 모임</a>
+      <a href="hotCrew.html" class="more">더보기</a>
+
+      <div class="hotCrew">
+        <a href="">
+          <div class="crewImage"></div>
+          <h6>드루와 안양천</h6>
+        </a>
+
+        <a href="">
+          <div class="crewImage"></div>
+          <h6>드루와라라 안양천 레츠기릿</h6>
+        </a>
+
+        <a href="">
+          <div class="crewImage"></div>
+          <h6>드루와 안양천</h6>
+        </a>
+
+        <a href="">
+          <div class="crewImage"></div>
+          <h6>드루와 안양천</h6>
+        </a>
+      </div>
+    </div>
+    <div class="top">
+      <a href="oneTimeHot.html" class="title">지금 핫🔥한 번개모임</a>
+      <a href="oneTimeHot.html" class="more">더보기</a>
+      <div class="oneTimeHot">
+        <a href="">
+          <div class="crewImage"></div>
+          <h6>오예</h6>
+        </a>
+
+        <a href="">
+          <div class="crewImage"></div>
+          <h6>드루와 안양천으로 레츠기릿</h6>
+        </a>
+
+        <a href="">
+          <div class="crewImage"></div>
+          <h6>안양천</h6>
+        </a>
+
+        <a href="">
+          <div class="crewImage"></div>
+          <h6>안양천</h6>
+        </a>
+      </div>
+    </div>
+
+    <div class="top">
+      <a href="place.html" class="title">여기 가봤어?</a>
+      <a href="place.html" class="more">더보기</a>
+      <div class="place">
+        <a href="">
+          <div class="crewImage"></div>
+          <h6>인왕산</h6>
+        </a>
+
+        <a href="">
+          <div class="crewImage"></div>
+          <h6>북악산 스카이웨이</h6>
+        </a>
+
+        <a href="">
+          <div class="crewImage"></div>
+          <h6>안양천</h6>
+        </a>
+
+        <a href="">
+          <div class="crewImage"></div>
+          <h6>한강</h6>
+        </a>
+      </div>
+    </div>
+
+    <div class="top">
+      <a href="/board/home" class="board">커뮤니티</a>
+      <a href="/board/home" class="more">더보기</a>
+      <div class="boardPlace"></div>
+    </div>
+
+    <div class="menu-container">
+      <div class="menu">
+        <div class="home">
+          <a href="/">
+            <img src="/img/home_mint.png" alt="home" />
+            <h6 style="color: #31c7cf">홈</h6>
+          </a>
+        </div>
+
+        <div class="crew">
+          <a href="runningMain.html">
+            <img src="/img/crew.png" alt="crew" />
+            <h6>모임</h6>
+          </a>
+        </div>
+
+        <div class="placemap">
+          <a href="placeMap.html">
+            <img src="/img/place.png" alt="placemap" />
+            <h6>내 근처</h6>
+          </a>
+        </div>
+
+        <div class="chat">
+          <a href="chat.html">
+            <img
+              src="/img/chat.png"
+              alt="chat"
+              style="width: 30px; height: 30px"
+            />
+            <h6>채팅</h6>
+          </a>
+        </div>
+
+        <div class="profile">
+          <a href="/member/profile">
+            <img src="/img/profile.png" alt="profile" />
+            <h6>프로필</h6>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var h6Elements = document.querySelectorAll(
+          ".hotCrew a h6, .oneTimeHot a h6, .place a h6"
+        );
+
+        h6Elements.forEach(function (h6Element) {
+          var elementWidth = h6Element.offsetWidth;
+
+          // 현재 단어를 포함한 줄의 너비를 계산하는 함수
+          function calculateLineWidth(text) {
+            var canvas = document.createElement("canvas");
+            var context = canvas.getContext("2d");
+            context.font = window.getComputedStyle(h6Element).font;
+            return context.measureText(text).width;
+          }
+
+          var words = h6Element.innerText.split(" ");
+          var result = "";
+          var currentLineWidth = 0;
+
+          words.forEach(function (word, index) {
+            var lineWithWord = currentLineWidth + calculateLineWidth(word);
+
+            if (index > 0 && lineWithWord > elementWidth) {
+              result += "";
+              currentLineWidth = 0;
+            }
+
+            result += "<span>" + word + "</span> ";
+            currentLineWidth += calculateLineWidth(word) + 5; // 5는 간격
+          });
+
+          h6Element.innerHTML = result.trim();
+        });
+      });
+    </script>
+  </body>
+</html>

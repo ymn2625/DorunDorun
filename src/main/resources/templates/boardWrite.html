@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>write</title>
+</head>
+<body>
+<form action="/board/write" method="post" enctype="multipart/form-data">
+    <table>
+        <tr>
+            <th>글 제목</th>
+            <td><input type="text" name="boardTitle"></td>
+        </tr>
+        <tr>
+            <th>글 카테고리</th>
+            <td>
+                <select name="boardCategory">
+                    <option th:if="${role == 'ROLE_ADMIN'}">공지</option>
+                    <option>자유</option>
+                    <option>후기</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>글 내용</th>
+            <td>
+                <textarea name="boardContent" cols="30" rows="10"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <th>파일첨부</th>
+            <td><input type="file" name="boardFile" multiple></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="글 작성"></td>
+            <td><input type="reset" onclick="window.location.back()" value="취소"></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

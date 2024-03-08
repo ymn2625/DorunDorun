@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>boardHome</title>
+</head>
+<body>
+<button onclick="location.href='/board/write'">글 작성</button>
+<table>
+    <tr>
+        <th>글 번호</th>
+        <th>글 제목</th>
+        <th>작성자</th>
+        <th>작성시간</th>
+        <th>조회수</th>
+    </tr>
+    <tr th:each="board: ${boardList}">
+        <td th:text="${board.boardId}"></td>
+        <td>
+            <a th:href="@{|/board/detail/${board.boardId}|(page=${boardList.number + 1})}">
+                [<span th:text="${board.boardCategory}"></span>]
+                <span th:text="${board.boardTitle}"></span>
+            </a>
+        </td>
+        <td th:text="${board.memberNickname}"></td>
+        <td th:text="*{#temporals.format(board.boardCreatedTime, 'yyyy-MM-dd HH:mm')}"></td>
+        <td th:text="${board.boardHits}"></td>
+    </tr>
+</table>
+<!-- 첫번째 페이지로 이동 page=1을 소괄호 안에 작성(query-string으로 변경해주는 thymeleaf 문법) -->
+<!-- /board/paging?page=1 -->
+<a th:href="@{/board/home(page=1)}"><<</a>
+<!-- boardList.getNumber() 사용자:2페이지 getNumber()=1 -->
+<!--boardList.getNumber를 호출한 것이 boardList.number/ 아까 설정해준 page = number-->
+<a th:href="${boardList.first} ? '#' : @{/board/home(page=${boardList.number})}"><</a>
+<!-- 페이지 번호 링크(현재 페이지는 숫자만)
+        for(int page=startPage; page<=endPage; page++)-->
+<span th:each="page: ${#numbers.sequence(startPage, endPage)}">
+    <!-- 현재페이지는 링크 없이 숫자만 -->
+    <!--그 안에서 페이지가 number 세팅 +1(number는 -1된 값이므로)이라면 page는 span처리-->
+    <span th:if="${page == boardList.number + 1}" th:text="${page}"></span>
+    <!-- 현재페이지 번호가 아닌 다른 페이지번호에는 링크를 보여줌 -->
+    <span th:unless="${page == boardList.number + 1}">
+        <a th:href="@{/board/home(page=${page})}" th:text="${page}"></a>
+    </span>
+</span>
+<!--prev의 반대이며, number가 +1 해줘야 현재 페이지이므로 +2로 다음페이지로 넘긴다-->
+<a th:href="${boardList.last} ? '#' : @{/board/home(page=${boardList.number + 2})}">></a>
+<!-- 마지막 페이지로 이동 -->
+<a th:href="@{/board/home(page=${boardList.totalPages})}">>></a>
+
+</body>
+</html>

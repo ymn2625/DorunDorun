@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>여기 가봤어?</title>
+    <link rel="stylesheet" href="/css/place.css" />
+  </head>
+  <body>
+    <div class="header">
+      <a href="main.html"
+        ><img src="/img/dorundorun.png" alt="icon" id="icon"
+      /></a>
+      <div class="right">
+        <div class="map">독산동</div>
+        <img src="/img/alert.png" alt="alert" id="alert" />
+      </div>
+    </div>
+
+    <h2>여기 가봤어?</h2>
+
+    <div class="placeList">
+      <div class="place">
+        <a href="#">
+          <div class="placeImg"></div>
+          <div class="placeName">인왕산</div>
+        </a>
+      </div>
+
+      <div class="place">
+        <a href="#">
+          <div class="placeImg"></div>
+          <div class="placeName">떠기네</div>
+        </a>
+      </div>
+
+      <div class="place">
+        <a href="#">
+          <div class="placeImg"></div>
+          <div class="placeName">아리네</div>
+        </a>
+      </div>
+
+      <div class="place">
+        <a href="#">
+          <div class="placeImg"></div>
+          <div class="placeName">나비네</div>
+        </a>
+      </div>
+
+      <div class="place">
+        <a href="#">
+          <div class="placeImg"></div>
+          <div class="placeName">민지네</div>
+        </a>
+      </div>
+
+      <div class="place">
+        <a href="#">
+          <div class="placeImg"></div>
+          <div class="placeName">민호네</div>
+        </a>
+      </div>
+
+      <div class="place">
+        <a href="#">
+          <div class="placeImg"></div>
+          <div class="placeName">세진이네</div>
+        </a>
+      </div>
+
+      <div class="place">
+        <a href="#">
+          <div class="placeImg"></div>
+          <div class="placeName">희선이네</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="menu-container">
+      <div class="menu">
+        <div class="home">
+          <a href="main.html">
+            <img src="/img/home_mint.png" alt="home" />
+            <h6 style="color: #31c7cf">홈</h6>
+          </a>
+        </div>
+
+        <div class="crew">
+          <a href="runningMain.html">
+            <img src="/img/crew.png" alt="crew" />
+            <h6>모임</h6>
+          </a>
+        </div>
+
+        <div class="placemap">
+          <a href="placeMap.html">
+            <img src="/img/place.png" alt="placemap" />
+            <h6>내 근처</h6>
+          </a>
+        </div>
+
+        <div class="chat">
+          <a href="chat.html">
+            <img
+              src="/img/chat.png"
+              alt="chat"
+              style="width: 30px; height: 30px"
+            />
+            <h6>채팅</h6>
+          </a>
+        </div>
+
+        <div class="profile">
+          <a href="profile.html">
+            <img src="/img/profile.png" alt="profile" />
+            <h6>프로필</h6>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var aElements = document.querySelectorAll(".placeName a");
+
+        aElements.forEach(function (aElement) {
+          var elementWidth = aElement.offsetWidth;
+
+          // 현재 단어를 포함한 줄의 너비를 계산하는 함수
+          function calculateLineWidth(text) {
+            var canvas = document.createElement("canvas");
+            var context = canvas.getContext("2d");
+            context.font = window.getComputedStyle(aElement).font;
+            return context.measureText(text).width;
+          }
+
+          var words = aElement.innerText.split(" ");
+          var result = "";
+          var currentLineWidth = 0;
+
+          words.forEach(function (word, index) {
+            var lineWithWord = currentLineWidth + calculateLineWidth(word);
+
+            if (index > 0 && lineWithWord > elementWidth) {
+              result += "";
+              currentLineWidth = 0;
+            }
+
+            result += "<span>" + word + "</span> ";
+            currentLineWidth += calculateLineWidth(word) + 5; // 5는 간격
+          });
+
+          aElement.innerHTML = result.trim();
+        });
+      });
+    </script>
+  </body>
+</html>

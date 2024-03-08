@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style type="text/css">
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      .image-upload-box {
+        background-color: lightgray;
+        height: 30px;
+        width: 290px;
+        padding: 70px;
+        cursor: pointer;
+      }
+
+      span {
+        margin-left: 50px;
+        vertical-align: middle;
+        color: rgb(78, 70, 70);
+      }
+
+      .image-upload-box:hover {
+        background-color: #f0f0f0;
+      }
+
+      #crew-image {
+        display: none; /* 파일 업로드 input을 감춤 */
+      }
+
+      .crewNameInput {
+        border: 0;
+        border-bottom: 2px solid gray;
+        width: 350px;
+        margin-left: 40px;
+        margin-top: 70px;
+      }
+
+      .crewNameInput > input {
+        border: 0;
+        font-size: 20px;
+        margin-left: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <form id="crew-form">
+      <div
+        class="image-upload-box"
+        onclick="document.getElementById('crew-image').click()"
+      >
+        <span>대표 이미지를 등록하세요.</span>
+      </div>
+      <input
+        type="file"
+        id="crew-image"
+        name="crew-image"
+        accept="image/*"
+        required
+      />
+
+      <div class="crewNameInput">
+        <input type="text" placeholder="크루 이름을 입력해주세요." />
+      </div>
+    </form>
+
+    <script>
+      document
+        .getElementById("crew-form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault(); // 폼 제출 기본 동작 방지
+
+          // 폼 데이터 가져오기
+          var formData = new FormData(document.getElementById("crew-form"));
+
+          // FormData에 이미지 파일이 있는지 확인
+          if (formData.has("crew-image")) {
+            // 이미지 파일 가져오기
+            var imageFile = formData.get("crew-image");
+
+            // 이미지 파일 정보 출력 (테스트용)
+            console.log("이미지 파일 이름:", imageFile.name);
+            console.log("이미지 파일 타입:", imageFile.type);
+            console.log("이미지 파일 크기:", imageFile.size, "bytes");
+          }
+
+          // 크루 개설 처리 및 서버로 폼 데이터 전송 (여기서는 예시로 console에 출력)
+          console.log("크루 이름:", formData.get("crew-name"));
+          console.log("크루 설명:", formData.get("crew-description"));
+
+          // 폼 데이터 전송 후에는 서버로 전송하거나 다른 작업을 수행할 수 있습니다.
+        });
+    </script>
+  </body>
+</html>
