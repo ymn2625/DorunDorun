@@ -10,6 +10,8 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
     Optional<MemberEntity> findByMemberNickname(String memberNickname);
     Optional<MemberEntity> findByUsername(String username);
 
+    List<MemberEntity> findByMemberNicknameContaining(String memberNickname);
+
     Boolean existsByUsername(String username);
 
     void deleteByUsername(String username);

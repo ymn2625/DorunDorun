@@ -4,6 +4,7 @@ import com.example.dorundorun.dto.BoardCommentDTO;
 import com.example.dorundorun.dto.BoardDTO;
 import com.example.dorundorun.dto.BoardLikeDTO;
 import com.example.dorundorun.dto.MemberDTO;
+import com.example.dorundorun.entity.BoardEntity;
 import com.example.dorundorun.service.BoardCommentService;
 import com.example.dorundorun.service.BoardService;
 import com.example.dorundorun.service.MemberService;
@@ -20,9 +21,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 
 @Controller
@@ -43,8 +42,10 @@ public class BoardController {
 //    }
 
     @GetMapping("/home")
-    public String paging(@PageableDefault(page=1) Pageable pageable, Model model){
-        Page<BoardDTO> boardList = boardService.paging(pageable);
+    public String paging(@PageableDefault(page=1) Pageable pageable, Model model, String searchKeyword, String searchCondition){
+
+        Page<BoardDTO> boardList = boardService.paging(pageable, searchKeyword, searchCondition);
+
 
         int blockLimit = 5;//하단에 보여지는 페이지 갯수
         // 사용자가 링크로 넘길 때 가지는 첫번째 페이지
@@ -52,12 +53,21 @@ public class BoardController {
         // 마지막 페이지는 총 페이지보다 작으면 총 페이지가 마지막 페이지
         int endPage = ((startPage + blockLimit - 1) < boardList.getTotalPages()) ? startPage+blockLimit-1 : boardList.getTotalPages();
 
+        Map<String, String> conditionMap = new LinkedHashMap<>();
+        conditionMap.put("내용", "boardTitle");
+        conditionMap.put("작성자", "memberNickname");
+
+        model.addAttribute("conditionMap", conditionMap);
+        model.addAttribute("keyword",searchKeyword);
+        model.addAttribute("condition",searchCondition);
         model.addAttribute("boardList", boardList);
         model.addAttribute("startPage",startPage);
         model.addAttribute("endPage", endPage);
 
         return "boardHome";
     }
+
+
 
     @GetMapping("/write")
     public String writeForm(Authentication authentication, Model model){

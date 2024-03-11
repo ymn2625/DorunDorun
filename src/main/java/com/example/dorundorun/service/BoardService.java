@@ -13,10 +13,7 @@ import com.example.dorundorun.repository.BoardRepository;
 import com.example.dorundorun.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.catalina.User;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,9 +22,7 @@ import org.springframework.web.servlet.handler.UserRoleAuthorizationInterceptor;
 import javax.persistence.EntityManager;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -78,12 +73,28 @@ public class BoardService {
 //    }
 
     @Transactional
-    public Page<BoardDTO> paging(Pageable pageable) {
+    public Page<BoardDTO> paging(Pageable pageable, String keyword, String condition) {
         int page = pageable.getPageNumber() - 1;
         int pageLimit = 10;
-        Page<BoardEntity> boardEntities = boardRepository.findAll(
-                PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "boardId"))
-        );
+        Page<BoardEntity> boardEntities = null;
+        List<BoardEntity> allBoard = new ArrayList<>();
+
+        if((keyword == null || keyword.equals("")) && condition == null || condition.equals("")) {
+
+            boardEntities = boardRepository.findAll(
+                    PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "boardId"))
+            );
+        }else if(condition.equals("boardTitle")){
+            boardEntities = boardRepository.findByBoardTitleContaining(keyword,
+                    PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "boardId"))
+            );
+        }else if(condition.equals("memberNickname")){
+            //memberNickname을 포함한 멤버를 다 찾는다.
+            List<MemberEntity> byMemberNicknameContaining = memberRepository.findByMemberNicknameContaining(keyword);
+            boardEntities = boardRepository.findByMemberEntityIn(byMemberNicknameContaining,
+                    PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "boardId"))
+            );
+        }
 
         Page<BoardDTO> boardDTOS = boardEntities.map(board -> new BoardDTO(board.getBoardId(), board.getMemberEntity().getMemberNickname(), board.getBoardTitle(), board.getBoardCategory(), board.getBoardHits(), board.getCreatedTime()));
 
@@ -210,4 +221,5 @@ public class BoardService {
             return false;
         }
     }
+
 }

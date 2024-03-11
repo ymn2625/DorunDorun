@@ -6,6 +6,22 @@
 </head>
 <body>
 <button onclick="location.href='/board/write'">글 작성</button>
+<form action="/board/home" method="get">
+    <select name="searchCondition" id="searchCondition">
+        <option th:each="entry : ${conditionMap.entrySet()}"
+                th:value="${entry.value}"
+                th:text="${entry.key}">
+        </option>
+    </select>
+    <input name="searchKeyword" type="text" id="searchKeyword">
+    <input type="submit" value="검색">
+</form>
+<form action = "/board/home" method="get">
+<input type="submit" value="전체">
+</form>
+<button onclick="showCategory(this)">공지</button>
+<button onclick="showCategory(this)">자유</button>
+<button onclick="showCategory(this)">후기</button>
 <table>
     <tr>
         <th>글 번호</th>
@@ -29,10 +45,10 @@
 </table>
 <!-- 첫번째 페이지로 이동 page=1을 소괄호 안에 작성(query-string으로 변경해주는 thymeleaf 문법) -->
 <!-- /board/paging?page=1 -->
-<a th:href="@{/board/home(page=1)}"><<</a>
+<a th:href="@{/board/home(page=1, searchKeyword=${keyword}, searchCondition=${condition})}"><<</a>
 <!-- boardList.getNumber() 사용자:2페이지 getNumber()=1 -->
 <!--boardList.getNumber를 호출한 것이 boardList.number/ 아까 설정해준 page = number-->
-<a th:href="${boardList.first} ? '#' : @{/board/home(page=${boardList.number})}"><</a>
+<a th:href="${boardList.first} ? '#' : @{/board/home(page=${boardList.number}, searchKeyword=${keyword}, searchCondition=${condition})}"><</a>
 <!-- 페이지 번호 링크(현재 페이지는 숫자만)
         for(int page=startPage; page<=endPage; page++)-->
 <span th:each="page: ${#numbers.sequence(startPage, endPage)}">
@@ -41,13 +57,35 @@
     <span th:if="${page == boardList.number + 1}" th:text="${page}"></span>
     <!-- 현재페이지 번호가 아닌 다른 페이지번호에는 링크를 보여줌 -->
     <span th:unless="${page == boardList.number + 1}">
-        <a th:href="@{/board/home(page=${page})}" th:text="${page}"></a>
+        <a th:href="@{/board/home(page=${page}, searchKeyword=${keyword}, searchCondition=${condition})}" th:text="${page}"></a>
     </span>
 </span>
 <!--prev의 반대이며, number가 +1 해줘야 현재 페이지이므로 +2로 다음페이지로 넘긴다-->
-<a th:href="${boardList.last} ? '#' : @{/board/home(page=${boardList.number + 2})}">></a>
+<a th:href="${boardList.last} ? '#' : @{/board/home(page=${boardList.number + 2}, searchKeyword=${keyword}, searchCondition=${condition})}">></a>
 <!-- 마지막 페이지로 이동 -->
-<a th:href="@{/board/home(page=${boardList.totalPages})}">>></a>
+<a th:href="@{/board/home(page=${boardList.totalPages}, searchKeyword=${keyword}, searchCondition=${condition})}">>></a>
+
+<script th:inline="javascript">
+    const showCategory = (button) =>{
+        const boardCategory = button.innerText;
+        $.ajax({
+            type : "get",
+            url : "/board/category",
+            data : {
+                "boardCategory" : boardCategory,
+                "page" : [[${page}]],
+                "searchCondition" : [[${condition}]],
+                "searchKeyword" : [[${keyword}]]
+            },
+            success : function (res){
+                console.log(res);
+            },
+            error : function (err){
+                console.log(err);
+            }
+        })
+    }
+</script>
 
 </body>
 </html>

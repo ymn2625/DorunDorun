@@ -41,10 +41,16 @@
         <td th:each="fileName: ${board.storedFileName}"><img th:src="@{|/upload/${fileName}|}" alt=""></td>
     </tr>
 </table>
-<button id="like" onclick="likeProc()">좋아여~</button>
+<button th:if="${likeOrHate.boardLike}" id="like1" onclick="likeProc()"
+        style="color: white; background-color: red">좋아여~</button>
+<button th:unless="${likeOrHate.boardLike}" id="like2" onclick="likeProc()"
+        style="color: black; background-color: pink">좋아여~</button>
 <span id="countLike" th:text="${likeOrHate.countLike}"></span>
 
-<button id="hate" onclick="hateProc()">싫어여~</button>
+<button th:if="${likeOrHate.boardHate}" id="hate1" onclick="hateProc()"
+        style="color: white; background-color: red">싫어여~</button>
+<button th:unless="${likeOrHate.boardHate}" id="hate2" onclick="hateProc()"
+        style="color: black; background-color: pink">싫어여~</button>
 <span id="countHate" th:text="${likeOrHate.countHate}"></span>
 
 <button onclick="listReq()">목록</button>
@@ -75,34 +81,11 @@
 </div>
 </body>
 <script th:inline="javascript">
-    $(function (){
-        let likebtn = document.getElementById("like");
-        let hatebtn = document.getElementById("hate");
-        const liked = [[${likeOrHate.boardLike}]];
-        const hated = [[${likeOrHate.boardHate}]];
-
-        if (liked == 1){
-            likebtn.style.backgroundColor = "red";
-            likebtn.style.color = "black";
-        }else{
-            likebtn.style.backgroundColor = "black";
-            likebtn.style.color = "white";
-        }
-
-        if(hated == 1){
-            hatebtn.style.backgroundColor = "blue";
-            hatebtn.style.color = "black";
-        }else{
-            hatebtn.style.backgroundColor = "black";
-            hatebtn.style.color = "white";
-        }
-
-    })
-
     const likeProc = () =>{
         const boardId = [[${board.boardId}]];
         const username = [[${username}]];
-        let likebtn = document.getElementById("like");
+        const likebtn1 = document.getElementById('like1');
+        const likebtn2 = document.getElementById('like2');
 
         $.ajax({
             type:"post",
@@ -117,14 +100,12 @@
                 let hate = res.countHate;
                 document.getElementById("countLike").innerText=like;
                 document.getElementById("countHate").innerText=hate;
-                if (res.boardLike = 1){
-                    likebtn.style.backgroundColor="red";
-                    likebtn.style.backgroundColor="black";
+                if(res.boardLike==1){
+                    likebtn1.style.display = "block";
+                    likebtn2.style.display = "none";
                 }else{
-                    likebtn.style.backgroundColor="black";
-                    likebtn.style.color="white"
-                }
 
+                }
             },
             error: function (err){
                 console.log(err);
@@ -134,7 +115,6 @@
     const hateProc = () =>{
         const boardId = [[${board.boardId}]];
         const username = [[${username}]];
-        const hatebtn = document.getElementById("hate");
 
         $.ajax({
             type:"post",
@@ -149,13 +129,6 @@
                 let hate = res.countHate;
                 document.getElementById("countLike").innerText=like;
                 document.getElementById("countHate").innerText=hate;
-                if (res.boardHate == 1){
-                    hatebtn.style.backgroundColor="blue";
-                    hatebtn.style.color="black";
-                }else{
-                    hatebtn.style.backgroundColor="black";
-                    hatebtn.style.color="white";
-                }
             },
             error: function (err){
                 console.log(err);
