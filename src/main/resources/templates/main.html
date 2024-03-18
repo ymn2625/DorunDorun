@@ -21,24 +21,24 @@
   </div>
 </div>
 
-  <a href="/marathon/intro?marathonId=202401">
-      <img style="width: 100%; height: 100%;" src="/img/event.png" alt="marathonImg">
-  </a>
+<a href="/marathon/intro?marathonId=202401">
+  <img style="width: 100%; height: 100%;" src="/img/event.png" alt="marathonImg" id="marathon">
+</a>
 
 <div class="top">
-  <a href="/crew/hot" class="title">지금 핫🔥한 모임</a>
+  <a href="/crew/main" class="title">지금 핫🔥한 모임</a>
   <a href="/crew/main" class="more">더보기</a>
 
-    <div class="hotCrew">
-      <a th:each="crew,iterStat : ${crewList}" th:if="${iterStat.count <= 4}" th:href="@{|/crew/detail/${crew.crewId}}">
-        <div class="crewImage"></div>
-        <h6 th:text="${crew.crewName}" th:href="@{|/crew/detail/${crew.crewId}}"></h6>
-      </a>
-    </div>
+  <div class="hotCrew">
+    <a th:each="crew,iterStat : ${crewList}" th:if="${iterStat.count <= 4}" th:href="@{|/crew/detail/${crew.crewId}}">
+      <div class="crewImage"></div>
+      <h6 th:text="${crew.crewName}" th:href="@{|/crew/detail/${crew.crewId}}"></h6>
+    </a>
+  </div>
 </div>
 <div class="top">
-  <a href="oneTimeHot.html" class="title">지금 핫🔥한 번개모임</a>
-  <a href="oneTimeHot.html" class="more">더보기</a>
+  <a href="/running/list" class="title">지금 핫🔥한 번개모임</a>
+  <a href="/running/list" class="more">더보기</a>
   <div class="oneTimeHot">
     <a href="">
       <div class="crewImage"></div>
@@ -63,12 +63,12 @@
 </div>
 
 <div class="top">
-  <a href="place.html" class="title">여기 가봤어?</a>
-  <a href="place.html" class="more">더보기</a>
+  <a href="/place/" class="title">여기 가봤어?</a>
+  <a href="/place/" class="more">더보기</a>
   <div class="place">
-    <a th:each="runningSpot,iterStat : ${runningSpot}" th:if="${iterStat.count <= 4}" th:href="@{|/runningSpot/detail/${runningSpot.spotId}}">
+    <a th:each="runningSpot,iterStat : ${runningSpot}" th:if="${iterStat.count <= 4}" th:href="@{|/place/detail/${runningSpot.spotId}}">
       <div class="crewImage"></div>
-      <h6 th:text="${runningSpot.spotName}" th:href="@{|/runningSpot/detail/${runningSpot.spotId}}"></h6>
+      <h6 th:text="${runningSpot.spotName}" th:href="@{|/place/detail/${runningSpot.spotId}}"></h6>
     </a>
   </div>
 </div>
@@ -87,7 +87,7 @@
   </div>
 </div>
 
-<div th:include="menuBar.html"></div>
+<div th:include="menuBar_home.html" class="footer"></div>
 
 <div id="firstLoginModal" style="display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4);">
   <div style="background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 600px; text-align: center;">
@@ -95,6 +95,38 @@
     <h2>배지 획득!</h2>
     <img src="/img/FisrtLoginBadge.png" alt="첫 로그인 성공 배지">
     <p>첫 로그인 배지 획득!</p>
+  </div>
+</div>
+<div id="sevenDays" style="display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4);">
+  <div style="background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 600px; text-align: center;">
+    <span style="float: right; font-size: 28px; font-weight: bold; cursor: pointer;" onclick="closeFirstLoginModal()">&times;</span>
+    <h2>배지 획득!</h2>
+    <img src="/img/7Days.png" alt="회원가입 7일 경과">
+    <p>가입 7일 경과 배지 획득!</p>
+  </div>
+</div>
+<div id="thirtyDays" style="display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4);">
+  <div style="background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 600px; text-align: center;">
+    <span style="float: right; font-size: 28px; font-weight: bold; cursor: pointer;" onclick="closeFirstLoginModal()">&times;</span>
+    <h2>배지 획득!</h2>
+    <img src="/img/30Days.png" alt="회원가입 30일 경과 배지">
+    <p>가입 30일 경과 배지 획득!</p>
+  </div>
+</div>
+<div id="sixMonth" style="display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4);">
+  <div style="background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 600px; text-align: center;">
+    <span style="float: right; font-size: 28px; font-weight: bold; cursor: pointer;" onclick="closeFirstLoginModal()">&times;</span>
+    <h2>배지 획득!</h2>
+    <img src="/img/180Days.png" alt="회원가입 180일 경과 배지">
+    <p>가입 180일 경과 배지 획득!</p>
+  </div>
+</div>
+<div id="oneYear" style="display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4);">
+  <div style="background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 600px; text-align: center;">
+    <span style="float: right; font-size: 28px; font-weight: bold; cursor: pointer;" onclick="closeFirstLoginModal()">&times;</span>
+    <h2>배지 획득!</h2>
+    <img src="/img/365Days.png" alt="회원가입 365일 경과 배지">
+    <p>가입 365일 경과 배지 획득!</p>
   </div>
 </div>
 
@@ -109,8 +141,26 @@
     }
   });
 
+  $(function (){
+    const dateDiffer = [[${dateDiffer}]];
+    console.log(dateDiffer);
+    if(dateDiffer==1){
+      $('#sevenDays').css('display','block');
+    }else if(dateDiffer == 2){
+      $('#thirtyDays').css('display','block');
+    }else if(dateDiffer == 3){
+      $('#sixMonth').css('display','block');
+    }else if(dateDiffer == 4){
+      $('#oneYear').css('display','block');
+    }
+  });
+
   function closeFirstLoginModal() {
     $('#firstLoginModal').hide();
+    $('#sevenDays').hide();
+    $('#thirtyDays').hide();
+    $('#sixMonth').hide();
+    $('#oneYear').hide();
   }
 
   document.addEventListener("DOMContentLoaded", function () {

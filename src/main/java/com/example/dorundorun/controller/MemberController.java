@@ -1,9 +1,7 @@
 package com.example.dorundorun.controller;
 
-import com.example.dorundorun.dto.BadgeDTO;
-import com.example.dorundorun.dto.GetBadgeDTO;
-import com.example.dorundorun.dto.MemberDTO;
-import com.example.dorundorun.dto.RunningRecordDTO;
+import com.example.dorundorun.dto.*;
+import com.example.dorundorun.entity.RunningSpotEntity;
 import com.example.dorundorun.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -73,15 +71,24 @@ public class MemberController {
     public String mainP(Authentication authentication, Model model){
         String username = authentication.getName();
         MemberDTO member = memberService.getMember(username);
+        List<CrewDTO> crewDTOList = crewService.findAll();
+        List<BoardDTO> boardDTOList = boardService.findBoardTitle();
+        List<RunningSpotEntity> saveRunningSpot = runningSpotService.getAllRunningSpots();
+
+
 
         Boolean isFirstLogin = badgeService.getBadgeDTOByMemberDTOAndBadgeId(member,1L);
 
         int dateDifference = badgeService.dateDifference(member);
 
+        model.addAttribute("runningSpot", saveRunningSpot);
+        model.addAttribute("boardList", boardDTOList);
+        model.addAttribute("crewList", crewDTOList);
         model.addAttribute("dateDiffer", dateDifference);
         model.addAttribute("isFirstLogin", isFirstLogin);
         model.addAttribute("member", member);
         return "main";
+
     }
 
     @GetMapping("/profile")
@@ -99,6 +106,9 @@ public class MemberController {
     @GetMapping("/profileupdate")
     public String updateForm(Authentication authentication, Model model){
         MemberDTO memberDTO = memberService.getMember(authentication.getName());
+        List<BadgeDTO> badgeDTOS = badgeService.getBadgeDTOListByMemberDTO(memberDTO);
+
+        model.addAttribute("badgeList", badgeDTOS);
         model.addAttribute("member",memberDTO);
         return "updateForm";
     }
@@ -156,7 +166,9 @@ public class MemberController {
         MemberDTO member = memberService.getMember(username);
 
         List<RunningRecordDTO> runningRecordDTOList = memberService.getRunningRecordListByMemberDTO(member);
+        int runningBadge = badgeService.getBadgeDTOByMemberDTOAndRecordDTOList(member);
 
+        model.addAttribute("runningBadge", runningBadge);
         model.addAttribute("member", member);
         model.addAttribute("runningRecordList", runningRecordDTOList);
 
@@ -177,5 +189,30 @@ public class MemberController {
         memberService.saveRunningRecord(memberDTO, runningRecordDTO);
 
         return "redirect:/member/runningRecordList";
+    }
+
+    @GetMapping("/findId")
+    public String findIdForm(){
+        return "findIdForm";
+    }
+
+    @PostMapping("/findId")
+    public String findId(@ModelAttribute MemberDTO memberDTO, Model model){
+        MemberDTO member = memberService.findUserNameByPhone(memberDTO);
+        model.addAttribute("memberId",member.getUsername());
+
+        return "checkId";
+    }
+
+    @GetMapping("/findPW")
+    public String findPWForm(@ModelAttribute MemberDTO memberDTO){
+        return "findPWForm";
+    }
+
+    @PostMapping("/findPW")
+    public String findPW(@ModelAttribute MemberDTO memberDTO, Model model){
+        memberService.changePasswordByPhone(memberDTO);
+
+        return "login";
     }
 }

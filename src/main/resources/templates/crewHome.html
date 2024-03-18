@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>crewHome</title>
 </head>
 <link rel="stylesheet" href="/css/crewHome.css">
+<link rel="stylesheet" href="/css/menuBar_crew.css">
 <body>
 
 
@@ -47,6 +48,8 @@
         </a>
     </div>
 </div>
+
+<div th:include="menuBar_crew.html" class="footer"></div>
 
 </body>
 

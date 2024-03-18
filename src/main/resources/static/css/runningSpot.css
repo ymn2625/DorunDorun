@@ -1,0 +1,22 @@
+body{
+    margin: 0;
+    padding: 40px;
+}
+
+#map{
+    width: 350px;
+    height: 350px;
+}
+
+table{
+    display: none;
+}
+
+.footer{
+    position: fixed;
+    bottom: 10px;
+    width: 430px;
+}
+
+
+

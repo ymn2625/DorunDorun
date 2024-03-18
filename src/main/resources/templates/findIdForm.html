@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>findIdForm</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</head>
+<body>
+<form action="/member/findId" method="post">
+    <input type="text" name="memberName" placeholder="이름"/><br>
+    <input type="text" name="memberTel" id="memberTel" placeholder="연락처"/><br>
+    <input
+            type="button"
+            onclick="confirmationMemberTel()"
+            value="핸드폰 인증"
+    /><br>
+    <input type="text" id="confirmation" placeholder="인증번호"/><br>
+    <input
+            type="button"
+            onclick="checkConfirm()"
+            value="인증번호 확인"
+    /><br>
+    <input type="submit" value="확인" name="joinForm" id="joinForm" disabled/>
+</form>
+<script>
+    confirmationMemberTel = () =>{
+        const tel = document.getElementById('memberTel').value;
+        console.log(tel);
+        $.ajax({
+            type:"post",
+            url:"/sms/send",
+            data:{
+                "tel":tel
+            },
+            success: function (res){
+                alert('sms 발송!');
+            },
+            error:function (err){
+                console.log("에러발생 :", err);
+            }
+        });
+    }
+
+    checkConfirm = () =>{
+        const tel = document.getElementById('memberTel').value;
+        const code = document.getElementById('confirmation').value;
+
+        console.log(tel);
+        console.log(code);
+        $.ajax({
+            type:"post",
+            url:"/sms/verify",
+            data:{
+                "tel":tel,
+                "certificationCode" : code
+            },
+            success: function (res){
+                if(res=="인증성공"){
+                    alert('인증 성공!');
+                    document.getElementById('joinForm').disabled=false;
+                }else{
+                    alert('인증 실패!');
+                }
+            },
+            error:function (err){
+                alert('인증 실패!');
+            }
+        });
+    }
+</script>
+</body>
+</html>

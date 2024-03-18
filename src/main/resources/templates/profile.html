@@ -8,6 +8,17 @@
 </head>
 <body>
 <h1 th:text="${member.memberNickname}+'님 반갑습니다.'"></h1>
+<h3>획득 배지</h3>
+<div style="display: flex; flex-wrap: wrap; justify-content: flex-start; width: 450px">
+    <div th:each="badge : ${badgeList}" style="width: 120px; margin: 10px; text-align: center;">
+        <div style="width: 120px; height: 80px; text-align: center">
+            <img th:src="${badge.badgeDesc}" width="50px" height="50px" th:alt="${badge.badgeName}"><br>
+            <span th:text="${badge.badgeName}"></span>
+        </div>
+    </div>
+</div>
+<button onclick="location.href='/member/runningRecordList'">러닝 기록 보기</button>
+<button onclick="location.href='/member/getRunningRecord'">러닝 하기</button><br>
 <button onclick="location.href='/member/profileupdate'">회원정보 수정</button>
 <button onclick="location.href='/member/select_update'">선호지역 수정</button>
 <button onclick="location.href='/logout'">로그아웃</button>

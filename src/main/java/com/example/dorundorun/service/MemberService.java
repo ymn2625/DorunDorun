@@ -163,4 +163,25 @@ public class MemberService {
 
         runningRecordRepository.save(runningRecordEntity);
     }
+
+    public MemberDTO findUserNameByPhone(MemberDTO memberDTO) {
+        Optional<MemberEntity> byMemberTelAndMemberName = memberRepository.findByMemberTelAndMemberName(memberDTO.getMemberTel(), memberDTO.getMemberName());
+
+        if(byMemberTelAndMemberName.isPresent()){
+            return MemberDTO.toMemberDTO(byMemberTelAndMemberName.get());
+        }else{
+            memberDTO.setUsername("가입하신 계정이 없습니다.");
+            return memberDTO;
+        }
+    }
+
+    public void changePasswordByPhone(MemberDTO memberDTO) {
+        Optional<MemberEntity> byMemberTelAndMemberName = memberRepository.findByMemberTelAndMemberName(memberDTO.getMemberTel(), memberDTO.getMemberName());
+
+        if(byMemberTelAndMemberName.isPresent()){
+            MemberEntity memberEntity = byMemberTelAndMemberName.get();
+            memberEntity.setPassword(bCryptPasswordEncoder.encode(memberDTO.getPassword()));
+            memberRepository.save(memberEntity);
+        }
+    }
 }

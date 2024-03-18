@@ -2,15 +2,17 @@ package com.example.dorundorun.service;
 
 import com.example.dorundorun.dto.CrewDTO;
 import com.example.dorundorun.dto.CrewMemberDTO;
-import com.example.dorundorun.entity.CrewEntity;
-import com.example.dorundorun.entity.CrewMemberEntity;
-import com.example.dorundorun.entity.MemberEntity;
+import com.example.dorundorun.entity.*;
+import com.example.dorundorun.repository.CrewFileRepository;
 import com.example.dorundorun.repository.CrewMemberRepository;
 import com.example.dorundorun.repository.CrewRepository;
 import com.example.dorundorun.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -22,13 +24,34 @@ public class CrewService {
     private final CrewRepository crewRepository;
     private final MemberRepository memberRepository;
     private final CrewMemberRepository crewMemberRepository;
+    private final CrewFileRepository crewFileRepository;
 
     //크루만들기
-    public CrewDTO crewCreate(CrewDTO crewDTO, String username) {
+    public CrewDTO crewCreate(CrewDTO crewDTO, String username) throws IOException {
+
         MemberEntity memberEntity = memberRepository.findByUsername(username).get();
 
+        if (crewDTO.getCrewFile().isEmpty()) {
+
+            CrewEntity crewEntity = CrewEntity.toSaveCrewEntity(crewDTO);
+
+            crewRepository.save(crewEntity);
+        } else {
+
+            CrewEntity crewEntity = CrewEntity.toFileCrewEntity(crewDTO);
+            Long crewId = crewRepository.save(crewEntity).getCrewId();
+            CrewEntity crew = crewRepository.findById(crewId).get();
+            for (MultipartFile crewFile : crewDTO.getCrewFile()) {
+                String originalFilename = crewFile.getOriginalFilename();
+                String storedFileName = System.currentTimeMillis() + "_" + username + "_" + originalFilename;
+                String savePath = "C:/pg/springboot_img/" + storedFileName;
+                crewFile.transferTo(new File(savePath));
+
+                CrewFileEntity crewFileEntity = CrewFileEntity.toCrewFileEntity(crew, originalFilename, storedFileName);
+                crewFileRepository.save(crewFileEntity);
+            }
+        }
         CrewEntity crewEntity = CrewEntity.toSaveCrewEntity(crewDTO);
-        crewRepository.save(crewEntity);
 
         CrewEntity myCrewEntity = crewRepository.findByCrewName(crewEntity.getCrewName());
 

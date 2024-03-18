@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -40,7 +41,7 @@ public class CrewController {
 
     //크루 생성
     @PostMapping("/create")
-    public String crewCreate(@ModelAttribute CrewDTO crewDTO, Authentication authentication){
+    public String crewCreate(@ModelAttribute CrewDTO crewDTO, Authentication authentication) throws IOException {
         String username = authentication.getName();
         CrewDTO myCrew = crewService.crewCreate(crewDTO, username);
         Long crewId = myCrew.getCrewId();

@@ -2,13 +2,15 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>crewDetail</title>
-    <link rel="stylesheet" href="/css/crewDetail.css">
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
 </head>
 <body>
+<button onclick="location.href='/crew/list'">목록보기</button>
+크루사진 : <span th:if="${crewDTO.fileAttached == 1}" th:each="fileName: ${crewDTO.storedFileName}"><img th:src="@{|/upload/${fileName}|}" alt=""></span>
 크루이름 : <h3 th:text="${crewDTO.crewName}"></h3>
 크루설명 : <p th:text="${crewDTO.crewDesc}"></p>
+크루지역 : <p th:text="${crewDTO.crewAddress}"></p>
 크루인원 : <p>
     <span th:text="${crewMember}"></span>
     /
@@ -23,15 +25,36 @@
 <button th:if="${isManager}" onclick="crewUpdate()">크루 정보 수정</button>
 <button th:if="${isAdmin}" onclick="crewDelete()">크루 삭제</button>
 
-<a th:href="@{|/crewBoard/write/${crewDTO.crewId}|}">글 쓰기</a>
+<a th:if="${isMember}" th:href="@{|/crewBoard/home/${crewDTO.crewId}|}">게시판</a>
 
 
-
+<div id="firstCrewJoin" style="display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4);">
+    <div style="background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 600px; text-align: center;">
+        <span style="float: right; font-size: 28px; font-weight: bold; cursor: pointer;" onclick="closeFirstLoginModal()">&times;</span>
+        <h2>배지 획득!</h2>
+        <img src="/img/FirstCrewJoin.png" alt="첫 크루가입 배지">
+        <p>첫 크루가입 배지 획득!</p>
+    </div>
+</div>
 
 
 
 <script th:inline="javascript">
-        const crewId = [[${crewDTO.crewId}]];
+    const crewId = [[${crewDTO.crewId}]];
+
+    $(function (){
+        const isFirstCrew = [[${isFirstCrew}]];
+        console.log(isFirstCrew);
+        if(isFirstCrew){
+            console.log(isFirstCrew);
+            $('#firstCrewJoin').css('display','block');
+        }
+    });
+
+    function closeFirstLoginModal() {
+        $('#firstCrewJoin').hide();
+    }
+
     const crewJoin = () =>{
         window.location.href = "/crew/join/"+crewId;
     }

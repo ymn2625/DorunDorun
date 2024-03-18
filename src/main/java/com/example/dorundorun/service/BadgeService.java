@@ -3,6 +3,7 @@ package com.example.dorundorun.service;
 import com.example.dorundorun.dto.BadgeDTO;
 import com.example.dorundorun.dto.GetBadgeDTO;
 import com.example.dorundorun.dto.MemberDTO;
+import com.example.dorundorun.dto.RunningRecordDTO;
 import com.example.dorundorun.entity.*;
 import com.example.dorundorun.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ public class BadgeService {
     private final BoardRepository boardRepository;
     private final CrewMemberRepository crewMemberRepository;
     private final MemberRepository memberRepository;
+    private final RunningRecordRepository runningrecordRepository;
 
     public Boolean getBadgeDTOByMemberDTOAndBadgeId(MemberDTO member, long i) {
         BadgeEntity badgeEntity = badgeRepository.findById(i).get();
@@ -207,5 +209,64 @@ public class BadgeService {
         }
 
         return badgeDTOList;
+    }
+
+    public int getBadgeDTOByMemberDTOAndRecordDTOList(MemberDTO member) {
+        BadgeEntity firstBoardWrite = badgeRepository.findById(11L).get();
+        BadgeEntity tenBoardWrite = badgeRepository.findById(12L).get();
+        BadgeEntity fiftyBoardWrite = badgeRepository.findById(13L).get();
+        BadgeEntity hundredBoardWrite = badgeRepository.findById(14L).get();
+
+        MemberEntity memberEntity = MemberEntity.toMemberUpdateMustBe(member);
+
+        List<RunningRecordEntity> allByMemberEntity = runningrecordRepository.findAllByMemberEntity(memberEntity);
+
+        long countRunningRecord = allByMemberEntity.size();
+
+        GetBadgeEntity getBadge = new GetBadgeEntity();
+
+        if(countRunningRecord >99){
+            Optional<GetBadgeEntity> getBadgeEntity = getBadgeRepository.findByBadgeEntityAndMemberEntity(hundredBoardWrite, memberEntity);
+            if(getBadgeEntity.isPresent()){
+                return 100;// 100번째 달리기기록 배지 이미존재 -> 획득X
+            }else{
+                getBadge.setMemberEntity(memberEntity);
+                getBadge.setBadgeEntity(firstBoardWrite);
+                getBadgeRepository.save(getBadge);
+                return 4; // 100번째 달리기기록 배지획득
+            }
+        }else if(countRunningRecord > 49){
+            Optional<GetBadgeEntity> getBadgeEntity = getBadgeRepository.findByBadgeEntityAndMemberEntity(fiftyBoardWrite, memberEntity);
+            if(getBadgeEntity.isPresent()){
+                return 100;// 50번째 달리기기록 배지 이미존재 -> 획득X
+            }else{
+                getBadge.setMemberEntity(memberEntity);
+                getBadge.setBadgeEntity(firstBoardWrite);
+                getBadgeRepository.save(getBadge);
+                return 3; // 50번째 달리기기록 배지획득
+            }
+        }else if(countRunningRecord > 9){
+            Optional<GetBadgeEntity> getBadgeEntity = getBadgeRepository.findByBadgeEntityAndMemberEntity(tenBoardWrite, memberEntity);
+            if(getBadgeEntity.isPresent()){
+                return 100;// 10번째 달리기기록 배지 이미존재 -> 획득X
+            }else{
+                getBadge.setMemberEntity(memberEntity);
+                getBadge.setBadgeEntity(firstBoardWrite);
+                getBadgeRepository.save(getBadge);
+                return 2; // 10번째 달리기기록 배지획득
+            }
+        }else if(countRunningRecord >0){
+            Optional<GetBadgeEntity> getBadgeEntity = getBadgeRepository.findByBadgeEntityAndMemberEntity(firstBoardWrite, memberEntity);
+            if(getBadgeEntity.isPresent()){
+                return 100;// 1번째 달리기기록 배지 이미존재 -> 획득X
+            }else{
+                getBadge.setMemberEntity(memberEntity);
+                getBadge.setBadgeEntity(firstBoardWrite);
+                getBadgeRepository.save(getBadge);
+                return 1; // 1번째 달리기기록 배지획득
+            }
+        }else {
+            return 100; // 100개 이상 달리기기록 있어서 더이상 배지가 없음 -> 획득 X
+        }
     }
 }

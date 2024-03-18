@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>boardUpdate</title>
+</head>
+<body>
+<form th:action="@{'/crewBoard/update/' + ${crewId} +'/'+${crewBoardId}}" method="post" name="updateForm">
+    <input type="hidden" name="crewBoardId" th:value="${crewBoard.crewBoardId}">
+    글 제목: <input type="text" name="crewBoardTitle" th:value="${crewBoard.crewBoardTitle}"> <br>
+    카테고리: <select name="crewBoardCategory" th:value="${crewBoard.crewBoardCategory}">
+    <option th:if="${isManager}">공지</option>
+    <option>자유</option>
+    <option>후기</option>
+</select> <br>
+    글 내용: <textarea name="crewBoardContent" cols="30" rows="10" th:text="${crewBoard.crewBoardContent}"></textarea> <br>
+    <input type="hidden" name="crewBoardHits" th:value="${crewBoard.crewBoardHits}">
+    <input type="submit" value="수정">
+</form>
+</body>
+</html>

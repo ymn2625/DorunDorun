@@ -2,35 +2,39 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>러닝 스팟</title>
+    <link rel="stylesheet" href="/css/runningSpot.css">
     <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=iiuliuld0k&submodules=geocoder"></script>
 </head>
 <body>
-    <form class="saveSpot" method="post">
-        <div class="search">
-            <input type="text" id="sample6_address" name="memberAddr" placeholder="주소">
-            <input type="button" onclick="sample6_execDaumPostcode()" value="주소 찾기">
-            <input id="submit" type="button" value="검색">
-            <input id="add" type="button" value="추가">
-        </div>
-    </form>
-    <div id="map" style="width:1000px;height:500px;"></div>
-    <div>
-        <table>
-            <thead>
-            <tr>
-                <th>주소</th>
-                <th>위도</th>
-                <th>경도</th>
-            </tr>
-            </thead>
-                <tbody id="mapList" th:each="srs:${saveRunningSpot}">
-                <td id="spotName" th:text="${srs.getSpotName()}"></td>
-                <td id="spotx" th:text="${srs.getSpotX()}"></td>
-                <td id="spoty" th:text="${srs.getSpotY()}"></td>
-            </tbody>
-        </table>
+<form class="saveSpot" method="post">
+    <div class="search">
+        <!--<input type="text" id="sample6_address" name="memberAddr" placeholder="주소">
+        <input type="button" onclick="sample6_execDaumPostcode()" value="주소 찾기">
+        <input id="submit" type="button" value="검색">
+        <input id="add" type="button" value="추가">-->
     </div>
+</form>
+<div id="map"></div>
+<div>
+    <table>
+        <thead>
+        <tr>
+            <th>주소</th>
+            <th>위도</th>
+            <th>경도</th>
+        </tr>
+        </thead>
+        <tbody id="mapList" th:each="srs:${saveRunningSpot}">
+        <td id="spotName" th:text="${srs.getSpotName()}"></td>
+        <td id="spotx" th:text="${srs.getSpotX()}"></td>
+        <td id="spoty" th:text="${srs.getSpotY()}"></td>
+        </tbody>
+    </table>
+</div>
+
+<div th:include="menuBar_place.html" class="footer"></div>
 </body>
 <script>
     spotMarker();   // 페이지 이동하자마자 바로 마커 표시

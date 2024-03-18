@@ -37,12 +37,16 @@ public class SecurityConfig {
         //경로별 접근 권한설정(인가기능)
         http
                 .authorizeHttpRequests((auth)->auth
-                        .antMatchers("/", "/member/login", "/member/join", "/member/idCheck", "/member/nicknameCheck","/css/**", "/img/**").permitAll()
-                        .antMatchers("/admin").hasRole("ADMIN")
-                        .antMatchers("/member/**", "/board/**", "/crew/**", "/crewBoard/**", "/marathon/**").hasAnyRole("USER","ADMIN")
-                        .antMatchers("/css/**", "/js/**", "/images/**").permitAll()
-                        .anyRequest().authenticated()
-                        .and()
+                                .antMatchers("/", "/member/findPW", "/member/findId", "/js/**" , "/css/**", "/img/**", "/member/login", "/member/join", "/member/idCheck", "/member/nicknameCheck", "/sms/**").permitAll()
+                                .antMatchers("/admin").hasRole("ADMIN")
+                                .antMatchers("/member/**", "/place/**", "/board/**", "/crew/**", "/crewBoard/**", "/marathon/**", "/board_comment/**", "/chat/**", "/crewBoard_comment").hasAnyRole("USER","ADMIN")
+                                .anyRequest().authenticated()
+//                        .antMatchers("/", "/member/login", "/member/join", "/member/idCheck", "/member/nicknameCheck","/css/**", "/img/**").permitAll()
+//                        .antMatchers("/admin").hasRole("ADMIN")
+//                        .antMatchers("/member/**", "/board/**", "/crew/**", "/crewBoard/**", "/marathon/**").hasAnyRole("USER","ADMIN")
+//                        .antMatchers("/css/**", "/js/**", "/images/**").permitAll()
+//                        .anyRequest().authenticated()
+//                        .and()
                 );
 
         //로그인 폼 작업

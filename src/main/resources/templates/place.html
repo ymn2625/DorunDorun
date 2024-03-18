@@ -1,162 +1,113 @@
 <!DOCTYPE html>
 <html lang="UTF-8">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>여기 가봤어?</title>
-    <link rel="stylesheet" href="/css/place.css" />
-  </head>
-  <body>
-    <div class="header">
-      <a href="/member/main"
-        ><img src="/img/dorundorun.png" alt="icon" id="icon"
-      /></a>
-      <div class="right">
-        <div class="map">
-          <a th:if="${#strings.isEmpty(member.memberAddr1)}" href="/member/select_update">선호지역설정</a>
-          <span th:if="${not #strings.isEmpty(member.memberAddr1)}" th:text="${member.memberAddr1}"></span>
-        </div>
-        <img src="/img/alert.png" alt="alert" id="alert" />
-      </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>여기 가봤어?</title>
+  <link rel="stylesheet" href="/css/place.css" />
+</head>
+<body>
+<div class="header">
+  <a href="/member/main"
+  ><img src="/img/dorundorun.png" alt="icon" id="icon"
+  /></a>
+  <div class="right">
+    <div class="map">
+      <a th:if="${#strings.isEmpty(member.memberAddr1)}" href="/member/select_update">선호지역설정</a>
+      <span th:if="${not #strings.isEmpty(member.memberAddr1)}" th:text="${member.memberAddr1}"></span>
     </div>
+    <img src="/img/alert.png" alt="alert" id="alert" />
+  </div>
+</div>
 
-    <h2>여기 가봤어?</h2>
+<h2>여기 가봤어?</h2>
 
-    <div class="placeList">
-      <div class="place">
-        <a href="#">
-          <div class="placeImg"></div>
-          <div class="placeName">인왕산</div>
+<div class="placeList">
+  <div class="place" th:each="runningSpot : ${spot}">
+    <a th:href="@{|/place/detail/${runningSpot.spotId}}">
+      <div class="placeImg"></div>
+      <div class="placeName" th:text="${runningSpot.spotName}" th:href="@{|/place/detail/${runningSpot.spotId}}"></div>
+    </a>
+  </div>
+
+
+  <div class="menu-container">
+    <div class="menu">
+      <div class="home">
+        <a href="/member/main">
+          <img src="/img/home_mint.png" alt="home" />
+          <h6 style="color: #31c7cf">홈</h6>
         </a>
       </div>
 
-      <div class="place">
-        <a href="#">
-          <div class="placeImg"></div>
-          <div class="placeName">떠기네</div>
+      <div class="crew">
+        <a href="/crew/main">
+          <img src="/img/crew.png" alt="crew" />
+          <h6>모임</h6>
         </a>
       </div>
 
-      <div class="place">
-        <a href="#">
-          <div class="placeImg"></div>
-          <div class="placeName">아리네</div>
+      <div class="placemap">
+        <a href="/crew/place">
+          <img src="/img/place.png" alt="placemap" />
+          <h6>내 근처</h6>
         </a>
       </div>
 
-      <div class="place">
-        <a href="#">
-          <div class="placeImg"></div>
-          <div class="placeName">나비네</div>
+      <div class="chat">
+        <a href="/chat/room">
+          <img
+                  src="/img/chat.png"
+                  alt="chat"
+                  style="width: 30px; height: 30px"
+          />
+          <h6>채팅</h6>
         </a>
       </div>
 
-      <div class="place">
-        <a href="#">
-          <div class="placeImg"></div>
-          <div class="placeName">민지네</div>
-        </a>
-      </div>
-
-      <div class="place">
-        <a href="#">
-          <div class="placeImg"></div>
-          <div class="placeName">민호네</div>
-        </a>
-      </div>
-
-      <div class="place">
-        <a href="#">
-          <div class="placeImg"></div>
-          <div class="placeName">세진이네</div>
-        </a>
-      </div>
-
-      <div class="place">
-        <a href="#">
-          <div class="placeImg"></div>
-          <div class="placeName">희선이네</div>
+      <div class="profile">
+        <a href="/member/profile">
+          <img src="/img/profile.png" alt="profile" />
+          <h6>프로필</h6>
         </a>
       </div>
     </div>
+  </div>
 
-    <div class="menu-container">
-      <div class="menu">
-        <div class="home">
-          <a href="/member/main">
-            <img src="/img/home_mint.png" alt="home" />
-            <h6 style="color: #31c7cf">홈</h6>
-          </a>
-        </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var aElements = document.querySelectorAll(".placeName a");
 
-        <div class="crew">
-          <a href="/crew/main">
-            <img src="/img/crew.png" alt="crew" />
-            <h6>모임</h6>
-          </a>
-        </div>
+      aElements.forEach(function (aElement) {
+        var elementWidth = aElement.offsetWidth;
 
-        <div class="placemap">
-          <a href="/crew/place">
-            <img src="/img/place.png" alt="placemap" />
-            <h6>내 근처</h6>
-          </a>
-        </div>
+        // 현재 단어를 포함한 줄의 너비를 계산하는 함수
+        function calculateLineWidth(text) {
+          var canvas = document.createElement("canvas");
+          var context = canvas.getContext("2d");
+          context.font = window.getComputedStyle(aElement).font;
+          return context.measureText(text).width;
+        }
 
-        <div class="chat">
-          <a href="/chat/room">
-            <img
-              src="/img/chat.png"
-              alt="chat"
-              style="width: 30px; height: 30px"
-            />
-            <h6>채팅</h6>
-          </a>
-        </div>
+        var words = aElement.innerText.split(" ");
+        var result = "";
+        var currentLineWidth = 0;
 
-        <div class="profile">
-          <a href="/member/profile">
-            <img src="/img/profile.png" alt="profile" />
-            <h6>프로필</h6>
-          </a>
-        </div>
-      </div>
-    </div>
+        words.forEach(function (word, index) {
+          var lineWithWord = currentLineWidth + calculateLineWidth(word);
 
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var aElements = document.querySelectorAll(".placeName a");
-
-        aElements.forEach(function (aElement) {
-          var elementWidth = aElement.offsetWidth;
-
-          // 현재 단어를 포함한 줄의 너비를 계산하는 함수
-          function calculateLineWidth(text) {
-            var canvas = document.createElement("canvas");
-            var context = canvas.getContext("2d");
-            context.font = window.getComputedStyle(aElement).font;
-            return context.measureText(text).width;
+          if (index > 0 && lineWithWord > elementWidth) {
+            result += "";
+            currentLineWidth = 0;
           }
 
-          var words = aElement.innerText.split(" ");
-          var result = "";
-          var currentLineWidth = 0;
-
-          words.forEach(function (word, index) {
-            var lineWithWord = currentLineWidth + calculateLineWidth(word);
-
-            if (index > 0 && lineWithWord > elementWidth) {
-              result += "";
-              currentLineWidth = 0;
-            }
-
-            result += "<span>" + word + "</span> ";
-            currentLineWidth += calculateLineWidth(word) + 5; // 5는 간격
-          });
-
-          aElement.innerHTML = result.trim();
+          result += "<span>" + word + "</span> ";
+          currentLineWidth += calculateLineWidth(word) + 5; // 5는 간격
         });
+
+        aElement.innerHTML = result.trim();
       });
-    </script>
-  </body>
+    });
+  </script>
+</body>
 </html>

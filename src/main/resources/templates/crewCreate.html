@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/css/crewCreate.css">
 </head>
 <body>
-<form action="/crew/create" method="post">
+<form action="/crew/create" method="post" enctype="multipart/form-data">
 
     <!-- 크루 대표 이미지 -->
     <div
@@ -33,7 +33,7 @@
     <input
             type="file"
             id="crew-image"
-            name="crew-image"
+            name="crewFile"
             accept="image/*"
             required
             onchange="previewImage(event)"
@@ -61,7 +61,7 @@
         <div id="selectArea" class="select">
             <div class="select-content">
                 <span class="closeArea">&times;</span>
-                <input type="text" id="searchAreaInput" placeholder="위치 선택" />
+                <input type="text" id="searchAreaInput" name="crewAddress" placeholder="위치 선택" />
                 <ul id="area">
                     <li>구로디지털단지역</li>
                     <li>구로역</li>
@@ -111,49 +111,8 @@
     </div>
 </form>
 
-<div class="menu-container">
-    <div class="menu">
-        <div class="home">
-            <a href="/member/main">
-                <img src="/img/home_white.png" alt="home" />
-                <h6>홈</h6>
-            </a>
-        </div>
+<div th:include="menuBar_crew.html" class="footer"></div>
+<script src="/js/crewCreate.js"></script>
 
-        <div class="crew">
-            <a href="/crew/main">
-                <img src="/img/crew_mint.png" alt="crew" />
-                <h6  style="color: #31c7cf">모임</h6>
-            </a>
-        </div>
-
-        <div class="placemap">
-            <a href="placeMap.html">
-                <img src="/img/place.png" alt="placemap" />
-                <h6>내 근처</h6>
-            </a>
-        </div>
-
-        <div class="chat">
-            <a href="/chat/room">
-                <img
-                        src="/img/chat.png"
-                        alt="chat"
-                        style="width: 30px; height: 30px"
-                />
-                <h6>채팅</h6>
-            </a>
-        </div>
-
-        <div class="profile">
-            <a href="/member/profile">
-                <img src="/img/profile.png" alt="profile" />
-                <h6>프로필</h6>
-            </a>
-        </div>
-    </div>
-</div>
-
-<script src="/js/openCrew.js"></script>
 </body>
 </html>

@@ -22,7 +22,12 @@
             </td>
 
             <td>
-              <input type="text" name="password" placeholder="비밀번호"/>
+              <input name="password" id="password" type="password" onkeyup='pwcheck();' placeholder="비밀번호"/>
+            </td>
+
+            <td>
+              <input type="password" name="confirm_password" id="confirm_password" onkeyup='pwcheck();' placeholder="비밀번호확인">
+              <p id="message"></p>
             </td>
 
             <td>
@@ -41,7 +46,18 @@
             </td>
 
             <td>
-              <input type="text" name="memberTel" placeholder="연락처"/>
+              <input type="text" name="memberTel" id="memberTel" placeholder="연락처"/>
+              <input
+                      type="button"
+                      onclick="confirmationMemberTel()"
+                      value="핸드폰 인증"
+              />
+              <input type="text" id="confirmation" placeholder="인증번호"/>
+              <input
+                type="button"
+                onclick="checkConfirm()"
+                value="인증번호 확인"
+              />
             </td>
 
             <td>
@@ -82,11 +98,71 @@
 
           </tr>
         </table>
-        <input type="submit" value="다음" name="joinForm"/>
+        <input type="submit" value="다음" name="joinForm" id="joinForm" disabled/>
     </form>
     </div>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script>
+      pwcheck=() => {
+        if (document.getElementById('password').value == document.getElementById('confirm_password').value) {
+          document.getElementById('message').style.color = 'green';
+          document.getElementById('message').innerHTML = '비밀번호 일치';
+        } else {
+          document.getElementById('message').style.color = 'red';
+          document.getElementById('message').innerHTML = '비밀번호 불일치';
+        }
+      }
+    </script>
+
+    <script>
+      confirmationMemberTel = () =>{
+        const tel = document.getElementById('memberTel').value;
+        console.log(tel);
+        $.ajax({
+          type:"post",
+          url:"/sms/send",
+          data:{
+            "tel":tel
+          },
+          success: function (res){
+            alert('sms 발송!');
+          },
+          error:function (err){
+            console.log("에러발생 :", err);
+          }
+        });
+      }
+
+      checkConfirm = () =>{
+        const tel = document.getElementById('memberTel').value;
+        const code = document.getElementById('confirmation').value;
+
+        console.log(tel);
+        console.log(code);
+        $.ajax({
+          type:"post",
+          url:"/sms/verify",
+          data:{
+            "tel":tel,
+            "certificationCode" : code
+          },
+          success: function (res){
+            if(res=="인증성공"){
+              alert('인증 성공!');
+              document.getElementById('joinForm').disabled=false;
+            }else{
+              alert('인증 실패!');
+            }
+          },
+          error:function (err){
+            alert('인증 실패!');
+          }
+        });
+      }
+    </script>
+    <script>
+
+
       idCheck = () =>{
         const username = document.getElementById("username").value;
         const checkResult = document.getElementById("checkIdResult");

@@ -108,10 +108,10 @@ document
     var maxPeopleInput = document.getElementById("searchPeopleInput");
     var maxPeople = parseInt(maxPeopleInput.value); // 입력된 값 숫자로 변환
 
-    if (maxPeople > 20) {
-      alert("정원은 20명 이하로 설정해주세요."); // 20 이상인 경우 경고 표시
-      maxPeopleInput.value = 20; // 입력된 값이 20 초과이면 최댓값인 20으로 변경
-      maxPeople = 20; // maxPeople 변수도 최댓값인 20으로 설정
+    if (maxPeople > 100) {
+      alert("정원은 100명 이하로 설정해주세요."); // 20 이상인 경우 경고 표시
+      maxPeopleInput.value = 100; // 입력된 값이 20 초과이면 최댓값인 20으로 변경
+      maxPeople = 100; // maxPeople 변수도 최댓값인 20으로 설정
     }
     console.log("정원:", maxPeople);
 

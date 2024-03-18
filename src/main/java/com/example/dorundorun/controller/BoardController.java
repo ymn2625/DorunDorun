@@ -128,10 +128,9 @@ public class BoardController {
     }
 
     @PostMapping("/write")
-    public String write(@ModelAttribute BoardDTO boardDTO, Authentication authentication, Model model) throws IOException {
+    public String write(@ModelAttribute BoardDTO boardDTO, Authentication authentication) throws IOException {
 
         String username = authentication.getName();
-        MemberDTO memberDTO = memberService.getMember(username);
 
         boardService.save(boardDTO, username);
 
