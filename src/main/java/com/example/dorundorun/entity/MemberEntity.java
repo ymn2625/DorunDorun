@@ -47,6 +47,15 @@ public class MemberEntity extends BaseEntity{
     private String memberRefAddr;
 
     @Column
+    private String memberRefAddr1;
+
+    @Column
+    private String memberRefAddr2;
+
+    @Column
+    private String memberRefAddr3;
+
+    @Column
     private String memberAddr1;
 
     @Column
@@ -115,6 +124,9 @@ public class MemberEntity extends BaseEntity{
     @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<RunningRecordEntity> runningRecordEntityList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<CrewRunningMemberEntity> crewRunningMemberEntityList = new ArrayList<>();
+
     public static MemberEntity toMemberEntity(MemberDTO memberDTO) {
         MemberEntity memberEntity = new MemberEntity();
         memberEntity.setUsername(memberDTO.getUsername());
@@ -125,6 +137,9 @@ public class MemberEntity extends BaseEntity{
         memberEntity.setMemberAddr(memberDTO.getMemberAddr());
         memberEntity.setMemberDetailAddr(memberDTO.getMemberDetailAddr());
         memberEntity.setMemberRefAddr(memberDTO.getMemberRefAddr());
+        memberEntity.setMemberRefAddr1(memberDTO.getMemberRefAddr1());
+        memberEntity.setMemberRefAddr2(memberDTO.getMemberRefAddr2());
+        memberEntity.setMemberRefAddr3(memberDTO.getMemberRefAddr3());
         memberEntity.setMemberPostCode(memberDTO.getMemberPostCode());
         memberEntity.setMemberAddr1(memberDTO.getMemberAddr1());
         memberEntity.setMemberAddr2(memberDTO.getMemberAddr2());
@@ -155,6 +170,9 @@ public class MemberEntity extends BaseEntity{
         memberEntity.setMemberAddr(memberDTO.getMemberAddr());
         memberEntity.setMemberDetailAddr(memberDTO.getMemberDetailAddr());
         memberEntity.setMemberRefAddr(memberDTO.getMemberRefAddr());
+        memberEntity.setMemberRefAddr1(memberDTO.getMemberRefAddr1());
+        memberEntity.setMemberRefAddr2(memberDTO.getMemberRefAddr2());
+        memberEntity.setMemberRefAddr3(memberDTO.getMemberRefAddr3());
         memberEntity.setMemberPostCode(memberDTO.getMemberPostCode());
         memberEntity.setMemberAddr1(memberDTO.getMemberAddr1());
         memberEntity.setMemberAddr2(memberDTO.getMemberAddr2());

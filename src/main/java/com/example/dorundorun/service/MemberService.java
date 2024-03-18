@@ -130,6 +130,9 @@ public class MemberService {
         byUsername.setMemberY1(memberDTO.getMemberY1());
         byUsername.setMemberY2(memberDTO.getMemberY2());
         byUsername.setMemberY3(memberDTO.getMemberY3());
+        byUsername.setMemberRefAddr1(memberDTO.getMemberRefAddr1());
+        byUsername.setMemberRefAddr2(memberDTO.getMemberRefAddr2());
+        byUsername.setMemberRefAddr3(memberDTO.getMemberRefAddr3());
         memberRepository.save(byUsername);
     }
 

@@ -31,4 +31,7 @@ public class CrewMemberEntity extends BaseEntity{
 
     @OneToMany(mappedBy = "crewMemberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<CrewBoardEntity> crewBoardEntityList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "crewMemberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<CrewRunningMemberEntity> crewRunningMemberEntityList = new ArrayList<>();
 }

@@ -25,6 +25,9 @@ public class MemberDTO {
     private String memberAddr;
     private String memberPostCode;
     private String memberRefAddr;
+    private String memberRefAddr1;
+    private String memberRefAddr2;
+    private String memberRefAddr3;
     private String memberDetailAddr;
     private String memberAddr1;
     private String memberAddr2;
@@ -55,6 +58,9 @@ public class MemberDTO {
         memberDTO.setMemberAddr(memberEntity.getMemberAddr());
         memberDTO.setMemberDetailAddr(memberEntity.getMemberDetailAddr());
         memberDTO.setMemberRefAddr(memberEntity.getMemberRefAddr());
+        memberDTO.setMemberRefAddr1(memberEntity.getMemberRefAddr1());
+        memberDTO.setMemberRefAddr2(memberEntity.getMemberRefAddr2());
+        memberDTO.setMemberRefAddr3(memberEntity.getMemberRefAddr3());
         memberDTO.setMemberPostCode(memberEntity.getMemberPostCode());
         memberDTO.setMemberAddr1(memberEntity.getMemberAddr1());
         memberDTO.setMemberAddr2(memberEntity.getMemberAddr2());

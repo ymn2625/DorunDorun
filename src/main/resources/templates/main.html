@@ -14,8 +14,8 @@
   /></a>
   <div class="right">
     <div class="map">
-      <a th:if="${#strings.isEmpty(member.memberAddr1)}" href="/member/select_update">선호지역설정</a>
-      <span th:if="${not #strings.isEmpty(member.memberRefAddr)}" th:text="${member.memberRefAddr}"></span>
+      <a th:if="${#strings.isEmpty(member.memberRefAddr1)}" href="/member/select_update">선호지역설정</a>
+      <span th:if="${not #strings.isEmpty(member.memberRefAddr1)}" th:text="${member.memberRefAddr1}"></span>
     </div>
     <img src="/img/alert.png" alt="alert" id="alert" />
   </div>
