@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>crewRunningUpdate</title>
+</head>
+<body>
+<form th:action="@{'/crewRunning/update/' + ${crewId} +'/'+${crewRunningDTO.crewRunningId}}" method="post">
+    <input type="text" name="crewRunningName" th:value="${crewRunningDTO.crewRunningName}" required><br>
+
+    <!--모임일정선택-->
+    <span th:text="${#dates.format(crewRunningDTO.crewRunningDate, 'yy-MM-dd HH:mm')}"></span>
+    &nbsp;&nbsp;
+    <span>
+    <span th:text="${crewRunningMember}"></span>
+    /
+    <input type="number" min="10" max="100" step="5" name="crewRunningLimit" th:value="${crewRunningDTO.crewRunningLimit}" required>
+</span><br>
+    <!--러닝스팟선택-->
+    <select id="spotId" name="spotId" required>
+        <option th:each="spot : ${spotNames}"
+                th:value="${spot.spotId}"
+                th:text="${spot.spotName}"
+                th:selected="${spot.spotId == crewRunningDTO.spotId}">
+        </option>
+    </select><br>
+
+    <textarea type="text" name="crewRunningContent" cols="50" rows="8" th:text="${crewRunningDTO.crewRunningContent}" required></textarea><br>
+    <input type="submit" value="수정">
+</form>
+<script th:inline="javascript">
+    // 현재 날짜와 시간 설정
+    var now = new Date();
+    var currentYear = now.getFullYear();
+    var currentMonth = now.getMonth() + 1;
+    var currentDay = now.getDate();
+    var currentHour = now.getHours();
+    var currentMinute = now.getMinutes();
+
+    // 년도 선택 목록 생성
+    var yearSelect = document.getElementById('year');
+    for (var i = currentYear; i <= currentYear + 1; i++) {
+        var option = document.createElement('option');
+        option.value = i;
+        option.text = i;
+        yearSelect.add(option);
+    }
+
+    // 월 선택 목록 생성
+    var monthSelect = document.getElementById('month');
+    for (var i = 1; i <= 12; i++) {
+        var option = document.createElement('option');
+        option.value = i;
+        option.text = i;
+        monthSelect.add(option);
+    }
+
+    // 일 선택 목록 생성 (선택된 월에 따라 일 수가 동적으로 변경됨)
+    var daySelect = document.getElementById('day');
+    updateDayOptions();
+    monthSelect.addEventListener('change', updateDayOptions);
+
+    // 시간 선택 목록 생성
+    var hourSelect = document.getElementById('hour');
+    for (var i = 0; i <= 23; i++) {
+        var option = document.createElement('option');
+        option.value = i;
+        option.text = i;
+        hourSelect.add(option);
+    }
+
+    // 분 선택 목록 생성
+    var minuteSelect = document.getElementById('minute');
+    for (var i = 0; i <= 59; i++) {
+        var option = document.createElement('option');
+        option.value = i;
+        option.text = i;
+        minuteSelect.add(option);
+    }
+
+    // 선택된 월에 따라 일 수를 동적으로 업데이트하는 함수
+    function updateDayOptions() {
+        var selectedYear = yearSelect.value;
+        var selectedMonth = monthSelect.value;
+        var daysInMonth = new Date(selectedYear, selectedMonth, 0).getDate();
+
+        // 일 선택 목록 초기화
+        daySelect.innerHTML = '';
+
+        // 일 선택 목록 업데이트
+        for (var i = 1; i <= daysInMonth; i++) {
+            var option = document.createElement('option');
+            option.value = i;
+            option.text = i;
+            daySelect.add(option);
+        }
+    }
+
+    // 현재 시간 설정
+    yearSelect.value = currentYear;
+    monthSelect.value = currentMonth;
+    daySelect.value = currentDay;
+    hourSelect.value = currentHour;
+    minuteSelect.value = currentMinute;
+
+
+    // 폼 제출 시 runningDate 설정
+    function setRunningDate() {
+        var year = document.getElementById('year').value;
+        var month = document.getElementById('month').value;
+        var day = document.getElementById('day').value;
+        var hour = document.getElementById('hour').value;
+        var minute = document.getElementById('minute').value;
+
+
+        var runningDate = new Date(year, month - 1, day, hour, minute);
+        document.getElementById('crewRunningDate').value = runningDate.toISOString(); // 폼의 hidden 필드에 저장
+    }
+
+</script>
+</body>
+</html>

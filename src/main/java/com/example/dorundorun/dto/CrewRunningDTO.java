@@ -29,4 +29,15 @@ public class CrewRunningDTO {
     private String searchCondition;
     private String searchKeyword;
 
+    public static CrewRunningDTO toCrewRunningDTO(CrewRunningEntity crewRunningEntity) {
+        CrewRunningDTO crewRunningDTO = new CrewRunningDTO();
+        crewRunningDTO.setCrewRunningId(crewRunningEntity.getCrewRunningId());
+        crewRunningDTO.setCrewRunningName(crewRunningEntity.getCrewRunningName());
+        crewRunningDTO.setCrewRunningContent(crewRunningEntity.getCrewRunningContent());
+        crewRunningDTO.setCrewRunningDate(crewRunningEntity.getCrewRunningDate());
+        crewRunningDTO.setSpotId(crewRunningEntity.getRunningSpotEntity().getSpotId());
+        crewRunningDTO.setCrewRunningLimit(crewRunningEntity.getCrewRunningLimit());
+        crewRunningDTO.setCrewRunningCreatedTime(crewRunningEntity.getCreatedTime());
+        return crewRunningDTO;
+    }
 }

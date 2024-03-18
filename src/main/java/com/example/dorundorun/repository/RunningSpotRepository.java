@@ -17,4 +17,8 @@ public interface RunningSpotRepository extends JpaRepository<RunningSpotEntity, 
     Optional<RunningSpotEntity> findBySpotId(Long spotId);
 
 
+    @Query("SELECT rs.spotName FROM RunningSpotEntity rs " +
+            "JOIN CrewRunningEntity c on rs.spotId = c.runningSpotEntity.spotId " +
+            "WHERE c.crewRunningId = :crewRunningId")
+    List<String> findSpotNamesByCrewRunningId(@Param("crewRunningId") Long crewRunningId);
 }

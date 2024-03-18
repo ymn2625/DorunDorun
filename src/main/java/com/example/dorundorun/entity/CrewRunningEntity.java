@@ -35,4 +35,34 @@ public class CrewRunningEntity extends BaseEntity{
     @Column
     private Long crewRunningLimit;
 
+    public static CrewRunningEntity toSaveCrewRunningEntity(CrewRunningDTO crewRunningDTO) {
+        CrewRunningEntity crewRunningEntity = new CrewRunningEntity();
+        crewRunningEntity.setCrewRunningId(crewRunningDTO.getCrewRunningId());
+        crewRunningEntity.setCrewRunningName(crewRunningDTO.getCrewRunningName());
+        crewRunningEntity.setCrewRunningDate(crewRunningDTO.getCrewRunningDate());
+        crewRunningEntity.setCrewRunningContent(crewRunningDTO.getCrewRunningContent());
+
+        RunningSpotEntity runningSpotEntity = new RunningSpotEntity();
+        runningSpotEntity.setSpotId(crewRunningDTO.getSpotId());
+        crewRunningEntity.setRunningSpotEntity(runningSpotEntity);
+
+        crewRunningEntity.setCrewRunningLimit(crewRunningDTO.getCrewRunningLimit());
+
+        return crewRunningEntity;
+    }
+
+    public static CrewRunningEntity toFindCrewRunningEntity(CrewRunningDTO crewRunningDTO) {
+        CrewRunningEntity crewRunningEntity = new CrewRunningEntity();
+        crewRunningEntity.setCrewRunningId(crewRunningDTO.getCrewRunningId());
+        crewRunningEntity.setCrewRunningName(crewRunningDTO.getCrewRunningName());
+        crewRunningEntity.setCrewRunningContent(crewRunningDTO.getCrewRunningContent());
+        crewRunningEntity.setCrewRunningDate(crewRunningDTO.getCrewRunningDate());
+
+        RunningSpotEntity runningSpotEntity = new RunningSpotEntity();
+        runningSpotEntity.setSpotId(crewRunningDTO.getSpotId());
+
+        crewRunningEntity.setCrewRunningLimit(crewRunningDTO.getCrewRunningLimit());
+
+        return crewRunningEntity;
+    }
 }

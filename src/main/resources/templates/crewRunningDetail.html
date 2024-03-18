@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>crewRunningDetail</title>
+</head>
+<body>
+<button onclick="showList()">목록보기</button>
+<h3 th:text="${crewRunningDTO.crewRunningName}"></h3>
+
+<span th:text="${#dates.format(crewRunningDTO.crewRunningDate, 'yy-MM-dd HH:mm')}"></span>
+&nbsp;&nbsp;
+<span>
+    <span th:text="${runningMember}"></span>
+    /
+    <span th:text="${crewRunningDTO.crewRunningLimit}"></span>
+</span><br>
+
+<span th:text="${spotName}"></span>
+<p th:text="${crewRunningDTO.crewRunningContent}"></p>
+
+<div th:each="member:${crewRunningMemberDTOList}">
+    <span th:text="${member.getMemberNickname()}"></span>&nbsp;<span th:if="${member.crewRunningRole == 'CREW_RUNNING_ADMIN'}">모임장</span>
+</div>
+<button th:if="${!isMember} and ${!isAdmin}" onclick="runningJoin()">같이 달려요!</button>
+<button th:if="${isMember} and ${!isAdmin}" onclick="quitRunning()">신청취소</button>
+<button th:if="${isAdmin}" onclick="runningUpdate()">수정</button>
+<button th:if="${isAdmin}" onclick="runningDelete()">삭제</button>
+
+
+</body>
+<script th:inline="javascript">
+    const runningId = [[${crewRunningDTO.crewRunningId}]];
+    const crewId = [[${crewId}]];
+    const showPopup = (message) => {
+        var popup = document.createElement('div');
+        popup.setAttribute('style', 'position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #ffffff; border: 1px solid #000000; padding: 20px; z-index: 9999;');
+        popup.textContent = message;
+        document.body.appendChild(popup);
+
+        setTimeout(function(){
+            popup.parentNode.removeChild(popup);
+        }, 1000);
+    }
+
+    const showList =() =>{
+        location.href='/crewRunning/home/'+crewId;
+    }
+
+    const runningJoin = () =>{
+        var popup = document.createElement('div');
+        popup.setAttribute('style', 'position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #ffffff; border: 1px solid #000000; padding: 20px; z-index: 9999;');
+        popup.textContent = "DORUNDORUN이 당신의 도전을 응원합니다!";
+        document.body.appendChild(popup);
+
+        setTimeout(function(){
+            popup.parentNode.removeChild(popup);
+            window.location.href = "/crewRunning/join/"+crewId+"/"+runningId;
+        }, 1000);
+
+    }
+
+    const runningDelete = () =>{
+        var confirmDelete = confirm("삭제하시겠습니까?");
+        if (confirmDelete) {
+            showPopup("다음에는 꼭 함께 달려요!");
+            setTimeout(function(){
+                window.location.href = "/crewRunning/delete/"+crewId+"/"+runningId;
+            }, 1000);
+        }
+    }
+    const quitRunning = () =>{
+        var confirmQuit = confirm("정말 신청을 취소하나요?");
+        if (confirmQuit) {
+            window.location.href = "/crewRunning/quitRunning/"+crewId+"/"+runningId;
+        }
+    }
+    const runningUpdate = () =>{
+        window.location.href = "/crewRunning/update/"+crewId+"/"+runningId;
+    }
+</script>
+</html>
