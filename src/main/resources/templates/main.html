@@ -1,186 +1,156 @@
 <!DOCTYPE html>
-<html lang="UTF-8">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>dorundorun</title>
-
-    <link rel="stylesheet" href="/css/main.css" />
-  </head>
-  <body>
-    <div class="header">
-      <a href="/"
-        ><img src="/img/dorundorun.png" alt="icon" id="icon"
-      /></a>
-      <div class="right">
-        <div class="map">독산동</div>
-        <img src="/img/alert.png" alt="alert" id="alert" />
-      </div>
+<html lang="UTF-8" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>dorundorun</title>
+  <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/css/main.css" />
+</head>
+<body>
+<div class="header">
+  <a href="/member/main"
+  ><img src="/img/dorundorun.png" alt="icon" id="icon"
+  /></a>
+  <div class="right">
+    <div class="map">
+      <a th:if="${#strings.isEmpty(member.memberAddr1)}" href="/member/select_update">선호지역설정</a>
+      <span th:if="${not #strings.isEmpty(member.memberRefAddr)}" th:text="${member.memberRefAddr}"></span>
     </div>
+    <img src="/img/alert.png" alt="alert" id="alert" />
+  </div>
+</div>
 
-    <div class="top">
-      <a href="hotCrew.html" class="title">지금 핫🔥한 모임</a>
-      <a href="hotCrew.html" class="more">더보기</a>
+  <a href="/marathon/intro?marathonId=202401">
+      <img style="width: 100%; height: 100%;" src="/img/event.png" alt="marathonImg">
+  </a>
 
-      <div class="hotCrew">
-        <a href="">
-          <div class="crewImage"></div>
-          <h6>드루와 안양천</h6>
-        </a>
+<div class="top">
+  <a href="/crew/hot" class="title">지금 핫🔥한 모임</a>
+  <a href="/crew/main" class="more">더보기</a>
 
-        <a href="">
-          <div class="crewImage"></div>
-          <h6>드루와라라 안양천 레츠기릿</h6>
-        </a>
-
-        <a href="">
-          <div class="crewImage"></div>
-          <h6>드루와 안양천</h6>
-        </a>
-
-        <a href="">
-          <div class="crewImage"></div>
-          <h6>드루와 안양천</h6>
-        </a>
-      </div>
+    <div class="hotCrew">
+      <a th:each="crew,iterStat : ${crewList}" th:if="${iterStat.count <= 4}" th:href="@{|/crew/detail/${crew.crewId}}">
+        <div class="crewImage"></div>
+        <h6 th:text="${crew.crewName}" th:href="@{|/crew/detail/${crew.crewId}}"></h6>
+      </a>
     </div>
-    <div class="top">
-      <a href="oneTimeHot.html" class="title">지금 핫🔥한 번개모임</a>
-      <a href="oneTimeHot.html" class="more">더보기</a>
-      <div class="oneTimeHot">
-        <a href="">
-          <div class="crewImage"></div>
-          <h6>오예</h6>
+</div>
+<div class="top">
+  <a href="oneTimeHot.html" class="title">지금 핫🔥한 번개모임</a>
+  <a href="oneTimeHot.html" class="more">더보기</a>
+  <div class="oneTimeHot">
+    <a href="">
+      <div class="crewImage"></div>
+      <h6>오예</h6>
+    </a>
+
+    <a href="">
+      <div class="crewImage"></div>
+      <h6>드루와 안양천으로 레츠기릿</h6>
+    </a>
+
+    <a href="">
+      <div class="crewImage"></div>
+      <h6>안양천</h6>
+    </a>
+
+    <a href="">
+      <div class="crewImage"></div>
+      <h6>안양천</h6>
+    </a>
+  </div>
+</div>
+
+<div class="top">
+  <a href="place.html" class="title">여기 가봤어?</a>
+  <a href="place.html" class="more">더보기</a>
+  <div class="place">
+    <a th:each="runningSpot,iterStat : ${runningSpot}" th:if="${iterStat.count <= 4}" th:href="@{|/runningSpot/detail/${runningSpot.spotId}}">
+      <div class="crewImage"></div>
+      <h6 th:text="${runningSpot.spotName}" th:href="@{|/runningSpot/detail/${runningSpot.spotId}}"></h6>
+    </a>
+  </div>
+</div>
+
+<div class="top">
+  <a href="/board/home" class="board">커뮤니티</a>
+  <a href="/board/home" class="more">더보기</a><br>
+  <div class="boardPlace">
+    <ul>
+      <li th:each="board,iterStat : ${boardList}" th:if="${iterStat.count <= 4}">
+        <a th:href="@{|/board/detail/${board.boardId}}">
+          <span th:text="${board.boardTitle}"></span>
         </a>
+      </li>
+    </ul>
+  </div>
+</div>
 
-        <a href="">
-          <div class="crewImage"></div>
-          <h6>드루와 안양천으로 레츠기릿</h6>
-        </a>
+<div th:include="menuBar.html"></div>
 
-        <a href="">
-          <div class="crewImage"></div>
-          <h6>안양천</h6>
-        </a>
+<div id="firstLoginModal" style="display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4);">
+  <div style="background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 600px; text-align: center;">
+    <span style="float: right; font-size: 28px; font-weight: bold; cursor: pointer;" onclick="closeFirstLoginModal()">&times;</span>
+    <h2>배지 획득!</h2>
+    <img src="/img/FisrtLoginBadge.png" alt="첫 로그인 성공 배지">
+    <p>첫 로그인 배지 획득!</p>
+  </div>
+</div>
 
-        <a href="">
-          <div class="crewImage"></div>
-          <h6>안양천</h6>
-        </a>
-      </div>
-    </div>
+<script th:inline="javascript">
 
-    <div class="top">
-      <a href="place.html" class="title">여기 가봤어?</a>
-      <a href="place.html" class="more">더보기</a>
-      <div class="place">
-        <a href="">
-          <div class="crewImage"></div>
-          <h6>인왕산</h6>
-        </a>
+  $(function (){
+    const isFirstLogin = [[${isFirstLogin}]];
+    console.log(isFirstLogin);
+    if(isFirstLogin){
+      console.log(isFirstLogin);
+      $('#firstLoginModal').css('display','block');
+    }
+  });
 
-        <a href="">
-          <div class="crewImage"></div>
-          <h6>북악산 스카이웨이</h6>
-        </a>
+  function closeFirstLoginModal() {
+    $('#firstLoginModal').hide();
+  }
 
-        <a href="">
-          <div class="crewImage"></div>
-          <h6>안양천</h6>
-        </a>
+  document.addEventListener("DOMContentLoaded", function () {
+    var h6Elements = document.querySelectorAll(
+            ".hotCrew a h6, .oneTimeHot a h6, .place a h6"
+    );
 
-        <a href="">
-          <div class="crewImage"></div>
-          <h6>한강</h6>
-        </a>
-      </div>
-    </div>
+    h6Elements.forEach(function (h6Element) {
+      var elementWidth = h6Element.offsetWidth;
 
-    <div class="top">
-      <a href="/board/home" class="board">커뮤니티</a>
-      <a href="/board/home" class="more">더보기</a>
-      <div class="boardPlace"></div>
-    </div>
+      // 현재 단어를 포함한 줄의 너비를 계산하는 함수
+      function calculateLineWidth(text) {
+        var canvas = document.createElement("canvas");
+        var context = canvas.getContext("2d");
+        context.font = window.getComputedStyle(h6Element).font;
+        return context.measureText(text).width;
+      }
 
-    <div class="menu-container">
-      <div class="menu">
-        <div class="home">
-          <a href="/">
-            <img src="/img/home_mint.png" alt="home" />
-            <h6 style="color: #31c7cf">홈</h6>
-          </a>
-        </div>
+      var words = h6Element.innerText.split(" ");
+      var result = "";
+      var currentLineWidth = 0;
 
-        <div class="crew">
-          <a href="runningMain.html">
-            <img src="/img/crew.png" alt="crew" />
-            <h6>모임</h6>
-          </a>
-        </div>
+      words.forEach(function (word, index) {
+        var lineWithWord = currentLineWidth + calculateLineWidth(word);
 
-        <div class="placemap">
-          <a href="placeMap.html">
-            <img src="/img/place.png" alt="placemap" />
-            <h6>내 근처</h6>
-          </a>
-        </div>
+        if (index > 0 && lineWithWord > elementWidth) {
+          result += "";
+          currentLineWidth = 0;
+        }
 
-        <div class="chat">
-          <a href="chat.html">
-            <img
-              src="/img/chat.png"
-              alt="chat"
-              style="width: 30px; height: 30px"
-            />
-            <h6>채팅</h6>
-          </a>
-        </div>
-
-        <div class="profile">
-          <a href="/member/profile">
-            <img src="/img/profile.png" alt="profile" />
-            <h6>프로필</h6>
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var h6Elements = document.querySelectorAll(
-          ".hotCrew a h6, .oneTimeHot a h6, .place a h6"
-        );
-
-        h6Elements.forEach(function (h6Element) {
-          var elementWidth = h6Element.offsetWidth;
-
-          // 현재 단어를 포함한 줄의 너비를 계산하는 함수
-          function calculateLineWidth(text) {
-            var canvas = document.createElement("canvas");
-            var context = canvas.getContext("2d");
-            context.font = window.getComputedStyle(h6Element).font;
-            return context.measureText(text).width;
-          }
-
-          var words = h6Element.innerText.split(" ");
-          var result = "";
-          var currentLineWidth = 0;
-
-          words.forEach(function (word, index) {
-            var lineWithWord = currentLineWidth + calculateLineWidth(word);
-
-            if (index > 0 && lineWithWord > elementWidth) {
-              result += "";
-              currentLineWidth = 0;
-            }
-
-            result += "<span>" + word + "</span> ";
-            currentLineWidth += calculateLineWidth(word) + 5; // 5는 간격
-          });
-
-          h6Element.innerHTML = result.trim();
-        });
+        result += "<span>" + word + "</span> ";
+        currentLineWidth += calculateLineWidth(word) + 5; // 5는 간격
       });
-    </script>
-  </body>
+
+      h6Element.innerHTML = result.trim();
+    });
+  });
+
+</script>
+
+
+</body>
 </html>

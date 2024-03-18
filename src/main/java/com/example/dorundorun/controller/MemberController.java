@@ -1,7 +1,10 @@
 package com.example.dorundorun.controller;
 
+import com.example.dorundorun.dto.BadgeDTO;
+import com.example.dorundorun.dto.GetBadgeDTO;
 import com.example.dorundorun.dto.MemberDTO;
-import com.example.dorundorun.service.MemberService;
+import com.example.dorundorun.dto.RunningRecordDTO;
+import com.example.dorundorun.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -20,6 +24,10 @@ import java.util.Iterator;
 public class MemberController {
     //생성자 주입
     private final MemberService memberService;
+    private final CrewService crewService;
+    private final BoardService boardService;
+    private final RunningSpotService runningSpotService;
+    private final BadgeService badgeService;
 
     @GetMapping("/join")
     public String saveForm(){
@@ -62,7 +70,17 @@ public class MemberController {
     }
 
     @GetMapping("/main")
-    public String mainP(){
+    public String mainP(Authentication authentication, Model model){
+        String username = authentication.getName();
+        MemberDTO member = memberService.getMember(username);
+
+        Boolean isFirstLogin = badgeService.getBadgeDTOByMemberDTOAndBadgeId(member,1L);
+
+        int dateDifference = badgeService.dateDifference(member);
+
+        model.addAttribute("dateDiffer", dateDifference);
+        model.addAttribute("isFirstLogin", isFirstLogin);
+        model.addAttribute("member", member);
         return "main";
     }
 
@@ -70,6 +88,10 @@ public class MemberController {
     public String profile(Authentication authentication, Model model){
         String username = authentication.getName();
         MemberDTO memberDTO = memberService.getMember(username);
+
+        List<BadgeDTO> badgeDTOS = badgeService.getBadgeDTOListByMemberDTO(memberDTO);
+
+        model.addAttribute("badgeList", badgeDTOS);
         model.addAttribute("member",memberDTO);
         return "profile";
     }
@@ -84,9 +106,9 @@ public class MemberController {
     @PostMapping("/profileupdate")
     public String profileupdate(@ModelAttribute MemberDTO memberDTO, Authentication authentication){
         if(memberDTO.getUsername()!=null && memberDTO.getMemberAddr()!=null && memberDTO.getPassword()!=null
-        && memberDTO.getMemberBirth()!=null && memberDTO.getMemberPostCode()!=null && memberDTO.getMemberNickname()!=null
-        && memberDTO.getMemberName()!=null && memberDTO.getMemberEmail()!=null && memberDTO.getMemberDetailAddr() !=null
-        && memberDTO.getMemberRefAddr() !=null) {
+                && memberDTO.getMemberBirth()!=null && memberDTO.getMemberPostCode()!=null && memberDTO.getMemberNickname()!=null
+                && memberDTO.getMemberName()!=null && memberDTO.getMemberEmail()!=null && memberDTO.getMemberDetailAddr() !=null
+                && memberDTO.getMemberRefAddr() !=null) {
             String username = authentication.getName();
 
             Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
@@ -128,5 +150,32 @@ public class MemberController {
         return "redirect:/logout";
     }
 
+    @GetMapping("/runningRecordList")
+    public String getRunningRecordList(Authentication authentication, Model model){
+        String username = authentication.getName();
+        MemberDTO member = memberService.getMember(username);
 
+        List<RunningRecordDTO> runningRecordDTOList = memberService.getRunningRecordListByMemberDTO(member);
+
+        model.addAttribute("member", member);
+        model.addAttribute("runningRecordList", runningRecordDTOList);
+
+        return "runningRecordList";
+    }
+
+    @GetMapping("/getRunningRecord")
+    public String getRunningRecord(){
+        return "getRunningRecord";
+    }
+
+    @PostMapping("/saveRunningRecord")
+    public String saveRunningRecord(@ModelAttribute RunningRecordDTO runningRecordDTO, Model model, Authentication authentication){
+
+        String username = authentication.getName();
+        MemberDTO memberDTO = memberService.getMember(username);
+
+        memberService.saveRunningRecord(memberDTO, runningRecordDTO);
+
+        return "redirect:/member/runningRecordList";
+    }
 }

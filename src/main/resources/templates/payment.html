@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>payment</title>
+    <link rel="stylesheet" href="/css/payment.css">
+</head>
+<!-- jQuery -->
+<!--<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>-->
+<!-- iamport.payment.js -->
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script>
+
+    $(document).ready(function () {
+
+        // 각 결제 버튼을 클릭할 때 호출될 함수
+        function getPaymentData(paymentFunction) {
+            // AJAX 요청을 보내서 사용자의 정보 가져오기
+            $.ajax({
+                type: "GET",
+                url: "/marathon/getMemberInfo", // 사용자의 가져오는 엔드포인트 URL
+                data: {username: $("#username").val()},
+                success: function (response) {
+                    // AJAX 요청이 성공하면 사용자의 정보를 marathonData 객체에 할당
+                    var marathonData = {
+                        // hidden input에서 받아온 값
+                        marathonCourseId: $("#marathonCourseId").val(),
+                        course: $("#course").val(),
+                        marathonId: $("#marathonId").val(),
+                        marathonName: $("#marathonName").val(),
+                        username: $("#username").val(),
+                        price: $("#price").val(),
+                        reward: $("#reward").val(),
+                        marathonJoinId: $("#marathonJoinId").val(),
+                        // username으로 서버에서 가져온 값
+                        memberEmail: response.memberEmail,
+                        memberTel: response.memberTel,
+                        memberAddr: response.memberAddr,
+                        memberPostCode: response.memberPostCode
+                    };
+
+                    // 결제 함수 호출
+                    var makeMerchantUid = goMerchantUid(marathonData);
+                    paymentFunction(marathonData, makeMerchantUid);
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
+
+
+
+        // 클릭 이벤트 핸들러 등록
+        $("#kakaoPayBtn").click(function() {
+            getPaymentData(kakaoPay);
+        });
+
+        $("#paycoPayBtn").click(function() {
+            getPaymentData(paycoPay);
+        });
+
+        $("#tossPayBtn").click(function() {
+            getPaymentData(tossPay);
+        });
+
+        $("#cardPayBtn").click(function() {
+            getPaymentData(cardPay);
+        });
+
+    });
+    // 결제 완료 후 리디렉션 처리
+    $(document).ready(function () {
+        $("#paymentForm").submit(function() {
+            $(this).attr("action", "/marathon/complete");
+        });
+    });
+
+    // 결제 함수 호출을 위한 Merchant UID 생성 함수
+    function goMerchantUid(marathonData) {
+        var today = new Date();
+        var hours = today.getHours(); // 시
+        var minutes = today.getMinutes();  // 분
+        var seconds = today.getSeconds();  // 초
+        var milliseconds = today.getMilliseconds();
+        var makeMerchantUid = hours +  minutes + seconds + milliseconds;
+
+        return makeMerchantUid;
+    }
+
+    $(document).ready(function () {
+        var marathonData = {
+            // hidden input에서 받아온 값
+            marathonCourseId: $("#marathonCourseId").val(),
+            marathonId: $("#marathonId").val(),
+            username: $("#username").val(),
+            reward: $("#reward").val(),
+            marathonJoinId: $("#marathonJoinId").val()
+        }
+        // 폼 서브밋 이벤트를 감지하여 처리합니다.
+        $('#cancelForm').submit(function () {
+            // 성공적으로 처리되었을 때 다른 페이지로 이동
+            window.location.href = '/marathon/intro?marathonId=202401';
+        });
+    });
+
+
+//------------------------------------------------------------------------------------------------
+
+    // 카카오
+    function kakaoPay(marathonData, makeMerchantUid) {
+        var IMP = window.IMP;
+        IMP.init("imp67775170");
+
+        IMP.request_pay({
+            pg : 'kakaopay',
+            merchant_uid: marathonData.marathonJoinId+makeMerchantUid,
+            name : marathonData.marathonName + " " + marathonData.course,
+            amount : parseInt(marathonData.price), // 정수로 변환했음
+            buyer_email : marathonData.memberEmail,
+            buyer_name : marathonData.memberName,
+            buyer_tel : marathonData.memberTel,
+            buyer_addr : marathonData.memberAddr,
+            buyer_postcode : marathonData.memberPostCode
+        }, function (rsp) { // callback
+            if (rsp.success) {
+                console.log(rsp);
+                //결제 완료시
+                alert("결제가 완료되었습니다.");
+                // 결제 성공, 결제 완료 페이지로
+                $("#paymentForm").submit();
+            } else {
+                //결제 실패시
+                alert("결제에 실패하였습니다."+rsp.error_msg);
+                console.log(rsp);
+            }
+        });
+    }
+
+    // 페이코
+    function paycoPay(marathonData, makeMerchantUid) {
+        var IMP = window.IMP;
+        IMP.init("imp67775170");
+
+        IMP.request_pay({
+            pg : 'payco',
+            merchant_uid: marathonData.marathonJoinId+makeMerchantUid,
+            name : marathonData.marathonName + " " + marathonData.course,
+            amount : parseInt(marathonData.price), // 정수로 변환
+            buyer_email : marathonData.memberEmail,
+            buyer_name : marathonData.memberName,
+            buyer_tel : marathonData.memberTel,
+            buyer_addr : marathonData.memberAddr,
+            buyer_postcode : marathonData.memberPostCode
+        }, function (rsp) { // callback
+            if (rsp.success) {
+                console.log(rsp);
+                // 결제 성공, 결제 완료 페이지로 리디렉션
+                $("#paymentForm").submit();
+            } else {
+                console.log(rsp);
+            }
+        });
+    }
+
+    // 토스
+    function tossPay(marathonData, makeMerchantUid) {
+        var IMP = window.IMP;
+        IMP.init("imp67775170");
+
+        IMP.request_pay({
+            pg : 'tosspay',
+            pay_method : 'card',
+            merchant_uid: marathonData.marathonJoinId+makeMerchantUid, //상점에서 생성한 고유 주문번호
+            name : marathonData.marathonName + " " + marathonData.course,
+            amount : parseInt(marathonData.price), // 정수로 변환
+            buyer_email : marathonData.memberEmail,
+            buyer_name : marathonData.memberName,
+            buyer_tel : marathonData.memberTel,
+            buyer_addr : marathonData.memberAddr,
+            buyer_postcode : marathonData.memberPostCode,
+            // m_redirect_url : '/marathon/complete'
+        }, function (rsp) { // callback
+            if (rsp.success) {
+                console.log(rsp);
+                // 결제 성공, 결제 완료 페이지로 리디렉션
+                $("#paymentForm").submit();
+            } else {
+                console.log(rsp);
+            }
+        });
+    }
+
+    // 카드결제
+    function cardPay(marathonData, makeMerchantUid) {
+        var IMP = window.IMP;
+        IMP.init("imp67775170");
+
+        IMP.request_pay({
+            pg: 'kcp.AO09C',
+            pay_method: 'card',
+            merchant_uid: "IMP" + makeMerchantUid,
+            name: marathonData.marathonName + " " + marathonData.course,
+            amount : parseInt(marathonData.price), // 정수로 변환
+            company: 'DoRunDoRun Company',
+            buyer_email: marathonData.memberEmail,
+            buyer_name: marathonData.memberName,
+            buyer_tel:  marathonData.memberTel,
+            buyer_addr: marathonData.memberAddr,
+            buyer_postcode: marathonData.memberPostCode,
+            language : 'ko',
+            auth_mode:'key-in' // 1회성 결제용 설정
+        }, function (rsp) { // callback
+            if (rsp.success) {
+                console.log(rsp);
+                // 결제 성공, 결제 완료 페이지로 리디렉션
+                $("#paymentForm").submit();
+            } else {
+                console.log(rsp);
+            }
+        });
+    }
+
+</script>
+<body>
+<h3>결제방법선택</h3>
+<form class="container" id="paymentForm" method="post">
+    <div>
+        <div class="box"><img id="kakaoPayBtn" src="../static/img/kakao.png"/></div>
+        <div class="box"><img id="paycoPayBtn" src="../static/img/payco.png"/></div>
+    </div>
+    <div>
+        <div class="box"><img id="tossPayBtn" src="../static/img/Toss.png"/></div>
+        <div class="box"><p id="cardPayBtn">카드결제</p></div>
+    </div>
+
+    <!-- hidden input -->
+    <input type="hidden" id="marathonCourseId" name="marathonCourseId" th:value="${marathonCourseId}">
+    <input type="hidden" id="course" name="course" th:value="${course}">
+    <input type="hidden" id="reward" name="reward" th:value="${reward}">
+    <input type="hidden" id="marathonId" name="marathonId" th:value="${marathonId}">
+    <input type="hidden" id="marathonName" name="marathonName" th:value="${marathonName}">
+    <input type="hidden" id="username" name="username" th:value="${username}">
+    <input type="hidden" id="price" name="price" th:value="${price}">
+    <input type="hidden" id="marathonJoinId" name="marathonJoinId" th:value="${marathonJoinId}">
+</form>
+<form id="cancelForm" th:action="@{/marathon/cancelPayment}" method="post" th:if="${username}">
+    <input type="hidden" name="username" th:value="${username}" />
+    <input type="submit" value="결제취소"></input>
+</form>
+
+</body>
+</html>
+<style>
+    .container{
+        margin: 0 auto;
+        display: flex;
+    }
+    .box{
+        margin: 0 auto;
+        text-align: center;
+        display: table;
+        table-layout: fixed;
+        width: 100px;
+        height: 60px;
+        border: 1px solid lightgray;
+        border-radius: 10px;
+    }
+    img{
+        display: table-cell;
+        width: 80px;
+        vertical-align: middle;
+    }
+    p{
+        display: table-cell;
+        vertical-align: middle;
+    }
+</style>

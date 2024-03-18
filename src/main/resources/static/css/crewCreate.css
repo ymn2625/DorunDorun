@@ -1,0 +1,304 @@
+body {
+  margin: 0;
+  padding: 0;
+  overflow-y: scroll;
+}
+
+.image-upload-box {
+  background-color: lightgray;
+  height: 170px;
+  width: 430px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.image-upload-box > #preview-image {
+  width: 430px;
+  height: 170px;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.image-upload-box > #inputImage {
+  width: 40px;
+  height: 40px;
+}
+
+.image-upload-box span {
+  vertical-align: middle;
+  color: rgb(78, 70, 70);
+}
+
+.image-upload-box:hover {
+  background-color: #f0f0f0;
+}
+
+#crew-image {
+  display: none; /* 파일 업로드 input을 감춤 */
+}
+
+.crewNameInput {
+  border: 0;
+  border-bottom: 2px solid gray;
+  width: 350px;
+  margin-left: 45px;
+  margin-top: 70px;
+  display: flex;
+}
+
+.crewNameInput > button {
+  border: 1px solid gray;
+  border-radius: 8px;
+  background-color: white;
+  margin-bottom: 8px;
+  height: 25px;
+  margin-left: 15px;
+  font-weight: bold;
+}
+
+.crewNameInput > input {
+  border: 0;
+  font-size: 18px;
+  margin-left: 10px;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.left_category,
+.left_area,
+.left_maxPeople {
+  margin-right: auto;
+  display: flex;
+}
+
+.right_category,
+.right_area,
+.right_maxPeople {
+  margin-left: auto;
+}
+
+.category,
+.area,
+.maxPeople {
+  display: flex;
+  margin-left: 45px;
+  margin-top: 30px;
+  width: 350px;
+  align-items: center;
+}
+
+#categoryImg,
+#maxPeopleImg {
+  width: 30px;
+  height: 30px;
+}
+
+#areaImg {
+  width: 25px;
+  height: 30px;
+  margin-right: 3px;
+  margin-left: 2px;
+}
+
+.openModalBtn,
+.openAreaModal,
+.openMaxPeopleModal {
+  border: 0;
+  background-color: white;
+  font-size: 17px;
+  font-weight: bold;
+  height: 30px;
+  vertical-align: top;
+  display: flex;
+  margin: 0 auto;
+}
+
+#searchCategoryInput,
+#searchAreaInput {
+  border: 0;
+  border-radius: 4px;
+  margin-left: 20px;
+  width: 250px;
+  height: 20px;
+  padding: 10px;
+}
+
+#searchPeopleInput {
+  border: 0;
+  border-radius: 4px;
+  margin-left: 20px;
+  width: 170px;
+  height: 20px;
+  padding: 10px;
+}
+
+#confirm {
+  border: 0;
+  background-color: white;
+  border-radius: 4px;
+  width: 70px;
+  height: 40px;
+}
+
+.select {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.select-content {
+  background-color: #e9b9b9;
+  border-radius: 12px;
+  padding: 20px;
+  width: 350px;
+  overflow: auto;
+  margin-top: 100px;
+  margin-left: 20px;
+}
+
+li {
+  margin-top: 10px;
+}
+
+#category,
+#area {
+  width: auto;
+  height: auto;
+  list-style: circle;
+  cursor: pointer;
+}
+
+.closeCategory,
+.closeArea,
+.closePeople {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.introduceCrew {
+  border-top: 2px solid gray;
+  border-bottom: 2px solid gray;
+  width: 350px;
+  margin-left: 45px;
+  margin-top: 30px;
+}
+
+.introduceCrew textarea {
+  border: 0;
+  width: 330px;
+  height: 150px;
+  margin-left: 10px;
+  margin-top: 10px;
+  resize: vertical; /* 사용자가 수직으로 크기를 조절할 수 있도록 설정 */
+}
+
+.accept {
+  width: 350px;
+  height: 30px;
+  margin-top: 70px;
+}
+
+.accept > button{
+  width: 300px;
+  height: 50px;
+  border: 0;
+  border-radius: 8px;
+  background-color: lightgray;
+  color: white;
+  font-weight: bold;
+  font-size: 23px;
+  margin-left: 70px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+#openCrewAccept {
+  width: 300px;
+  height: 50px;
+  border: 0;
+  border-radius: 8px;
+  background-color: #e9b9b9;
+  color: white;
+  font-weight: bold;
+  font-size: 23px;
+  margin-left: 70px;
+  cursor: pointer;
+}
+
+.menu-container {
+  margin-top: 80px;
+}
+
+.menu {
+  width: 430px;
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  justify-content: space-around;
+}
+
+.home,
+.crew,
+.placemap,
+.chat,
+.profile {
+  display: inline-table;
+}
+
+.crew {
+  width: 86px;
+  height: 80px;
+  margin: 0;
+  padding: 0;
+  background-color: white;
+  align-items: center;
+  text-align: center;
+  border: 0;
+  border-radius: 10px 10px 0 0;
+  box-shadow: 3px 3px 3px black;
+}
+
+.home,
+.placemap,
+.chat,
+.profile {
+  width: 86px;
+  height: 80px;
+  margin: 0;
+  padding: 0;
+  background-color: #31c7cf;
+  align-items: center;
+  text-align: center;
+  border: 0;
+  border-radius: 10px 10px 0 0;
+  box-shadow: 3px 3px 3px black;
+}
+
+.menu img {
+  margin-top: 15px;
+  filter: drop-shadow(2px 2px 2px #084b4e);
+}
+
+.menu h6 {
+  color: white;
+  text-shadow: 1px 1px 1px #084b4e;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}

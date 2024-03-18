@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>crewHome</title>
+</head>
+<link rel="stylesheet" href="/css/crewHome.css">
+<body>
+
+
+<a href="/crew/create" id="banner">
+    <div class="open" onclick="location.href='/crew/create'">
+        <img src="/img/plus.png" alt="plus" />
+        <p>직접 러닝 크루를 개설해보세요!</p>
+    </div>
+</a>
+
+
+<div class="search">
+    <input type="text" id="search-box" placeholder="검색어를 입력하세요" />
+    <button id="search-button" type="submit"></button>
+</div>
+
+<div class="crewInfo">
+    <div th:each="crew : ${crewList}" class="crewList">
+        <a th:href="@{|/crew/detail/${crew.crewId}}">
+            <div class="img"></div>
+            <div class="side">
+                <div class="text">
+                    <h3 class="crewName" th:text="${crew.crewName}" name="crewName"></h3>
+                    <p class="introduce" th:text="${crew.crewDesc}" th:href="@{|/crew/detail/${crew.crewId}}"></p>
+                </div>
+
+                <div class="info">
+                    <div class="crewLocation">
+                        <img src="/img/mapmarker.png" alt="space" />
+                        <!--<a th:text="${crew.crewLocation}"></a>-->
+                    </div>
+                    <div>
+                        <img src="/img/people.png" alt="np" />
+                        <span th:text="${crew.crewMemberCount}"></span>/
+                        <span th:text="${crew.crewLimit}"></span>명
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+
+</body>
+
+<script>
+    function searchCrew(){
+        var searchValue = document.getElementById("search-box").value.toUpperCase();
+        var crewNames = document.querySelectorAll(".crewName");
+
+        crewNames.forEach(function (crewName) {
+            var parentDiv = crewName.closest(".crewList");
+            if (crewName.textContent.toUpperCase().includes(searchValue)) {
+                parentDiv.style.display = "block";
+            } else {
+                parentDiv.style.display = "none";
+            }
+        });
+    }
+
+    document.getElementById("search-button").addEventListener("click", ()=>{
+        searchCrew();
+    });
+
+    document.getElementById("search-box").addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+            searchCrew();
+        }
+    });
+</script>
+
+</html>

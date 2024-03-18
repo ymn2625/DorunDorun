@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>마라톤 신청 완료</title>
+    <link rel="stylesheet" href="/css/payComplete.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container">
+    <div class="main">
+        <form id="marathonForm" action="/marathon/cancelMarathon" method="post">
+            <h3 th:text="${marathonName}"></h3>
+            <img style="width: 350px; height: 200px" src="../static/img/event1.png"/>
+            <p><span id="memberNickname"></span>님과 함께할 5월을 기다리겠습니다!</p>
+            <input type="hidden" id="marathonJoinId" name="marathonJoinId" th:value="${marathonJoinId}">
+            <hr/>
+            <p>신청이 완료되었습니다.</p>
+            <p>신청번호 : <span id="marathonJoinNum">marathon20240507</span></p>
+            <input type="submit" value="신청취소">
+        </form>
+    </div>
+</div>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+    $(document).ready(function() {
+        // Ajax 요청을 통해 현재 로그인한 사용자의 정보를 안전하게 가져옴
+        $.ajax({
+            type: "GET",
+            url: "/marathon/currentUser",
+            success: function(data) {
+                // 가져온 사용자 정보를 각 input 요소에 설정
+                $("#username").val(data.username);
+                $("#id").val(data.id);
+                $("#memberName").val(data.memberName);
+                $("#memberTel").val(data.memberTel);
+                $("#memberEmail").val(data.memberEmail);
+                // 닉네임을 span 요소에 표시
+                $("#memberNickname").text(data.memberNickname);
+
+                // marathonId 값이 제대로 읽어와지는지 확인하기 위해 콘솔에 출력
+                //console.log("Marathon ID:", marathonId);
+            },
+            error: function (xhr, status, error) {
+                console.error("아작스에러 : " + status, error);
+            },
+        });
+
+        // Ajax 요청을 통해 현재 로그인한 사용자의 마라톤조인 아이디 정보를 가져옴
+        $.ajax({
+            type: "GET",
+            url: "/marathon/currentMarathonJoinId",
+            success: function(data) {
+                // 가져온 marathonJoinId를 hidden input에 설정
+                $("#marathonJoinId").val(data);
+                // 콘솔에 marathonJoinId 출력하여 값 확인
+                console.log("마라톤조인아이디 나오나요? MarathonJoinId:", data);
+
+                // 주문번호를 출력하는 부분 수정
+                $("#marathonJoinNum").text(data+"marathon20240507");
+            },
+            error: function (xhr, status, error) {
+                console.error("아작스에러 : " + status, error);
+            }
+        });
+
+        // 폼 제출 시 실행되는 함수
+        $("#marathonForm").submit(function(e) {
+            // 확인 창을 띄우기 위한 변수
+            var confirmCancel = confirm("정말 취소하시겠습니까?");
+            // 사용자가 확인을 눌렀을 경우에만 폼 제출
+            if (!confirmCancel) {
+                e.preventDefault(); // 폼 제출 막기
+            } else {
+                // 폼 제출 시 hidden input 값을 업데이트
+                $("#marathonForm").submit(function() {
+                    var marathonJoinIn = $("#marathonJoinId").val(); // hidden input에서 값 가져와서
+                    $(this).find("#marathonJoinId").val(marathonJoinId); // 업데이트
+                });
+            }
+        });
+    });
+</script>
+</body>
+</html>

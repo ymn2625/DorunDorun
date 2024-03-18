@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>crewCreate</title>
+    <link rel="stylesheet" href="/css/crewCreate.css">
+</head>
+<body>
+<form action="/crew/create" method="post">
+
+    <!-- 크루 대표 이미지 -->
+    <div
+            class="image-upload-box"
+            onclick="document.getElementById('crew-image').click()"
+    >
+        <br /><br />
+        <span id="preview-text">대표 이미지를 등록하세요.</span>
+        <br /><br />
+        <img
+                id="inputImage"
+                src="/img/crewimage.png"
+                alt="inputImage"
+        />
+
+        <img
+                id="preview-image"
+                src="#"
+                alt="미리보기 이미지"
+                style="display: none"
+        />
+    </div>
+    <input
+            type="file"
+            id="crew-image"
+            name="crew-image"
+            accept="image/*"
+            required
+            onchange="previewImage(event)"
+    />
+
+    <!-- 크루명 -->
+    <div class="crewNameInput">
+        <input
+                type="text"
+                id="crewName"
+                name="crewName"
+                placeholder="크루 이름을 입력해주세요."
+        />
+    </div>
+
+    <!-- 위치 -->
+    <div class="area">
+        <div class="left_area">
+            <img id="areaImg" src="/img/area.png" alt="area" />
+            <button type="button" class="openAreaModal">지역</button>
+        </div>
+        <div class="right_area">
+            <button type="button" class="openAreaModal">선택</button>
+        </div>
+        <div id="selectArea" class="select">
+            <div class="select-content">
+                <span class="closeArea">&times;</span>
+                <input type="text" id="searchAreaInput" placeholder="위치 선택" />
+                <ul id="area">
+                    <li>구로디지털단지역</li>
+                    <li>구로역</li>
+                    <li>사당역</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="maxPeople">
+        <div class="left_maxPeople">
+            <img
+                    id="maxPeopleImg"
+                    src="/img/maxPeopleImg.png"
+                    alt="maxPeople"
+            />
+            <button type="button" class="openMaxPeopleModal">정원</button>
+        </div>
+        <div class="right_maxPeople">
+            <button type="button" class="openMaxPeopleModal">선택</button>
+        </div>
+        <div id="selectMaxPeople" class="select">
+            <div class="select-content">
+                <span class="closePeople">&times;</span>
+                <input
+                        type="number"
+                        min="10"
+                        max="100"
+                        step="5"
+                        id="searchPeopleInput"
+                        placeholder="정원 선택"
+                        name="crewLimit"
+                />
+                <button id="confirm">확인</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 모임 소개 -->
+    <div class="introduceCrew" name="crew-desc">
+        <textarea type="text" name="crewDesc" cols="50" rows="8" placeholder="크루설명을 입력해주세요."></textarea>
+    </div>
+
+    <div class="accept">
+        <input type="submit" id="openCrewAccept" value="크루 개설하기">
+        <button onclick="window.location.back()">취소</button>
+    </div>
+</form>
+
+<div class="menu-container">
+    <div class="menu">
+        <div class="home">
+            <a href="/member/main">
+                <img src="/img/home_white.png" alt="home" />
+                <h6>홈</h6>
+            </a>
+        </div>
+
+        <div class="crew">
+            <a href="/crew/main">
+                <img src="/img/crew_mint.png" alt="crew" />
+                <h6  style="color: #31c7cf">모임</h6>
+            </a>
+        </div>
+
+        <div class="placemap">
+            <a href="placeMap.html">
+                <img src="/img/place.png" alt="placemap" />
+                <h6>내 근처</h6>
+            </a>
+        </div>
+
+        <div class="chat">
+            <a href="/chat/room">
+                <img
+                        src="/img/chat.png"
+                        alt="chat"
+                        style="width: 30px; height: 30px"
+                />
+                <h6>채팅</h6>
+            </a>
+        </div>
+
+        <div class="profile">
+            <a href="/member/profile">
+                <img src="/img/profile.png" alt="profile" />
+                <h6>프로필</h6>
+            </a>
+        </div>
+    </div>
+</div>
+
+<script src="/js/openCrew.js"></script>
+</body>
+</html>

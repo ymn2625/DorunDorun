@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.lang.reflect.Member;
 import java.util.List;
 
 public interface BoardRepository extends JpaRepository<BoardEntity, Long> {
@@ -22,4 +23,12 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Long> {
     Page<BoardEntity> findByBoardTitleContaining(String keyword, Pageable pageable);
 
     Page<BoardEntity> findByMemberEntityIn(List<MemberEntity> byMemberNicknameContaining, Pageable pageable);
+
+    Page<BoardEntity> findByBoardCategoryAndMemberEntityIn(String boardCategory, List<MemberEntity> memberEntity, Pageable pageable);
+
+    Page<BoardEntity> findByBoardCategoryAndBoardTitleContaining(String boardCategory, String boardTitle, Pageable pageable);
+
+    Page<BoardEntity> findByBoardCategory(String boardCategory, Pageable pageable);
+
+    List<BoardEntity> findAllByMemberEntity(MemberEntity memberEntity);
 }

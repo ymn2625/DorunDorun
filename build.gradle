@@ -20,6 +20,8 @@ configurations {
 
 repositories {
     mavenCentral()
+    // 아임포트 관련
+    maven {url 'https://jitpack.io'}
 }
 
 dependencies {
@@ -28,6 +30,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+    implementation 'org.springframework.boot:spring-boot-configuration-processor'
     testImplementation 'org.springframework.security:spring-security-test'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
@@ -35,6 +38,28 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    // 채팅 관련 의존성 추가
+    implementation 'org.springframework.boot:spring-boot-starter-freemarker'
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    //embedded-redis
+    implementation 'it.ozimov:embedded-redis:0.7.2'
+    implementation 'org.webjars.bower:vue:2.5.16'
+    implementation 'org.webjars.bower:axios:0.17.1'
+    implementation 'org.webjars:sockjs-client:1.1.2'
+    implementation 'org.webjars:stomp-websocket:2.3.3-1'
+    implementation 'com.google.code.gson:gson:2.8.0'
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+    implementation 'javax.xml.bind:jaxb-api'
+
+    // 마라톤 추가
+    implementation 'org.modelmapper:modelmapper:2.4.4'
+    implementation 'org.slf4j:slf4j-api:2.0.0-alpha1'
+    implementation 'org.slf4j:slf4j-simple:2.0.0-alpha1'
+
+
+    // 아임포트 관련 //
+    implementation 'com.github.iamport:iamport-rest-client-java:0.1.6'
 }
 
 tasks.named('test') {

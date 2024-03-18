@@ -2,15 +2,35 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>login</title>
+    <link rel="stylesheet" href="/css/login.css">
 </head>
 <body>
-    로그인
-    <form action="/member/loginProc" method="post">
-        ID : <input type="text" name="username">
-        PW : <input type="password" name="password">
-        <input type="submit" value="로그인">
+<div id="form">
+<img src="/img/dorundorun.png" alt="logo" id="logo">
+    <form action="/member/loginProc" method="post" onsubmit="return validateForm()">
+        <div class="id">
+            <img src="/img/id.png" alt="id">
+            <input type="text" name="username" placeholder="아이디">
+        </div>
+
+        <div class="password">
+            <img src="/img/password.png" alt="password">
+            <input type="password" name="password" placeholder="비밀번호">
+        </div>
+
+        <div class="find">
+            <input type="button" id="fineId" value="아이디 찾기">
+            <input type="button" id="finePassword" value="비밀번호 찾기">
+        </div>
+            <input type="submit" id="login" value="로그인">
+
     </form>
-    <a href="/member/join">회원가입</a>
+    <a href="/member/join">
+        <div class="join">회원가입</div>
+    </a>
+</div>
 </body>
+
 </html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>참가신청 폼</title>
+    <link rel="stylesheet" href="/css/event.css">
+   <!-- <link rel="stylesheet" href="/css/sakura.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>-->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <!--<script src="/js/sakura.js"></script>-->
+    <script>
+
+        $(document).ready(function() {
+
+            // Ajax 요청을 통해 현재 로그인한 사용자의 정보를 가져옴
+            $.ajax({
+                type: "GET",
+                url: "/marathon/currentUser",
+                success: function(data) {
+                    // 가져온 사용자 정보를 각 input 요소에 설정
+                    $("#username").val(data.username);
+                    $("#id").val(data.id);
+                    $("#memberName").val(data.memberName);
+                    // 닉네임을 span 요소에 표시
+                    $("#memberNickname").text(data.memberNickname);
+                },
+                error: function (xhr, status, error) {
+                    console.error("마라톤조인아이디없음 : " + status, error);
+                },
+            });
+            // Ajax 요청을 통해 현재 로그인한 사용자의 마라톤조인 아이디 정보를 가져옴
+            $.ajax({
+                type: "GET",
+                url: "/marathon/currentMarathonJoinId",
+                success: function(data) {
+                    // 가져온 marathonJoinId를 hidden input에 설정
+                    $("#marathonJoinId").val(data);
+                    // 콘솔에 marathonJoinId 출력하여 값 확인
+                    console.log("마라톤조인아이디 나오나요? MarathonJoinId:", data);
+
+                    // 마라톤 조인 ID를 확인하여 버튼 상태 및 텍스트를 변경
+                    if (data) {
+                        // 버튼의 텍스트를 변경하고
+                        $("#submitBtn").val("이미 신청한 이벤트입니다").click(function (e) {
+                            e.preventDefault(); // 기본 이벤트 동작 중지
+                            var marathonId = $("#marathonId").val();
+                            // 다음 페이지로 이동하면서 마라톤 조인 아이디를 전달
+                            window.location.href = "/marathon/complete?marathonId="+marathonId;
+                        });
+                    }
+                },
+
+                error: function (xhr, status, error) {
+                    console.error("아작스에러 : " + status, error);
+                }
+            });
+
+            // 폼 제출 시 선택한 마라톤 코스와 기념 티셔츠 사이즈 값을 hidden input에 할당
+            $("#marathonForm").submit(function() {
+                var marathonCourseId = $("#marathonCourseId").val();
+                var reward = $("#reward").val();
+                $("#marathonCourseId").val(marathonCourseId);
+                $("#reward").val(reward);
+            });
+
+        });
+
+    </script>
+</head>
+<body>
+
+
+<form id="marathonForm" method="post">
+    <div class="marathonInfo">
+
+        <h3>2024</h3>
+        <h3>DORUNDORUN</h3>
+
+        <h3 th:text="${marathonName}"></h3>
+    </div>
+
+    <div class="date">
+        <h3>일시</h3>
+        <p th:text="${marathonDate}"></p>
+    </div>
+
+    <div class="line"></div>
+
+    <div class="content">
+        <h3>내용</h3>
+        <p th:text="${marathonContent}"></p>
+    </div>
+
+    <div class="line"></div>
+
+    <!-- 마라톤 코스 선택 -->
+    <h3 class="select">코스 선택</h3>
+    <select id="marathonCourseId" name="marathonCourseId">
+        <option th:each="course : ${marathonCourses}"
+                th:value="${course.marathonCourseId}"
+        th:text="${course.course}"> <!-- 각 마라톤 코스의 이름을 텍스트로 설정 -->
+        </option>
+    </select>
+
+    <div class="line"></div>
+
+    <!-- 기념 티셔츠 사이즈 선택 -->
+    <h3 class="select">기념품 의류 사이즈 선택</h3>
+    <select id="reward" name="reward">
+        <option value="s">S</option>
+        <option value="m">M</option>
+        <option value="l">L</option>
+        <option value="xl">XL</option>
+    </select>
+<!--
+    마라톤 코스 :
+    <select id="marathonCourseId" name="marathonCourseId">
+        <option value=001>5km</option>
+        <option value=002>10km</option>
+        <option value=003>half</option>
+        <option value=004>full</option>
+    </select><br>
+
+    -->
+    <input type="hidden" id="marathonId" name="marathonId" th:value="${marathonId}">
+
+    <input type="submit" id="submitBtn" value="신청하기">
+</form>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+    function submitForm() {
+        // AJAX 요청을 보냅니다.
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "/getMarathonId", true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var marathonId = xhr.responseText;
+
+                document.getElementById("marathonForm").action = "/marathon/joinForm?marathonId=" + marathonId;
+
+                document.getElementById("marathonForm").submit();
+            }
+        };
+        xhr.send();
+    }
+</script>
+
+</body>
+</html>

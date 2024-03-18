@@ -1,0 +1,18 @@
+body {
+  width: 100%; /* 기본적으로 너비를 100%로 설정 */
+  max-width: 1200px; /* 최대 너비 설정 */
+  margin: 0 auto; /* 가운데 정렬을 위해 자동 마진 사용 */
+}
+
+/* 모바일 디바이스에 대한 스타일 */
+@media (max-width: 768px) {
+  .container {
+    padding: 20px; /* 너비가 작을 때 내부 패딩 추가 */
+  }
+}
+
+.info {
+  display: flex;
+  color: gray;
+  margin-top: 2px;
+}

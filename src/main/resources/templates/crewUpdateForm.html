@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>crewUpdateForm</title>
+    <link rel="stylesheet" href="/css/crewUpdateForm.css">
+</head>
+<body>
+<form th:action="@{/crew/update/{crewId}(crewId=${crewDTO.crewId})}" method="post">
+    크루이름 : <input type="text" name="crewName" th:value="${crewDTO.crewName}"><br>
+    크루설명 : <textarea type="text" name="crewDesc" cols="50" rows="8" th:text="${crewDTO.crewDesc}">
+
+        </textarea><br>
+    크루정원 : <input type="number" min="10" max="100" step="5" name="crewLimit" th:value="${crewDTO.crewLimit}"><br>
+    최소인원 10명, 5명 단위로 만들수 있음
+
+    <input type="submit" value="수정">
+</form>
+</body>
+</html>

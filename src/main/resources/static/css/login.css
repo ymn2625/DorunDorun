@@ -1,0 +1,93 @@
+body{
+    padding: 0;
+    margin: 0;
+}
+
+#form{
+    width: 430px;
+    height: 932px;
+    background-color: #faebeb;
+    text-align: center;
+}
+
+#logo{
+    width: 300px;
+    height: 225px;
+    margin-top: 110px;
+    margin-bottom: 50px;
+}
+
+
+.id, .password{
+    width: 300px;
+    padding: 10px;
+    display: inline-flex;
+}
+
+.id > img, .password > img{
+    width: 45px;
+    height: 40px;
+    margin-right: 20px;
+}
+
+.id > input, .password > input{
+    border: 0;
+    background-color: white;
+    border-radius: 10px;
+    height: 40px;
+    width: 260px;
+    box-shadow: 2px 2px 2px lightgray;
+}
+
+.find{
+    display: inline-flex;
+    height: 40px;
+    margin-top: 20px;
+}
+
+#fineId, #finePassword{
+    width: 130px;
+    background-color: #e9b9b9;
+    border: 0;
+    border-radius: 20px;
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+#fineId{
+    margin-right: 20px;
+}
+
+#login{
+    width: 320px;
+    padding: 10px;
+    text-align: center;
+    background-color: #e9b9b9;
+    border-radius: 10px;
+    margin-top: 80px;
+    border: 0;
+    font-size: 25px;
+    font-weight: bold;
+    color: white;
+}
+
+.join {
+    width: 300px;
+    padding: 10px;
+    text-align: center;
+    background-color: #e9b9b9;
+    border-radius: 10px;
+    margin-top: 20px;
+    margin-left: 55px;
+    height: 33px;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+a{
+    text-decoration: none;
+    color: white;
+
+}
+

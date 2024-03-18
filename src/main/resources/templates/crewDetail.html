@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>crewDetail</title>
+    <link rel="stylesheet" href="/css/crewDetail.css">
+</head>
+<body>
+크루이름 : <h3 th:text="${crewDTO.crewName}"></h3>
+크루설명 : <p th:text="${crewDTO.crewDesc}"></p>
+크루인원 : <p>
+    <span th:text="${crewMember}"></span>
+    /
+    <span th:text="${crewDTO.crewLimit}"></span>
+</p>
+회원 : <div th:each="member:${crewMemberList}">
+    <span th:text="${member.memberNickname}"></span><span th:text="${member.crewMemberAuth}"></span>
+</div>
+<button th:unless="${isMember}" onclick="crewJoin()">가입</button>
+<button th:if="${isMember} and ${!isAdmin}" onclick="quitCrew()">탈퇴</button>
+<button th:if="${isManager}" onclick="crewMemberManage()">멤버관리</button>
+<button th:if="${isManager}" onclick="crewUpdate()">크루 정보 수정</button>
+<button th:if="${isAdmin}" onclick="crewDelete()">크루 삭제</button>
+
+<a th:href="@{|/crewBoard/write/${crewDTO.crewId}|}">글 쓰기</a>
+
+
+
+
+
+
+<script th:inline="javascript">
+        const crewId = [[${crewDTO.crewId}]];
+    const crewJoin = () =>{
+        window.location.href = "/crew/join/"+crewId;
+    }
+    const crewMemberManage = () =>{
+        window.location.href = "/crew/memberManage/"+crewId;
+    }
+    const crewUpdate = () =>{
+        window.location.href = "/crew/update/"+crewId;
+    }
+    const crewDelete = () =>{
+        window.location.href = "/crew/delete/"+crewId;
+    }
+    const quitCrew = () =>{
+        window.location.href = "/crew/quitCrew/"+crewId;
+    }
+</script>
+</body>
+</html>

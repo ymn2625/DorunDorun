@@ -33,8 +33,8 @@ public class BoardDTO {
     private List<String> storedFileName;      //서버 저장용 파일 이름
     private int fileAttached;           // 파일 첨부 여부(첨부 1, 미첨부 0)
 
-    private String SearchCondition;
-    private String SearchKeyword;
+    private String searchCondition;
+    private String searchKeyword;
 
 
     public BoardDTO(Long boardId, String memberNickname, String boardTitle, String boardCategory, Long boardHits, LocalDateTime createdTime) {

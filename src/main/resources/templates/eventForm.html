@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>참가신청 폼</title>
+ <link rel="stylesheet" href="/css/eventForm.css">
+ <!-- jQuery -->
+ <!--<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>-->
+ <!-- iamport.payment.js -->
+ <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+ <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+     $(document).ready(function() {
+
+      // Ajax 요청을 통해 현재 로그인한 사용자의 정보를 안전하게 가져옴
+      $.ajax({
+       type: "GET",
+       url: "/marathon/currentUser",
+       success: function(data) {
+        // 가져온 사용자 정보를 각 input 요소에 설정
+        $("#username").val(data.username);
+        $("#memberName").val(data.memberName);
+        $("#memberTel").val(data.memberTel);
+        $("#memberEmail").val(data.memberEmail);
+        $("#memberNickname").val(data.memberNickname)
+        $("#sample6_postcode").val(data.memberPostCode);
+        $("#sample6_address").val(data.memberAddr);
+        $("#sample6_detailAddress").val(data.memberDetailAddr);
+        $("#sample6_extraAddress").val(data.memberRefAddr);
+
+        // 마라톤 이름 설정
+        $("#marathonName").text(data.marathonName);
+
+        // hidden input에서 값을 가져와서 input에 표시
+        var marathonCourseId = $("#marathonCourseId").val();
+        var reward = $("#reward").val();
+        $("#marathonCourseId").val(marathonCourseId);
+        $("#reward").val(reward);
+       },
+       error: function (xhr, status, error) {
+        console.error("아작스에러 : " + status, error);
+       },
+      });
+
+      });
+     $(document).ready(function() {
+      // 폼 제출 시 실행되는 함수
+      $("#marathonForm").submit(function(e) {
+       // 만약 체크박스가 체크되지 않았다면
+       if (!$("#agree").prop("checked")) {
+        // 폼 제출을 막고 알림을 띄움
+        e.preventDefault(); // 폼 제출 막기
+        alert("신청 내용을 확인해 주세요.");
+       } else {
+        // 폼 제출 시 hidden input 값을 업데이트
+        $("#marathonForm").submit(function (e) {
+         var marathonCourseId = $("#marathonCourseId").val();
+         var course = $("#course").val();
+         var reward = $("#reward").val();
+         var username = $("#username").val();
+         var marathonId = $("#marathonId").val();
+         var marathonName = $("#marathonName").val();
+         var price = $("#price").val();
+         $("#username").val(username);
+         $("#marathonId").val(marathonId);
+         $("#marathonName").val(marathonName);
+         $("#price").val(price);
+         $("#marathonCourseId").val(marathonCourseId);
+         $("#course").val(course);
+         $("#reward").val(reward);
+
+        });
+       }
+      });
+      });
+
+    </script>
+</head>
+<body>
+<form action="/marathon/payment" method="post" id="marathonForm">
+   <h3 th:text="${marathonName}"></h3>
+    <h4>신청정보확인</h4>
+    <p>마라톤 코스 : <span th:text="${course}"></span></p>
+    <p>기념 티셔츠 사이즈 : <span th:text="${reward}"></span></p>
+    <!-- hidden input으로 세션에 저장된 값들을 받아와서 폼에 포함시킴 -->
+    <input type="hidden" id="marathonCourseId" name="marathonCourseId" th:value="${marathonCourseId}">
+    <input type="hidden" id="course" name="course" th:value="${course}">
+    <input type="hidden" id="reward" name="reward" th:value="${reward}">
+    <input type="hidden" id="marathonId" name="marathonId" th:value="${marathonId}">
+    <input type="hidden" id="marathonName" name="marathonName" th:value="${marathonName}">
+    <input type="hidden" id="username" name="username" th:value="${username}">
+    <input type="hidden" id="price" name="price" th:value="${price}">
+
+    <hr>
+    이름 : <input type="text" id="memberName" name="memberName" readonly><br>
+    전화번호 : <input type="text" id="memberTel" name="memberTel" readonly><br>
+    이메일 : <input type="text" id="memberEmail" name="memberEmail" readonly><br>
+    닉네임 : <input type="text" id="memberNickname" name="memberNickname" readonly><br>
+    주소<br>
+    우편번호 : <input type="text" id="sample6_postcode" name="memberPostCode" readonly><br>
+    주소 : <input type="text" id="sample6_address" name="memberAddr" readonly><br>
+    상세주소 : <input type="text" id="sample6_detailAddress" name="memberDetailAddr" readonly>
+    <input type="text" id="sample6_extraAddress" name="memberRefAddr" readonly>
+    <br>
+    <input type="checkbox" id="agree" > 모든 내용을 확인했습니다.
+    <br>
+    <p style="font-size: 10px; color: gray;">* 2024 DORUNDORUN 봄꽃마라톤은 ID당 1회, 본인 신청만 가능합니다.<br>
+     마라톤 기념품 제작 및 배송을 위한 개인정보는 회원정보를 기반으로 하며,<br>
+     배송지 변경 등이 필요하다면 회원정보를 변경해 주세요.</br></p>
+    <a href="/">회원정보수정</a><br>
+    <hr>
+    <h4>결제금액</h4>
+    <span th:text="${price}"></span><br>
+    <input type="submit" value="결제하기">
+</form>
+
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+</body>
+</html>

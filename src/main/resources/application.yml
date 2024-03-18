@@ -16,6 +16,22 @@ spring:
     password : mysql
   thymeleaf:
     cache: false
+      # 채팅 추가 부분
+  profiles:
+    active: local
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: false
+    add-properties: false
+  freemarker:
+    cache: false
+  jwt:
+    secret: govlepel@$&
+  redis:
+    port: 6379
+
 
   #spring data jpa 설정
   jpa:
@@ -24,7 +40,3 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
-
-
-
-

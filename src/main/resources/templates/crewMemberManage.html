@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>crewMemberManage</title>
+  <link rel="stylesheet" href="/css/crewMemberManage.css">
+</head>
+<body>
+회원관리<br>
+<table>
+  <tr>
+    <th>멤버</th>
+    <th>멤버권한</th>
+    <th th:if="${isAdmin}">매니저해제</th>
+    <th th:if="${isAdmin}">매니저임명</th>
+    <th th:if="${isAdmin}">크루장임명</th>
+    <th>멤버방출</th>
+  </tr>
+  <tr th:each="member:${crewMemberList}">
+    <td th:text="${member.memberNickname}"></td>
+    <td th:text="${member.crewMemberAuth}"></td>
+    <td th:if="${isAdmin}"><button th:if="${member.crewMemberAuth!='CREW_ADMIN'}" onclick="makeMember(this)">매니저해제</button></td>
+    <td th:if="${isAdmin}"><button th:if="${member.crewMemberAuth!='CREW_ADMIN'}" onclick="makeManager(this)">매니저 임명</button></td>
+    <td th:if="${isAdmin}"><button th:if="${member.crewMemberAuth!='CREW_ADMIN'}" onclick="makeAdmin(this)">크루장 임명</button> </td>
+    <td><input type="hidden" th:value="${member.crewMemberId}"><button th:if="${member.crewMemberAuth!='CREW_ADMIN'}" onclick="quitMember(this)">크루추방</button></td>
+  </tr>
+</table>
+<button onclick="goDetail()">취소</button>
+<script th:inline="javascript">
+  const goDetail = () =>{
+    const crewId = [[${crewId}]];
+    window.location.href="/crew/detail/"+crewId;
+  }
+  const makeMember =(button) =>{
+    const row = button.closest('tr');// 클릭버튼의 부모요소인 tr을 찾는다
+    const crewMemberId = row.querySelector('input').value; // crewMemberId를 찾아옴(tr 안의 input)
+    console.log(crewMemberId);
+    window.location.href="/crew/makeMember/"+crewMemberId;
+  }
+  const makeManager = (button) =>{
+    const row = button.closest('tr');// 클릭버튼의 부모요소인 tr을 찾는다
+    const crewMemberId = row.querySelector('input').value; // crewMemberId를 찾아옴(tr 안의 input)
+    console.log(crewMemberId);
+    window.location.href="/crew/makeManager/"+crewMemberId;
+  }
+  const makeAdmin = (button) =>{
+    const row = button.closest('tr');// 클릭버튼의 부모요소인 tr을 찾는다
+    const crewMemberId = row.querySelector('input').value; // crewMemberId를 찾아옴(tr 안의 input)
+    console.log(crewMemberId);
+    window.location.href="/crew/makeAdmin/"+crewMemberId;
+  }
+  const quitMember = (button) =>{
+    const row = button.closest('tr');// 클릭버튼의 부모요소인 tr을 찾는다
+    const crewMemberId = row.querySelector('input').value; // crewMemberId를 찾아옴(tr 안의 input)
+    console.log(crewMemberId);
+    window.location.href="/crew/quitMember/"+crewMemberId;
+  }
+</script>
+</body>
+</html>

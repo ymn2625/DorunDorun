@@ -85,6 +85,9 @@ public class MemberEntity extends BaseEntity{
     @Column
     private String memberBirth;
 
+    @Column
+    private Long countLogin;
+
     @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<BoardEntity> boardEntityList = new ArrayList<>();
 
@@ -93,6 +96,24 @@ public class MemberEntity extends BaseEntity{
 
     @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<BoardLikeEntity> boardLikeEntityList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<CrewMemberEntity> crewMemberEntityList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<CrewBoardEntity> crewBoardEntityList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<CrewBoardLikeEntity> crewBoardLikeEntityList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<CrewBoardCommentEntity> crewBoardCommentEntityList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<GetBadgeEntity> getBadgeEntityList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<RunningRecordEntity> runningRecordEntityList = new ArrayList<>();
 
     public static MemberEntity toMemberEntity(MemberDTO memberDTO) {
         MemberEntity memberEntity = new MemberEntity();
@@ -147,6 +168,7 @@ public class MemberEntity extends BaseEntity{
         memberEntity.setMemberEmail(memberDTO.getMemberEmail());
         memberEntity.setMemberCelebrity(memberDTO.getMemberCelebrity());
         memberEntity.setRole(memberDTO.getRole());
+        memberEntity.setCountLogin(0L);
         memberEntity.setMemberBirth(memberDTO.getMemberBirth());
 
         return memberEntity;

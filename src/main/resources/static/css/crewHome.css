@@ -32,51 +32,15 @@ body {
   margin-top: 20px;
 }
 
-.myCrew {
-  padding: 30px;
-  padding-top: 10px;
-}
-
-.myCrew h3 {
+.text h3 {
   font-weight: bold;
-}
-
-.list {
-  display: flex;
-  overflow-x: scroll;
-  overflow-y: hidden;
-  white-space: nowrap;
-  scrollbar-width: thin;
-  white-space: normal;
-}
-
-.list::-webkit-scrollbar {
-  width: 0;
-}
-
-.myCrewList {
-  margin: 5px;
-}
-
-.img {
-  width: 80px;
-  height: 80px;
-  background-color: lightgray;
-  border-radius: 8px;
 }
 
 .crewName {
-  font-size: 13px;
-  width: 80px;
-  text-align: center;
+  margin: 0;
+  padding: 0;
   font-weight: bold;
-  margin-top: 3px;
-}
-
-.line {
-  width: 100%;
-  height: 2px;
-  background-color: #31c7cf;
+  margin-bottom: 3px;
 }
 
 .search {
@@ -111,34 +75,31 @@ body {
   margin-top: 10px;
 }
 
-.hotCrew {
-  margin-top: 30px;
-  width: 400px;
-  margin-left: 30px;
+.crewInfo{
+  margin: 0;
+  padding: 40px;
 }
-
-.hotCrew a {
-  margin-bottom: 20px;
+.crewList {
+  display: flex; /* 부모 요소를 플렉스 컨테이너로 설정 */
+  align-items: center; /* 수직 가운데 정렬 */
+  margin-bottom: 25px;
 }
 
 .img {
-  width: 70px;
-  height: 70px;
+  width: 80px;
+  height: 80px;
   background-color: lightgray;
   border-radius: 8px;
 }
 
-.crewinfo {
-  height: 70px;
+.img, .side{
+  display: table-cell;
 }
 
-.crewinfo,
-.newCrew a {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-  max-height: 70px;
+.side {
+  max-width: 270px;
 }
+
 
 .text {
   max-height: 70px;
@@ -164,28 +125,22 @@ body {
 
 .info {
   display: flex;
-  justify-content: space-around;
-  margin-left: -20px;
+  margin-left: 20px;
   color: gray;
-  margin-top: 2px;
+  margin-top: 5px;
 }
 
 a {
   text-decoration: none;
 }
 
-.newCrew {
-  margin-top: 30px;
-  width: 400px;
-  margin-left: 30px;
-}
-
-.space {
-  width: 125px;
+.crewLocation {
+  width: 155px;
+  margin-right: 20px;
 }
 
 .introduce {
-  margin: 0 auto;
+  margin-top: 2px;
 }
 
 .name {
@@ -197,6 +152,7 @@ a {
 .name {
   margin: 0;
 }
+
 
 .menu-container {
   margin-bottom: 100px;

@@ -1,137 +1,299 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>updateForm</title>
+    <link rel="stylesheet" href="/css/updateForm.css"/>
 </head>
 <body>
-<form action="/member/profileupdate" method="post">
-    <table>
-        <tr>
-            <th>아이디</th>
-            <td>
-                <input type="text" th:value="${member.username}" name="username" readonly>
-                <p id="checkIdResult"></p>
-            </td>
-        </tr>
-        <tr>
-            <th>비밀번호</th>
-            <td><input type="password" th:value="${member.password}" name="password"></td>
-        </tr>
-        <tr>
-            <th>이름</th>
-            <td><input type="text" th:value="${member.memberName}" name="memberName" readonly></td>
-        </tr>
-        <tr>
-            <th>닉네임</th>
-            <td>
-                <input type="text" th:value="${member.memberNickname}" name="memberNickname">
-                <p id="checkNicknameResult"></p>
-            </td>
-        </tr>
-        <tr>
-            <th>전화번호</th>
-            <td><input type="text" th:value="${member.memberTel}" name="memberTel"></td>
-        </tr>
-        <tr>
-            <th>생일</th>
-            <td><input type="text" th:value="${member.memberBirth}" name="memberBirth"></td>
-        </tr>
-        <tr>
-            <th>이메일</th>
-            <td><input type="text" th:value="${member.memberEmail}" name="memberEmail"></td>
-        </tr>
-        <tr>
-            <th>주소</th>
-            <td><input th:value="${member.memberPostCode}" type="text" id="sample6_postcode" name="memberPostCode" placeholder="우편번호">
-                <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-                <input th:value="${member.memberAddr}" type="text" id="sample6_address" name="memberAddr" placeholder="주소"><br>
-                <input th:value="${member.memberDetailAddr}" type="text" id="sample6_detailAddress" name="memberDetailAddr" placeholder="상세주소">
-                <input th:value="${member.memberRefAddr}" type="text" id="sample6_extraAddress" name="memberRefAddr" placeholder="참고항목"></td>
-        </tr>
-        <tr>
-            <td>
-                <input type="submit" onclick="confirm('정말로 수정하시겠습니까?')" value="수정">
-            </td>
-            <td>
-                <input type="reset" onclick="window.location.back()" value="취소">
-            </td>
-        </tr>
-    </table>
-</form>
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script>
-    nicknameCheck = () =>{
-        const nickname = document.getElementById("memberNickname").value;
-        const checkResult = document.getElementById("checkNicknameResult");
-        $.ajax({
-            type:"post",
-            url:"/member/nicknameCheck",
-            data:{
-                "memberNickname":nickname
-            },
-            success: function (res){
-                if(res=="ok"){
-                    checkResult.style.color="green";
-                    checkResult.innerHTML="사용가능한 닉네임 입니다.";
-                }else{
-                    checkResult.style.color="red";
-                    checkResult.innerHTML="이미 사용중인 닉네임 입니다.";
-                }
-            },
-            error:function (err){
-                console.log("에러발생 :", err);
-            }
-        });
-    }
+<button type="submit" id="submit">완료</button>
+<br/>
 
-    function sample6_execDaumPostcode() {
-        new daum.Postcode({
-            oncomplete: function(data) {
-                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+<!-- 프로필 사진 -->
+<div class="profileImg">
+   <label for="profileImg" class="update-input" id="imagePreviewLabel">
+        <img
+                id="imagePreview"
+                src="/img/profileImg.png"
+                alt="First Image"
+        />
+    </label>
+    <img
+            src="/img/profileUpload.png"
+            alt="Second Image"
+            id="camera"
+    />
+    <input
+            type="file"
+            id="profileImg"
+            name="profileImg"
+            class="input-button"
+            onchange="previewImage(event)"
+            accept="image/*"
+    />
+</div>
+<div class="memberInfo">
 
-                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-                var addr = ''; // 주소 변수
-                var extraAddr = ''; // 참고항목 변수
+    <form>
+        <!--닉네임-->
+        <div class="nickname">
+            <input
+                    id="nickname"
+                    type="text"
+                    th:value="${member.memberNickname}"
+                    name="memberNickname"
+                    placeholder="닉네임"
+            />
+          <p id="checkNicknameResult"></p>
+        </div>
+    </form>
 
-                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-                    addr = data.roadAddress;
-                } else { // 사용자가 지번 주소를 선택했을 경우(J)
-                    addr = data.jibunAddress;
-                }
+    <!-- 연락처 -->
+    <form>
+        <input id="phoneNumber" placeholder="휴대전화 입력"/>
+        <button id="phoneNumberButton">인증번호 전송</button>
+    </form>
 
-                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-                if(data.userSelectedType === 'R'){
-                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-                        extraAddr += data.bname;
-                    }
-                    // 건물명이 있고, 공동주택일 경우 추가한다.
-                    if(data.buildingName !== '' && data.apartment === 'Y'){
-                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                    }
-                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-                    if(extraAddr !== ''){
-                        extraAddr = ' (' + extraAddr + ')';
-                    }
-                    // 조합된 참고항목을 해당 필드에 넣는다.
-                    document.getElementById("sample6_extraAddress").value = extraAddr;
+    <form>
+        <input id="confirmCode" placeholder="인증번호 입력"/>
+        <button id="confirmCodeButton">인증 확인</button>
+    </form>
 
-                } else {
-                    document.getElementById("sample6_extraAddress").value = '';
-                }
+    <!--비밀번호 변경-->
+    <form id="registerForm" onsubmit="submitForm(event)">
+        <div class="passwordInput">
+            <input type="password" id="password" name="password" placeholder="현재 비밀번호" required>
+        </div>
+        <div class="passwordCheck" style="display:none">
+            <input type="password" id="passwordCheck" name="passwordCheck" placeholder="새로운 비밀번호" required>
+            <span id="passwordError" class="error"></span>
+        </div>
+    </form>
 
-                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById('sample6_postcode').value = data.zonecode;
-                document.getElementById("sample6_address").value = addr;
-                // 커서를 상세주소 필드로 이동한다.
-                document.getElementById("sample6_detailAddress").focus();
-            }
-        }).open();
-    }
-</script>
+    <!--이메일-->
+    <div class="email">
+        <input type="email" id=email placeholder="이메일">
+    </div>
+
+
+    <!--주소-->
+    <div class="address">
+      <div class="postCode">
+        <input
+                th:value="${member.memberPostCode}"
+                type="text"
+                id="sample6_postcode"
+                name="memberPostCode"
+                placeholder="우편번호"
+        />
+        <input
+                type="button"
+                id="postCodeButton"
+                onclick="sample6_execDaumPostcode()"
+                value="우편번호 찾기"
+        />
+      </div>
+        <input
+                th:value="${member.memberAddr}"
+                type="text"
+                id="sample6_address"
+                name="memberAddr"
+                placeholder="주소"
+                onclick="sample6_execDaumPostcode()"
+                readonly
+        />
+        <input
+                th:value="${member.memberDetailAddr}"
+                type="text"
+                id="sample6_detailAddress"
+                name="memberDetailAddr"
+                placeholder="상세주소"
+        />
+        <input
+                th:value="${member.memberRefAddr}"
+                type="text"
+                id="sample6_extraAddress"
+                name="memberRefAddr"
+                placeholder="참고주소"
+                onclick="sample6_execDaumPostcode()"
+                readonly
+        />
+    </div>
+
+    <div class="accept">
+        <input
+                type="submit"
+                onclick="confirm('정말로 수정하시겠습니까?')"
+                value="수정"
+        />
+        <input type="reset" onclick="window.location.back()" value="뒤로 가기"/>
+    </div>
+
+</div>
+
+<div class="menu-container">
+  <div class="menu">
+    <div class="home">
+      <a href="main.html">
+        <img src="/img/home_white.png" alt="home" />
+        <h6>홈</h6>
+      </a>
+    </div>
+
+    <div class="crew">
+      <a href="runningMain.html">
+        <img src="/img/crew_white.png" alt="crew" />
+        <h6>모임</h6>
+      </a>
+    </div>
+
+    <div class="placemap">
+      <a href="placeMap.html">
+        <img src="/img/place.png" alt="placemap" />
+        <h6>내 근처</h6>
+      </a>
+    </div>
+
+    <div class="chat">
+      <a href="chat.html">
+        <img
+                src="/img/chat.png"
+                alt="chat"
+                style="width: 30px; height: 30px"
+        />
+        <h6>채팅</h6>
+      </a>
+    </div>
+
+    <div class="profile">
+      <a href="profile.html">
+        <img src="/img/profile_mint.png" alt="profile" />
+        <h6 style="color: #31c7cf">프로필</h6>
+      </a>
+    </div>
+  </div>
+</div>
+
 </body>
+
+
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="/js/updateForm.js"></script>
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-analytics.js";
+    import {
+        getAuth,
+        GoogleAuthProvider,
+        signInWithPhoneNumber,
+        RecaptchaVerifier,
+    } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+        apiKey: "AIzaSyBkZl36adPngWU_hgs7b3NZMaHuKPSR7jo",
+        authDomain: "dorundorun-87553.firebaseapp.com",
+        databaseURL: "https://dorundorun-87553-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "dorundorun-87553",
+        storageBucket: "dorundorun-87553.appspot.com",
+        messagingSenderId: "912002351436",
+        appId: "1:912002351436:web:2015c757f841a7945a8fe9",
+        measurementId: "G-X68SDDQR69"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+
+    const provider = new GoogleAuthProvider();
+    const auth = getAuth();
+    auth.languageCode = "ko";
+
+    document.getElementById("googleLogin").addEventListener("click", () => {
+        signInWithPopup(auth, provider)
+            .then((result) => {
+                // This gives you a Google Access Token. You can use it to access the Google API.
+                const credential = GoogleAuthProvider.credentialFromResult(result);
+                const token = credential.accessToken;
+                // The signed-in user info.
+                const user = result.user;
+                console.log(result);
+                // ...
+            })
+            .catch((error) => {
+                // Handle Errors here.
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                // The email of the user's account used.
+                const email = error.customData.email;
+                // The AuthCredential type that was used.
+                const credential = GoogleAuthProvider.credentialFromError(error);
+                console.log(error);
+                // ...
+            });
+    });
+    window.recaptchaVerifier = new RecaptchaVerifier(
+        "phoneNumberButton",
+        {
+            size: "invisible",
+            callback: (response) => {
+                // reCAPTCHA solved, allow signInWithPhoneNumber.
+                onSignInSubmit();
+            },
+        },
+        auth
+    );
+
+    document
+        .getElementById("phoneNumberButton")
+        .addEventListener("click", (event) => {
+            event.preventDefault();
+
+            const phoneNumber = document.getElementById("phoneNumber").value;
+            const appVerifier = window.recaptchaVerifier;
+
+            signInWithPhoneNumber(auth, "+82" + phoneNumber, appVerifier)
+                .then((confirmationResult) => {
+                    // SMS sent. Prompt user to type the code from the message, then sign the
+                    // user in with confirmationResult.confirm(code).
+                    window.confirmationResult = confirmationResult;
+                    console.log(confirmationResult);
+                    // ...
+                })
+                .catch((error) => {
+                    console.log(error);
+                    // Error; SMS not sent
+                    // ...
+                });
+        });
+
+    document
+        .getElementById("confirmCodeButton")
+        .addEventListener("click", (event) => {
+            event.preventDefault();
+            const code = document.getElementById("confirmCode").value;
+            confirmationResult
+                .confirm(code)
+                .then((result) => {
+                    // User signed in successfully.
+                    const user = result.user;
+                    console.log(result);
+                    // ...
+                })
+                .catch((error) => {
+                    console.log(error);
+                    // User couldn't sign in (bad verification code?)
+                    // ...
+                });
+        });
+</script>
+
 </html>

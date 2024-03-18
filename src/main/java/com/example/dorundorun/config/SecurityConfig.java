@@ -16,6 +16,7 @@ public class SecurityConfig {
     //패스워드 암호화 처리용(해싱)
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder(){
+
         return new BCryptPasswordEncoder();
     }
 
@@ -24,7 +25,7 @@ public class SecurityConfig {
     public RoleHierarchy roleHierarchy(){
         RoleHierarchyImpl hierarchy = new RoleHierarchyImpl();
 
-        hierarchy.setHierarchy("ADMIN > USER");
+        hierarchy.setHierarchy("ROLE_ADMIN > ROLE_USER");
 
         return hierarchy;
     }
@@ -36,10 +37,12 @@ public class SecurityConfig {
         //경로별 접근 권한설정(인가기능)
         http
                 .authorizeHttpRequests((auth)->auth
-                        .antMatchers("/", "/member/login", "/member/join", "/member/idCheck", "/member/nicknameCheck").permitAll()
+                        .antMatchers("/", "/member/login", "/member/join", "/member/idCheck", "/member/nicknameCheck","/css/**", "/img/**").permitAll()
                         .antMatchers("/admin").hasRole("ADMIN")
-                        .antMatchers("/member/**", "/board/**").hasAnyRole("USER","ADMIN")
+                        .antMatchers("/member/**", "/board/**", "/crew/**", "/crewBoard/**", "/marathon/**").hasAnyRole("USER","ADMIN")
+                        .antMatchers("/css/**", "/js/**", "/images/**").permitAll()
                         .anyRequest().authenticated()
+                        .and()
                 );
 
         //로그인 폼 작업
@@ -75,6 +78,7 @@ public class SecurityConfig {
                 .invalidateHttpSession(true) // 세션 무효화 설정
                 .deleteCookies("JSESSIONID") // 쿠키 삭제 설정
                 .permitAll();
+
 
         return http.build();
     }

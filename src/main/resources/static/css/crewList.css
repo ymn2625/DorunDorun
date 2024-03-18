@@ -1,0 +1,187 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+.text h3 {
+    font-weight: bold;
+}
+
+.crewName {
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+    margin-bottom: 3px;
+}
+
+.search {
+    margin-top: 30px;
+    text-align: center;
+    border: 1px solid #31c7cf;
+    background-color: whitesmoke;
+    border-radius: 20px;
+    width: 300px;
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    margin-left: 65px;
+}
+
+#search-box {
+    border: 0;
+    background-color: rgba(2, 2, 2, 0);
+    height: 40px;
+    align-items: center;
+    margin-left: 25px;
+}
+
+#search-button {
+    border: 0;
+    background-image: url("../img/search_mint.png");
+    width: 25px;
+    height: 25px;
+    background-repeat: no-repeat;
+    background-color: rgba(2, 2, 2, 0);
+    margin-right: 20px;
+    margin-top: 10px;
+}
+
+.crewInfo{
+    margin: 0;
+    padding: 40px;
+}
+.crewList {
+    display: flex; /* 부모 요소를 플렉스 컨테이너로 설정 */
+    align-items: center; /* 수직 가운데 정렬 */
+    margin-bottom: 25px;
+}
+
+.img {
+    width: 80px;
+    height: 80px;
+    background-color: lightgray;
+    border-radius: 8px;
+}
+
+.img, .side{
+    display: table-cell;
+}
+
+.side {
+    max-width: 270px;
+}
+
+
+.text {
+    max-height: 70px;
+    overflow: hidden;
+    font-size: 14px;
+    width: 280px;
+    margin-left: 20px;
+    color: black;
+    margin-top: 5px;
+    margin-right: 30px;
+}
+
+.text h3 {
+    font-weight: bold;
+}
+
+.text p {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.info {
+    display: flex;
+    margin-left: 20px;
+    color: gray;
+    margin-top: 5px;
+}
+
+a {
+    text-decoration: none;
+}
+
+.crewLocation {
+    width: 155px;
+    margin-right: 20px;
+}
+
+.introduce {
+    margin-top: 2px;
+}
+
+.name {
+    margin: 0 auto;
+    margin-bottom: 0;
+}
+
+.introduce,
+.name {
+    margin: 0;
+}
+
+.menu-container {
+    margin-bottom: 100px;
+}
+
+.menu {
+    width: 430px;
+    margin-top: 50px;
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    justify-content: space-around;
+}
+
+.home,
+.crew,
+.placemap,
+.chat,
+.profile {
+    display: inline-table;
+}
+
+.crew {
+    width: 86px;
+    height: 80px;
+    margin: 0;
+    padding: 0;
+    background-color: white;
+    align-items: center;
+    text-align: center;
+    border: 0;
+    border-radius: 10px 10px 0 0;
+}
+
+.home,
+.placemap,
+.chat,
+.profile {
+    width: 86px;
+    height: 80px;
+    margin: 0;
+    padding: 0;
+    background-color: #31c7cf;
+    align-items: center;
+    text-align: center;
+    border: 0;
+    border-radius: 10px 10px 0 0;
+    box-shadow: 3px 3px 3px black;
+}
+
+.menu img {
+    margin-top: 15px;
+    filter: drop-shadow(2px 2px 2px #084b4e);
+}
+
+.menu h6 {
+    color: white;
+    text-shadow: 1px 1px 1px #084b4e;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
