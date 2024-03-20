@@ -82,6 +82,8 @@ th:if="${likeOrHate.boardHate!=1}" id="hate2" onclick="hateProc()"
         </tr>
     </table>
 </div>
+
+<div th:include="menuBar_crew.html" class="footer"></div>
 </body>
 <script th:inline="javascript">
     const clickLikeUrl = "/img/icons8-thumbs-60%20(1).png";

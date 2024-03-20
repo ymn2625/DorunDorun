@@ -10,10 +10,9 @@
 <body>
 <form class="saveSpot" method="post">
     <div class="search">
-        <!--<input type="text" id="sample6_address" name="memberAddr" placeholder="주소">
-        <input type="button" onclick="sample6_execDaumPostcode()" value="주소 찾기">
-        <input id="submit" type="button" value="검색">
-        <input id="add" type="button" value="추가">-->
+        <input id="addr1" type="button" value="선호1" onclick="spotAddr1()" th:disabled="${member.getMemberAddr1() == null || member.getMemberAddr1().equals('')}">
+        <input id="addr2" type="button" value="선호2" onclick="spotAddr2()" th:disabled="${member.getMemberAddr2() == null || member.getMemberAddr2().equals('')}">
+        <input id="addr3" type="button" value="선호3" onclick="spotAddr3()" th:disabled="${member.getMemberAddr3() == null || member.getMemberAddr3().equals('')}">
     </div>
 </form>
 <div id="map"></div>
@@ -27,106 +26,210 @@
         </tr>
         </thead>
         <tbody id="mapList" th:each="srs:${saveRunningSpot}">
-        <td id="spotName" th:text="${srs.getSpotName()}"></td>
+        <td id="spotName" th:text="${srs.getSpotAddress()}"></td>
+        <td id="spotName1" th:text="${srs.getSpotName()}"></td>
         <td id="spotx" th:text="${srs.getSpotX()}"></td>
         <td id="spoty" th:text="${srs.getSpotY()}"></td>
         </tbody>
     </table>
 </div>
-
+<div style="display: none">
+    <table>
+        <thead>
+        <tr>
+            <th>주소</th>
+            <th>위도</th>
+            <th>경도</th>
+        </tr>
+        </thead>
+        <tbody id="mapList1">
+        <div th:disabled="${member.getMemberAddr1() == null || member.getMemberAddr1().equals('')}">
+            <td id="memberAddr1" th:text="${member.getMemberAddr1()}"></td>
+            <td id="memberx1" th:text="${member.getMemberX1()}"></td>
+            <td id="membery1" th:text="${member.getMemberY1()}"></td>
+        </div>
+        </tbody>
+        <tbody id="mapList2">
+        <div th:disabled="${member.getMemberAddr2() == null || member.getMemberAddr2().equals('')}">
+            <td id="memberAddr2" th:text="${member.getMemberAddr2()}"></td>
+            <td id="memberx2" th:text="${member.getMemberX2()}"></td>
+            <td id="membery2" th:text="${member.getMemberY2()}"></td>
+        </div>
+        </tbody>
+        <tbody id="mapList3">
+        <div th:disabled="${member.getMemberAddr3() == null || member.getMemberAddr3().equals('')}">
+            <td id="memberAddr3" th:text="${member.getMemberAddr3()}"></td>
+            <td id="memberx3" th:text="${member.getMemberX3()}"></td>
+            <td id="membery3" th:text="${member.getMemberY3()}"></td>
+        </div>
+        </tbody>
+    </table>
+</div>
 <div th:include="menuBar_place.html" class="footer"></div>
 </body>
 <script>
-    spotMarker();   // 페이지 이동하자마자 바로 마커 표시
-
     // DB에 등록된 장소 마커 표시 함수
-    function spotMarker() {
-        // 러닝 스팟(마커)
-        var spotName = document.querySelectorAll("#spotName");
-        var latitudeElements = document.querySelectorAll("#mapList #spotx");
-        var longitudeElements = document.querySelectorAll("#mapList #spoty");
+    // 러닝 스팟(마커)
+    var spotName = document.querySelectorAll("#spotName");
+    var spotName1 = document.querySelectorAll("#spotName1");
+    var latitudeElements = document.querySelectorAll("#mapList #spotx");
+    var longitudeElements = document.querySelectorAll("#mapList #spoty");
 
-        // 사용자 선호 지역
-        var map = new naver.maps.Map('map', {
-            // (Y좌표, X좌표)
-            center: new naver.maps.LatLng(37.3595704, 127.105399),
-            zoom: 10
+
+    var map = new naver.maps.Map('map', {
+        // (Y좌표, X좌표)
+        center: new naver.maps.LatLng(37.3595704, 127.105399),
+        zoom: 10
+    });
+
+
+    for (var i = 0; i < latitudeElements.length; i++) {
+        var latitude = parseFloat(latitudeElements[i].innerText);
+        console.log(latitude);
+        var longitude = parseFloat(longitudeElements[i].innerText);
+        console.log(longitude);
+
+        // 마커 생성
+        var marker = new naver.maps.Marker({
+            position: new naver.maps.LatLng(longitude, latitude),
+            map: map
         });
 
-        for (var i = 0; i < latitudeElements.length; i++) {
-            var latitude = parseFloat(latitudeElements[i].innerText);
-            console.log(latitude);
-            var longitude = parseFloat(longitudeElements[i].innerText);
-            console.log(longitude);
 
-            // 마커 생성
-            var marker = new naver.maps.Marker({
-                position: new naver.maps.LatLng(longitude, latitude),
-                map: map
+        // 인포창 생성
+        var infowindow = new naver.maps.InfoWindow({
+            content: '<div class="iw_inner">' +
+                '<p>' + spotName1[i].innerHTML + '</p>'+
+                '<p>' + spotName[i].innerHTML + '</p>' +
+                '</div>',
+            maxWidth: 200,
+            backgroundColor: "#eee",
+            borderColor: "#2db400",
+            borderWidth: 5
+        });
+
+        // 이벤트 리스너를 마커와 인포창에 연결
+        (function(marker, infowindow) {
+            naver.maps.Event.addListener(marker, "mouseover", function() {
+                infowindow.open(map, marker);
             });
-
-
-            // 인포창 생성
-            var infowindow = new naver.maps.InfoWindow({
-                content: '<div class="iw_inner"><p>' + spotName[i].innerHTML + '</p></div>',
-                maxWidth: 200,
-                backgroundColor: "#eee",
-                borderColor: "#2db400",
-                borderWidth: 5
+            naver.maps.Event.addListener(marker, "mouseout", function() {
+                infowindow.close();
             });
-
-            // 이벤트 리스너를 마커와 인포창에 연결
-            (function(marker, infowindow) {
-                naver.maps.Event.addListener(marker, "mouseover", function() {
-                    infowindow.open(map, marker);
-                });
-                naver.maps.Event.addListener(marker, "mouseout", function() {
-                    infowindow.close();
-                });
-            })(marker, infowindow);
-        }
+        })(marker, infowindow);
     }
-    // 주소 팝업창 API
-    function sample6_execDaumPostcode() {
-        new daum.Postcode({
-            oncomplete: function (data) {
-                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
-                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-                var addr = ''; // 주소 변수
-                var extraAddr = ''; // 참고항목 변수
+    var currentMarker = null;
+    function spotAddr1() {
+        var y1 = document.getElementById('membery1').innerText;
+        var x1 = document.getElementById('memberx1').innerText;
 
-                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-                    addr = data.roadAddress;
-                } else { // 사용자가 지번 주소를 선택했을 경우(J)
-                    addr = data.jibunAddress;
-                }
+        map.setCenter(new naver.maps.LatLng(y1,x1));
+        map.setZoom(15);
 
-                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-                if (data.userSelectedType === 'R') {
-                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-                    if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
-                        extraAddr += data.bname;
-                    }
-                    // 건물명이 있고, 공동주택일 경우 추가한다.
-                    if (data.buildingName !== '' && data.apartment === 'Y') {
-                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                    }
-                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-                    if (extraAddr !== '') {
-                        extraAddr = ' (' + extraAddr + ')';
-                    }
-                    // 조합된 참고항목을 해당 필드에 넣는다.
+        if(currentMarker){
+            currentMarker.setMap(null);
+        }
 
-                } else {
-                }
-                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById("sample6_address").value = addr;
-            }
-        }).open()
+        var marker = new naver.maps.Marker({
+            map: map,
+            position: new naver.maps.LatLng(y1, x1),
+        });
+
+        currentMarker = marker;
+
+        var infowindow = new naver.maps.InfoWindow({
+            content: '<div class="iw_inner"><p>' + '현재 위치' + '</p></div>',
+            maxWidth: 200,
+            backgroundColor: "#eee",
+            borderColor: "#0e170d",
+            borderWidth: 5
+        });
+
+        (function(marker, infowindow) {
+            naver.maps.Event.addListener(marker, "mouseover", function() {
+                infowindow.open(map, marker);
+            });
+            naver.maps.Event.addListener(marker, "mouseout", function() {
+                infowindow.close();
+            });
+        })(marker, infowindow);
+
+    }
+
+    function spotAddr2() {
+        var y2 = document.getElementById('membery2').innerText;
+        console.log(y2);
+        var x2 = document.getElementById('memberx2').innerText;
+
+        map.setCenter(new naver.maps.LatLng(y2,x2));
+        map.setZoom(15);
+
+        if(currentMarker){
+            currentMarker.setMap(null);
+        }
+
+        var marker = new naver.maps.Marker({
+            map: map,
+            position: new naver.maps.LatLng(y2, x2),
+        });
+
+        currentMarker = marker;
+
+        var infowindow = new naver.maps.InfoWindow({
+            content: '<div class="iw_inner"><p>' + '현재 위치' + '</p></div>',
+            maxWidth: 200,
+            backgroundColor: "#eee",
+            borderColor: "#0e170d",
+            borderWidth: 5
+        });
+
+        (function(marker, infowindow) {
+            naver.maps.Event.addListener(marker, "mouseover", function() {
+                infowindow.open(map, marker);
+            });
+            naver.maps.Event.addListener(marker, "mouseout", function() {
+                infowindow.close();
+            });
+        })(marker, infowindow);
+
+    }
+
+    function spotAddr3() {
+        var y3 = document.getElementById('membery3').innerText;
+        var x3 = document.getElementById('memberx3').innerText;
+
+        map.setCenter(new naver.maps.LatLng(y3,x3));
+        map.setZoom(15);
+
+        if(currentMarker){
+            currentMarker.setMap(null);
+        }
+
+        var marker = new naver.maps.Marker({
+            map: map,
+            position: new naver.maps.LatLng(y3, x3),
+        });
+
+        currentMarker = marker;
+
+        var infowindow = new naver.maps.InfoWindow({
+            content: '<div class="iw_inner"><p>' + '현재 위치' + '</p></div>',
+            maxWidth: 200,
+            backgroundColor: "#eee",
+            borderColor: "#0e170d",
+            borderWidth: 5
+        });
+
+        (function(marker, infowindow) {
+            naver.maps.Event.addListener(marker, "mouseover", function() {
+                infowindow.open(map, marker);
+            });
+            naver.maps.Event.addListener(marker, "mouseout", function() {
+                infowindow.close();
+            });
+        })(marker, infowindow);
+
     }
 
 </script>

@@ -37,10 +37,9 @@ body {
 }
 
 .place {
-  display: inline-block;
+  display: inline-grid;
   width: 45%;
   margin: 2%;
-  margin-top: 20px;
 }
 
 .placeImg {
@@ -54,8 +53,8 @@ body {
   font-size: 16px;
   max-width: 150px;
   text-align: center;
-  margin-top: 5px;
   font-weight: bold;
+  min-height: 42px;
 }
 
 .place a {
@@ -63,64 +62,6 @@ body {
   color: black;
 }
 
-.menu-container {
-  margin-bottom: 60px;
-}
-
-.menu {
-  width: 430px;
-  display: flex;
-  position: fixed;
-  bottom: 0;
-  margin-left: -40px;
-  justify-content: space-around;
-}
-
-.home,
-.crew,
-.placemap,
-.chat,
-.profile {
-  display: inline-table;
-}
-
-.home {
-  width: 86px;
-  height: 80px;
-  margin: 0;
-  padding: 0;
-  background-color: white;
-  align-items: center;
-  text-align: center;
-  border: 0;
-  border-radius: 10px 10px 0 0;
-  box-shadow: 3px 3px 3px black;
-}
-
-.crew,
-.placemap,
-.chat,
-.profile {
-  width: 86px;
-  height: 80px;
-  margin: 0;
-  padding: 0;
-  background-color: #31c7cf;
-  align-items: center;
-  text-align: center;
-  border: 0;
-  border-radius: 10px 10px 0 0;
-  box-shadow: 3px 3px 3px black;
-}
-
-.menu img {
-  margin-top: 15px;
-  filter: drop-shadow(2px 2px 2px #084b4e);
-}
-
-.menu h6 {
-  color: white;
-  text-shadow: 1px 1px 1px #084b4e;
-  margin-top: 5px;
-  margin-bottom: 5px;
+a{
+  text-decoration: none;
 }

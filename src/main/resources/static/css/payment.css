@@ -1,0 +1,87 @@
+body{
+    margin: 0;
+    padding: 40px;
+    width: 350px;
+}
+
+.choicePay{
+    margin-top: 60px;
+    color: #ec9090;
+    font-weight: bolder;
+
+}
+
+.container{
+    margin: 0 auto;
+    display: flex;
+    width: 350px;
+    margin-top: 100px;
+
+    margin-bottom: 190px;
+}
+.box{
+    margin: 0 auto;
+    text-align: center;
+    display: table;
+    table-layout: fixed;
+    width: 153px;
+    height: 100px;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    padding: 10px;
+}
+.box > img{
+    display: table-cell;
+    width: 140px;
+    vertical-align: middle;
+}
+
+
+#kakaoPayBtn{
+    margin-left: 5px;
+    margin-top: 5px;
+}
+
+#paycoPayBtn{
+    margin-left: 8px;
+    margin-top: 35px;
+}
+
+#tossPayBtn {
+    width: 185px;
+    margin-left: -20px;
+    margin-top: 5px;
+}
+
+#cardPayBtn{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+input[type="submit"]{
+    width: 350px;
+    padding: 20px;
+    font-weight: bold;
+    font-size: 30px;
+    border: 0;
+    border-radius: 25px;
+    background-color: #e9b9b9;
+    box-shadow: 2px 2px 2px #ec9090;
+    color: white;
+}
+
+#logo{
+    position: fixed;
+    bottom: 250px;
+    left: 90px;
+    width: 250px;
+    opacity: 0.4;
+}
+
+p{
+    margin-top: 37px;
+}
+
+a{
+    text-decoration: none;
+}

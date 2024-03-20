@@ -9,7 +9,7 @@
 <!-- jQuery -->
 <!--<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>-->
 <!-- iamport.payment.js -->
-<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.7.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script>
 
@@ -124,6 +124,7 @@
             buyer_tel : marathonData.memberTel,
             buyer_addr : marathonData.memberAddr,
             buyer_postcode : marathonData.memberPostCode
+            /*m_redirect_url : '/marathon/complete'*/
         }, function (rsp) { // callback
             if (rsp.success) {
                 console.log(rsp);
@@ -225,14 +226,14 @@
 
 </script>
 <body>
-<h3>결제방법선택</h3>
+<h1 class="choicePay">결제방법 선택</h1>
 <form class="container" id="paymentForm" method="post">
-    <div>
-        <div class="box"><img id="kakaoPayBtn" src="../static/img/kakao.png"/></div>
-        <div class="box"><img id="paycoPayBtn" src="../static/img/payco.png"/></div>
+    <div class="payment">
+        <div class="box"><img id="kakaoPayBtn" src="/img/kakao.png"/></div>
+        <div class="box"><img id="paycoPayBtn" src="/img/payco.png"/></div>
     </div>
-    <div>
-        <div class="box"><img id="tossPayBtn" src="../static/img/Toss.png"/></div>
+    <div class="payment">
+        <div class="box"><img id="tossPayBtn" src="/img/Toss.png"/></div>
         <div class="box"><p id="cardPayBtn">카드결제</p></div>
     </div>
 
@@ -251,30 +252,9 @@
     <input type="submit" value="결제취소"></input>
 </form>
 
+<img src="/img/dorundorun.png" alt="dorundorun" id="logo">
+
+<div th:include="menuBar_home.html" class="footer"></div>
+
 </body>
 </html>
-<style>
-    .container{
-        margin: 0 auto;
-        display: flex;
-    }
-    .box{
-        margin: 0 auto;
-        text-align: center;
-        display: table;
-        table-layout: fixed;
-        width: 100px;
-        height: 60px;
-        border: 1px solid lightgray;
-        border-radius: 10px;
-    }
-    img{
-        display: table-cell;
-        width: 80px;
-        vertical-align: middle;
-    }
-    p{
-        display: table-cell;
-        vertical-align: middle;
-    }
-</style>

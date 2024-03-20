@@ -40,6 +40,7 @@ public class CrewBoardController {
                          Model model,String searchKeyword, String searchCondition, String crewBoardCategory){
 
         Page<CrewBoardDTO> crewBoardList = crewBoardService.paging(pageable, searchKeyword, searchCondition, crewBoardCategory);
+        CrewDTO crewDTO = crewService.findById(crewId);
 
 
         int blockLimit = 5;//하단에 보여지는 페이지 갯수
@@ -52,6 +53,7 @@ public class CrewBoardController {
         conditionMap.put("내용", "crewBoardTitle");
         conditionMap.put("작성자", "memberNickname");
 
+        model.addAttribute("crewDTO",crewDTO);
         model.addAttribute("conditionMap", conditionMap);
         model.addAttribute("keyword",searchKeyword);
         model.addAttribute("condition",searchCondition);

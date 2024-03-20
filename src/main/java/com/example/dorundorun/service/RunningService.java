@@ -11,10 +11,8 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -84,8 +82,13 @@ public class RunningService {
     //RunningDTO runningId로 찾기
     public RunningDTO findById(Long runningId) {
         RunningEntity runningEntity = runningRepository.findById(runningId).get();
+        RunningDTO runningDTO = RunningDTO.toRunningDTO(runningEntity);
+        runningDTO.setEnded(isRunningEnded(runningEntity)); // 종료 여부 설정
+        return runningDTO;
+    }
 
-        return RunningDTO.toRunningDTO(runningEntity);
+    private boolean isRunningEnded(RunningEntity runningEntity) {
+        return runningEntity.getRunningDate().before(new Date());
     }
 
     //RunningDTO로 Running 인원수 확인
@@ -93,7 +96,6 @@ public class RunningService {
         return runningMemberRepository.countRunningMember(runningDTO.getRunningId());
     }
 
-    //RunningDTOList 찾기
     public List<RunningDTO> findAll() {
         List<RunningEntity> runningEntityList = runningRepository.findAll();
         List<RunningDTO> runningDTOList = new ArrayList<>();
@@ -106,6 +108,32 @@ public class RunningService {
         }
         return runningDTOList;
     }
+
+    //RunningDTOList 보여주기
+    public List<RunningDTO> findAllSortedByDate() {
+        List<RunningEntity> runningEntityList = runningRepository.findAllByOrderByRunningDateAsc();
+//        List<RunningDTO> runningDTOList = new ArrayList<>();
+//
+//        for(RunningEntity runningEntity : runningEntityList){
+//            RunningDTO runningDTO = RunningDTO.toRunningDTO(runningEntity);
+//            int countRunningMember = runningMemberRepository.countRunningMember(runningDTO.getRunningId());
+//            runningDTO.setRunningMemberCount(countRunningMember);
+//            runningDTOList.add(runningDTO);
+//        }
+        return runningEntityList.stream()
+                .map(this::mapToDTO)
+                .sorted(Comparator.comparing(RunningDTO::isEnded)) // 종료된 게시물이 뒤로 가도록 정렬
+                .collect(Collectors.toList());
+    }
+
+    private RunningDTO mapToDTO(RunningEntity runningEntity) {
+        RunningDTO runningDTO = RunningDTO.toRunningDTO(runningEntity);
+        if (runningEntity.getRunningDate().before(new Date())) { // 이미 지난 날짜라면
+            runningDTO.setEnded(true); // 종료 표시
+        }
+        return runningDTO;
+    }
+
 
     //러닝일정 신청 멤버인지?
     public Boolean findByRunningDTO(RunningDTO runningDTO, String username) {

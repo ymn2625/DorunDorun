@@ -8,14 +8,19 @@
 </head>
 <body>
 <form th:action="@{/crew/update/{crewId}(crewId=${crewDTO.crewId})}" method="post">
-    크루이름 : <input type="text" name="crewName" th:value="${crewDTO.crewName}"><br>
-    크루설명 : <textarea type="text" name="crewDesc" cols="50" rows="8" th:text="${crewDTO.crewDesc}">
+    <label>크루명</label>
+    <input type="text" name="crewName" th:value="${crewDTO.crewName}"><br><br><br>
+    <label>소개</label>
+    <textarea type="text" name="crewDesc" cols="50" rows="8" th:text="${crewDTO.crewDesc}">
 
-        </textarea><br>
-    크루정원 : <input type="number" min="10" max="100" step="5" name="crewLimit" th:value="${crewDTO.crewLimit}"><br>
-    최소인원 10명, 5명 단위로 만들수 있음
+        </textarea><br><br><br>
+    <label>정원</label>
+    <input type="number" min="10" max="100" step="5" name="crewLimit" th:value="${crewDTO.crewLimit}"><br>
+    <p>최소인원 10명, 5명 단위로 설정 가능</p>
 
     <input type="submit" value="수정">
 </form>
+
+<div th:include="menuBar_crew.html" class="footer"></div>
 </body>
 </html>

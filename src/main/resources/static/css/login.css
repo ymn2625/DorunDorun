@@ -70,7 +70,10 @@ body{
     font-size: 25px;
     font-weight: bold;
     color: white;
+    cursor: pointer;
 }
+
+
 
 .join {
     width: 300px;

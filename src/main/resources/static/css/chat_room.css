@@ -3,6 +3,15 @@ body{
     padding: 0;
 }
 
+#backgroundImg{
+    width: 350px;
+    opacity: 0.4;
+    position: fixed;
+    top: 350px;
+    left: 40px;
+    z-index: -1;
+}
+
 .container{
     border: 0;
     padding: 40px;
@@ -34,18 +43,44 @@ h1{
     font-weight: bold;
     font-size: 20px;
     color: white;
+    margin-bottom: 30px;
 }
 
 .list-group{
-    margin-top: 30px;
-    width: 350px;
+    width: 430px;
+    margin: 0;
+    padding: 0;
+    margin-left: -40px;
 }
 
 .list-group > li{
     list-style: none;
+    margin: 0;
+    padding: 0;
+    margin-left: 40px;
+    width: 330px;
+    padding-left: 20px;
 }
 
 .list-group > h3{
     font-size: 15px;
     font-weight: bold;
+    color: #ec9090;
+}
+
+h3, span{
+    display: flow;
+}
+
+li{
+    border-bottom: 2px solid #ec9090;
+}
+
+span{
+    margin-top: 10px;
+    color: gray;
+}
+
+a{
+    text-decoration: none;
 }

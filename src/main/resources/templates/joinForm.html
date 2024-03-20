@@ -68,7 +68,7 @@
               <input
                       type="text"
                       id="sample6_postcode"
-                      name="memberPostcode"
+                      name="memberPostCode"
                       placeholder="우편번호"
               />
               <input
@@ -106,10 +106,10 @@
       pwcheck=() => {
         if (document.getElementById('password').value == document.getElementById('confirm_password').value) {
           document.getElementById('message').style.color = 'green';
-          document.getElementById('message').innerHTML = '비밀번호 일치';
+          document.getElementById('message').innerHTML = '비밀번호가 일치합니다.';
         } else {
           document.getElementById('message').style.color = 'red';
-          document.getElementById('message').innerHTML = '비밀번호 불일치';
+          document.getElementById('message').innerHTML = '비밀번호가 일치하지 않습니다.';
         }
       }
     </script>
@@ -125,10 +125,10 @@
             "tel":tel
           },
           success: function (res){
-            alert('sms 발송!');
+            alert('인증번호가 전송되었습니다.');
           },
           error:function (err){
-            console.log("에러발생 :", err);
+            console.log("에러가 발생하였습니다.", err);
           }
         });
       }
@@ -148,14 +148,14 @@
           },
           success: function (res){
             if(res=="인증성공"){
-              alert('인증 성공!');
+              alert('인증에 성공하였습니다.');
               document.getElementById('joinForm').disabled=false;
             }else{
-              alert('인증 실패!');
+              alert('인증에 실패하였습니다.');
             }
           },
           error:function (err){
-            alert('인증 실패!');
+            alert('인증에 실패하였습니다.');
           }
         });
       }

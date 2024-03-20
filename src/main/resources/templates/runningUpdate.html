@@ -28,6 +28,9 @@
     <textarea type="text" name="runningContent" cols="50" rows="8" th:text="${runningDTO.runningContent}" required></textarea><br>
     <input type="submit" value="수정">
 </form>
+
+<div th:include="menuBar_home.html" class="footer"></div>
+
 <script th:inline="javascript">
     // 현재 날짜와 시간 설정
     var now = new Date();

@@ -3,30 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <title>crewRunningDetail</title>
+    <link rel="stylesheet" href="/css/crewRunningDetail.css">
 </head>
 <body>
 <button onclick="showList()">목록보기</button>
 <h3 th:text="${crewRunningDTO.crewRunningName}"></h3>
 
 <span th:text="${#dates.format(crewRunningDTO.crewRunningDate, 'yy-MM-dd HH:mm')}"></span>
-&nbsp;&nbsp;
+<div class="info">
 <span>
     <span th:text="${runningMember}"></span>
     /
     <span th:text="${crewRunningDTO.crewRunningLimit}"></span>
-</span><br>
+</span><br><br>
 
-<span th:text="${spotName}"></span>
-<p th:text="${crewRunningDTO.crewRunningContent}"></p>
-
-<div th:each="member:${crewRunningMemberDTOList}">
+    <span>장소 : </span><span th:text="${spotName}"></span>
+    <p th:text="${crewRunningDTO.crewRunningContent}"></p>
+</div>
+<div th:each="member:${crewRunningMemberDTOList}" id="list">
     <span th:text="${member.getMemberNickname()}"></span>&nbsp;<span th:if="${member.crewRunningRole == 'CREW_RUNNING_ADMIN'}">모임장</span>
 </div>
-<button th:if="${!isMember} and ${!isAdmin}" onclick="runningJoin()">같이 달려요!</button>
-<button th:if="${isMember} and ${!isAdmin}" onclick="quitRunning()">신청취소</button>
-<button th:if="${isAdmin}" onclick="runningUpdate()">수정</button>
-<button th:if="${isAdmin}" onclick="runningDelete()">삭제</button>
-
+<div class="runningFinish">
+    <button th:if="${!isMember} and ${!isAdmin}" onclick="runningJoin()">같이 달려요!</button>
+    <button th:if="${isMember} and ${!isAdmin}" onclick="quitRunning()">신청취소</button>
+    <button th:if="${isAdmin}" onclick="runningUpdate()">수정</button>
+    <button th:if="${isAdmin}" onclick="runningDelete()">삭제</button>
+</div>
+<div th:include="menuBar_crew.html" class="footer"></div>
 
 </body>
 <script th:inline="javascript">

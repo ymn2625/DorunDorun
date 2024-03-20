@@ -19,7 +19,7 @@
     display: inline-table;
 }
 
-.home {
+.profile {
     width: 86px;
     height: 80px;
     margin: 0;
@@ -34,7 +34,7 @@
 .crew,
 .placemap,
 .chat,
-.profile {
+.home {
     width: 86px;
     height: 80px;
     margin: 0;

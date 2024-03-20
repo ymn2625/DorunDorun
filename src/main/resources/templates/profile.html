@@ -7,21 +7,41 @@
     <link rel="stylesheet" href="/css/profile.css">
 </head>
 <body>
-<h1 th:text="${member.memberNickname}+'님 반갑습니다.'"></h1>
-<h3>획득 배지</h3>
-<div style="display: flex; flex-wrap: wrap; justify-content: flex-start; width: 450px">
+
+<div class="header">
+    <a href="/member/main"
+    ><img src="/img/dorundorun.png" alt="icon" id="icon"/>
+    </a>
+</div>
+
+<div id="profile">
+    <img src="/img/dorundorun.png" alt="profileImg" id="profileImg">
+</div>
+<div class="name">
+    <div class="nameTop">
+    <h1 th:text="${member.memberNickname}" id="nickname"></h1>
+    <h3 id="nameCall">님</h3>
+    <h3 id="hello">안녕하세요!</h3>
+    </div>
+    <p th:text="${member.memberEmail}"></p>
+</div>
+
+<h3 id="gotBadge">나의 뱃지</h3>
+<div class="badge">
     <div th:each="badge : ${badgeList}" style="width: 120px; margin: 10px; text-align: center;">
-        <div style="width: 120px; height: 80px; text-align: center">
+        <div style="width: 80px; height: 80px; text-align: center" id="myBadge">
             <img th:src="${badge.badgeDesc}" width="50px" height="50px" th:alt="${badge.badgeName}"><br>
             <span th:text="${badge.badgeName}"></span>
         </div>
     </div>
 </div>
-<button onclick="location.href='/member/runningRecordList'">러닝 기록 보기</button>
-<button onclick="location.href='/member/getRunningRecord'">러닝 하기</button><br>
+<button onclick="location.href='/member/getRunningRecord'">러닝 하기</button>
+<button onclick="location.href='/member/runningRecordList'">러닝 기록 보기</button><br>
 <button onclick="location.href='/member/profileupdate'">회원정보 수정</button>
 <button onclick="location.href='/member/select_update'">선호지역 수정</button>
 <button onclick="location.href='/logout'">로그아웃</button>
 <button onclick="location.href='/member/quit'">회원 탈퇴</button>
+
+<div th:include="menuBar_profile.html" class="footer"></div>
 </body>
 </html>

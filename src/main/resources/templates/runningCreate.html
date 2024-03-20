@@ -2,6 +2,8 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/runningCreate.css">
     <title>runningCreate</title>
 </head>
 <script>
@@ -12,15 +14,15 @@
     <input type="text" name="runningName" placeholder="러닝 일정 제목"required><br>
 
     <!--모임일정선택-->
-    모임 일정 :
-    <select id="year" name="year"></select>년
-    <select id="month" name="month"></select>월
-    <select id="day" name="day"></select>일
-    <select id="hour" name="hour"></select>시
+    <p>모임 일정</p>
+    <select id="year" name="year"></select><p>년</p>
+    <select id="month" name="month"></select><p>월</p>
+    <select id="day" name="day"></select><p>일</p>
+    <select id="hour" name="hour"></select><p>시</p>
     <select id="minute" name="minute">
         <option value="00">00</option>
         <option value="30">30</option>
-    </select>분<br>
+    </select><p>분</p><br>
 
     <!--러닝스팟선택-->
     <select id="spotId" name="spotId" required>
@@ -29,8 +31,9 @@
                 th:text="${spot.spotName}">
         </option>
     </select><br>
-    최대인원 : <input type="number" min="10" max="100" step="5" name="runningLimit" required><br>
-    *최소인원 10명 / 5명 단위로 개설 가능
+    <p>최대인원</p>
+    <input type="number" min="10" max="100" step="5" name="runningLimit" required><br>
+    <h4>*최소인원 10명 / 5명 단위로 개설 가능</h4>
 
     <textarea type="text" name="runningContent" cols="50" rows="8" placeholder="러닝 일정에 대한 설명을 작성해주세요" required>
 
@@ -39,6 +42,8 @@
     <input type="submit" value="일정개설">
     <button onclick="confirmCancel()">뒤로가기</button>
 </form>
+
+<div th:include="menuBar_home.html" class="footer"></div>
 
 <script th:inline="javascript">
     // 현재 날짜와 시간 설정

@@ -80,6 +80,9 @@
         <h3 th:text="${marathonName}"></h3>
     </div>
 
+    <img src="/img/marathon_detail.png" alt="marathonDetail" id="marathon_detail">
+
+
     <div class="date">
         <h3>일시</h3>
         <p th:text="${marathonDate}"></p>
@@ -127,6 +130,8 @@
 
     <input type="submit" id="submitBtn" value="신청하기">
 </form>
+
+<div th:include="menuBar_home.html" class="footer"></div>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
     function submitForm() {

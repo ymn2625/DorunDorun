@@ -1,0 +1,123 @@
+body{
+    margin: 0;
+    padding: 40px;
+    width: 350px;
+    height: 932px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 80px;
+}
+
+
+#icon {
+    width: 100px;
+    height: 80px;
+    margin-top: -11px;
+}
+
+.footer{
+    position: fixed;
+    bottom: 10px;
+    width: 430px;
+}
+
+.top a {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.top {
+    min-height: 150px;
+    margin-top: 40px;
+    height: auto;
+}
+
+
+#profileImg{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-top: 30px;
+}
+
+a{
+    text-decoration: none;
+}
+
+.name{
+    width: 240px;
+    margin-left: 10px;
+    margin-bottom: 30px;
+}
+
+#nickname, #nameCall, #hello{
+    display: contents;
+}
+
+#nickname{
+    color: #ec9090;
+}
+
+#profile, .name{
+    display: inline-block;
+}
+
+.nameTop, .name > p {
+    display: contents;
+}
+
+#gotBadge{
+    margin-left: 20px;
+    border-bottom: 2px solid #ec9090;
+    width: 100px;
+    text-align: center;
+    padding: 10px;
+}
+
+.badge{
+    display: flex;
+    width: 330px;
+    overflow-x: scroll;
+    scrollbar-color: white;
+    margin-left: 10px;
+    margin-bottom: 50px;
+}
+
+.badge::-webkit-scrollbar {
+    width: 0; /* 기본 스크롤바 숨김 */
+}
+
+
+#myBadge > span {
+    font-weight: bold;
+    font-size: 15px;
+}
+
+#myBadge{
+    border-radius: 50%;
+    border: 1px solid #ec9090;
+    padding: 20px;
+    background-color: #faebeb;
+}
+
+button{
+    display: table;
+    border: 0;
+    border-bottom: 2px solid lightgray;
+    padding: 10px;
+    font-size: 20px;
+    background-color: white;
+    width: 350px;
+    text-align: left;
+    font-weight: bolder;
+    padding-left: 20px;
+}
+
+a{
+    text-decoration: none;
+}

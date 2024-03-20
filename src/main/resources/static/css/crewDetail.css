@@ -1,0 +1,142 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+.image-upload-box {
+    background-color: lightgray;
+    height: 170px;
+    width: 430px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.image-upload-box > img{
+    margin-top: 70px;
+}
+
+.crew{
+    padding: 40px;
+    margin: 0;
+}
+
+.crewInfo{
+    width: 330px;
+    padding: 10px;
+    margin-left: 40px;
+    margin-top: 30px;
+}
+
+.crewInfo > h3 {
+    font-weight: bolder;
+    color: #333333;
+}
+
+.under{
+    display: inline-flex;
+    margin-left: 5px;
+}
+
+.under > img{
+    width: 25px;
+    height: 25px;
+    margin-right: 20px;
+    margin-top: 5px;
+}
+
+ #inputImage > img{
+    margin-right: 20px;
+}
+
+p{
+    font-size: 18px;
+    font-weight: bold;
+    padding: 0;
+    margin: 0;
+    margin-top: 7px;
+    color: gray;
+}
+
+h3{
+    margin-bottom: 10px;
+}
+
+.navbar{
+    width: 430px;
+    margin-top: 10px;
+}
+
+.container-fluid{
+    background-color: white;
+    border: 0;
+    padding: 10px;
+    border-bottom: 2px solid #ec9090;
+}
+
+.navbar-toggler{
+    background-color: #e9b9b9;
+    margin-right: 20px;
+    border: 0;
+}
+
+.navbar-toggler-icon{
+}
+.navbar-brand{
+    margin-left: 20px;
+    font-weight: bold;
+    color: #ec9090;
+}
+
+.nav-item{
+    margin-left: 20px;
+}
+
+.nav-item{
+    color: #ec9090;
+    font-weight: bolder;
+    font-size: 17px;
+}
+
+a{
+    text-decoration: none;
+}
+
+.crewDesc > h4{
+    color: black;
+    width: 430px;
+    font-weight: bolder;
+    text-align: left;
+    margin-top: 30px;
+    padding-left: 35px;
+}
+
+.crewDesc > p{
+    padding: 30px;
+    font-size: 15px;
+    padding-top: 10px;
+    border-bottom: 3px solid lightgray;
+    margin-bottom: 35px;
+    word-wrap: break-word;
+}
+
+.myCrew {
+    padding: 40px;
+    width: 390px;
+}
+
+.crewAuth{
+    display: none;
+}
+
+.myCrew > button{
+    border: 0;
+    border-bottom: 2px solid gray;
+    width: 350px;
+    text-align: left;
+    padding-left: 20px;
+    font-weight: bolder;
+    font-size: 20px;
+    color: #333333;
+    background-color: white;
+    padding: 20px;
+}

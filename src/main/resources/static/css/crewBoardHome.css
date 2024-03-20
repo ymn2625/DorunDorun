@@ -1,0 +1,176 @@
+body{
+    width: 430px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.top{
+    background-image: url("../img/sakura.png");
+    margin-top: 0;
+    padding: 30px;
+    border-radius: 0 0 20px 20px;
+}
+
+#dorundorun{
+    font-size: 60px;
+    font-weight: bolder;
+    margin: 0;
+    padding: 0;
+    color: #31c7cf;
+    text-shadow: 2px 2px 2px gray;
+    margin-right: 40px;
+}
+
+#dorundorun2{
+    font-size: 60px;
+    font-weight: bolder;
+    margin: 0;
+    padding: 0;
+    color: #e16e6e;
+    text-shadow: 2px 2px 2px gray;
+    margin-left: 40px;
+    margin-top: -40px;
+}
+
+#community{
+    font-size: 45px;
+    font-weight: bolder;
+    color: white;
+    margin-bottom: 0;
+    text-shadow: 2px 2px 2px gray;
+}
+
+#write{
+    margin-top: 30px;
+    width: 250px;
+    border: 0;
+    background-color: #e9b9b9;
+    border-radius: 20px;
+    padding: 15px;
+    font-weight: bolder;
+    margin-bottom: 30px;
+    color: white;
+    font-size: 25px;
+    font-weight: bolder;
+}
+
+.line{
+    width: 430px;
+    height: 2px;
+    background-color: lightgray;
+    border: 0;
+    margin-bottom: 20px;
+}
+
+#searchCondition{
+    border: 0;
+}
+
+a{
+    text-decoration: none;
+}
+
+#searchCondition{
+    width: 90px;
+    padding: 15px;
+    border-radius: 30px;
+    border: 0;
+    background-color: #e9b9b9;
+    color: white;
+    font-size: 15px;
+    font-weight: bolder;
+    margin-left: 24px;
+}
+
+#searchKeyword{
+    width: 180px;
+    border: 0;
+    border-radius: 30px;
+    background-color: #faebeb;
+    padding: 15px;
+    margin-left: 5px;
+}
+
+input[type="submit"]{
+    width: 70px;
+    border: 0;
+    border-radius: 30px;
+    background-color: #e9b9b9;
+    padding: 15px;
+    margin-left: 5px;
+}
+
+form{
+    display: flex;
+    text-align: center;
+    width: auto;
+}
+
+.menuBar{
+    width: 430px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid gray;
+}
+
+.menuBar > button{
+    border: 0;
+    background-color: white;
+    font-size: 18px;
+    font-weight: bolder;
+    color: #ec9090;
+    width: 100px;
+}
+
+.footer{
+    margin-left: 40px;
+}
+
+#title{
+    width: 200px;
+}
+
+#writer{
+    width: 100px;
+}
+
+#count{
+    width: 80px;
+}
+
+table{
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+#title2{
+    text-align: left;
+}
+
+
+.boardTop{
+    margin-bottom: 20px;
+}
+
+#boardTitle{
+    color: black;
+}
+
+#category{
+    color: #ec9090;
+}
+
+.page{
+    margin-top: 30px;
+    color: black;
+    font-size: 15px;
+}
+
+board{
+    max-height: 400px;
+}
+
+a{
+    text-decoration: none;
+    color: #ec9090;
+}

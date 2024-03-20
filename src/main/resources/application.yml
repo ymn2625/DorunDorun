@@ -10,7 +10,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     # database의 이름
-    url : jdbc:mysql://localhost:3306/final2?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    url : jdbc:mysql://localhost:3306/dorundorun?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     # mysql 아이디비번
     username : root
     password : mysql

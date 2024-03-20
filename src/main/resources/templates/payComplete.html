@@ -12,16 +12,18 @@
     <div class="main">
         <form id="marathonForm" action="/marathon/cancelMarathon" method="post">
             <h3 th:text="${marathonName}"></h3>
-            <img style="width: 350px; height: 200px" src="../static/img/event1.png"/>
-            <p><span id="memberNickname"></span>님과 함께할 5월을 기다리겠습니다!</p>
+            <img style="width: 350px; height: 200px" src="/img/marathon_payComplete.png"/>
+            <p id="welcome"><span id="memberNickname"></span>님과 함께할 5월을 기다리겠습니다!</p>
             <input type="hidden" id="marathonJoinId" name="marathonJoinId" th:value="${marathonJoinId}">
             <hr/>
-            <p>신청이 완료되었습니다.</p>
-            <p>신청번호 : <span id="marathonJoinNum">marathon20240507</span></p>
+            <p id="complete">신청이 완료되었습니다.</p>
+            <p id="joinNum">신청번호<br><span id="marathonJoinNum">marathon20240507</span></p>
             <input type="submit" value="신청취소">
         </form>
     </div>
 </div>
+
+<div th:include="menuBar_home.html" class="footer"></div>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
     $(document).ready(function() {

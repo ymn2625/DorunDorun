@@ -1,0 +1,50 @@
+body{
+    margin: 0;
+    padding: 40px;
+    width: 350px;
+}
+
+.container{
+    text-align: center;
+    font-weight: bold;
+}
+
+#welcome{
+    margin-top: 50px;
+}
+
+#welcome > span{
+    color: #ec9090;
+    font-size: 20px;
+    font-weight: bolder;
+}
+
+#complete{
+    margin-top: 100px;
+}
+
+#joinNum {
+    font-size: 20px;
+    margin-top: 30px;
+}
+
+#marathonJoinNum{
+    font-size: 17px;
+    color: #555555;
+}
+
+input[type="submit"]{
+    border: 0;
+    border-radius: 20px;
+    margin-top: 100px;
+    background-color: #e9b9b9;
+    padding: 20px;
+    width: 310px;
+    font-weight: bolder;
+    font-size: 30px;
+    color: white;
+}
+
+a{
+    text-decoration: none;
+}

@@ -4,30 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>selectForm</title>
+    <link rel="stylesheet" href="/css/selectForm.css">
 </head>
 <body>
 <form action="/member/select_update" method="post">
-    선호지역 1:<input type="text" name="memberAddr1" th:value="${member.memberAddr1}" id="memberAddr1" placeholder="주소">
-    <input type="button" onclick="sample6_execDaumPostcode1()" value="선호지역 등록"><br>
-    <input type="hidden" name="memberX1" id="memberX1" th:value="${member.memberX1}">
-    <input type="hidden" name="memberY1" id="memberY1" th:value="${member.memberY1}">
-    <input type="hidden" name="memberRefAddr1" id="memberRefAddr1" th:value="${member.memberRefAddr1}">
-
-    선호지역 2:<input type="text" name="memberAddr2" id="memberAddr2" th:value="${member.memberAddr2}" placeholder="주소">
-    <input type="button" onclick="sample6_execDaumPostcode2()" value="선호지역 등록"><br>
-    <input type="hidden" name="memberX2" id="memberX2" th:value="${member.memberX2}">
-    <input type="hidden" name="memberY2" id="memberY2" th:value="${member.memberY2}">
-    <input type="hidden" name="memberRefAddr2" id="memberRefAddr2" th:value="${member.memberRefAddr2}">
-
-    선호지역 3:<input type="text" name="memberAddr3" id="memberAddr3" th:value="${member.memberAddr3}" placeholder="주소">
-    <input type="button" onclick="sample6_execDaumPostcode3()" value="선호지역 등록"><br>
-    <input type="hidden" name="memberX3" id="memberX3" th:value="${member.memberX3}">
-    <input type="hidden" name="memberY3" id="memberY3" th:value="${member.memberY3}">
-    <input type="hidden" name="memberRefAddr3" id="memberRefAddr3" th:value="${member.memberRefAddr3}">
+    <img src="/img/dorundorun.png" alt="logo" id="logo">
+    <h1>선호지역 등록</h1>
+    <div class="firstSpot">
+        <input type="text" name="memberAddr1" th:value="${member.memberAddr1}" id="memberAddr1" placeholder="주소">
+        <input type="button" onclick="sample6_execDaumPostcode1()" value="등록"><br>
+        <input type="hidden" name="memberX1" id="memberX1" th:value="${member.memberX1}">
+        <input type="hidden" name="memberY1" id="memberY1" th:value="${member.memberY1}">
+        <input type="hidden" name="memberRefAddr1" id="memberRefAddr1" th:value="${member.memberRefAddr1}">
+    </div>
+    <div class="secondSpot">
+        <input type="text" name="memberAddr2" id="memberAddr2" th:value="${member.memberAddr2}" placeholder="주소">
+        <input type="button" onclick="sample6_execDaumPostcode2()" value="등록"><br>
+        <input type="hidden" name="memberX2" id="memberX2" th:value="${member.memberX2}">
+        <input type="hidden" name="memberY2" id="memberY2" th:value="${member.memberY2}">
+        <input type="hidden" name="memberRefAddr2" id="memberRefAddr2" th:value="${member.memberRefAddr2}">
+    </div>
+    <div class="thirdSpot">
+        <input type="text" name="memberAddr3" id="memberAddr3" th:value="${member.memberAddr3}" placeholder="주소">
+        <input type="button" onclick="sample6_execDaumPostcode3()" value="등록"><br>
+        <input type="hidden" name="memberX3" id="memberX3" th:value="${member.memberX3}">
+        <input type="hidden" name="memberY3" id="memberY3" th:value="${member.memberY3}">
+        <input type="hidden" name="memberRefAddr3" id="memberRefAddr3" th:value="${member.memberRefAddr3}">
+    </div>
 
     <input type="submit" onclick="confirm('정말로 수정하시겠습니까?')" value="저장">
     <input type="reset" onclick="window.location.back()" value="취소">
 </form>
+
+<div th:include="menuBar_profile.html" class="footer"></div>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=xqihmrgc2i&submodules=geocoder"></script>
 <script>

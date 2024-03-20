@@ -1,0 +1,151 @@
+body{
+    margin: 0;
+    padding: 0;
+    width: 430px;
+    background-color: #faebeb;
+}
+
+.list-group::-webkit-scrollbar {
+    width: 0; /* 기본 스크롤바 숨김 */
+}
+
+
+.container{
+    margin: 0;
+    padding: 40px;
+    margin-top: 20px;
+}
+
+.top > h1{
+    margin-left: 10px;
+}
+
+.col-md-6 > h2 {
+    color: #555555;
+    text-align: right;
+    margin-right: 10px;
+}
+
+.col-md-6 > h2, span{
+    display: flow;
+}
+
+span{
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+.line{
+    width: 350px;
+    height: 2px;
+    background-color: #ec9090;
+    margin-bottom: 30px;
+}
+
+.col-md-6{
+    text-align: right;
+    margin-right: 10px;
+    margin-bottom: 20px;
+    width: 350px;
+}
+
+.col-md-6 > a{
+    text-decoration: none;
+    color: gray;
+    font-weight: bold;
+    font-size: 15px;
+    padding: 10px;
+    border: 1px solid #ec9090;
+    border-radius: 8px;
+    margin-left: 120px;
+}
+
+.top{
+    width: 350px;
+    margin-bottom: 20px;
+}
+
+.top > h1, .col-md-6{
+    display: contents;
+}
+
+.list-group{
+    height: 480px;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+/*.list-group-item {
+    background-color: white; !* 배경색 *!
+    border: none; !* 테두리 없음 *!
+    margin-bottom: 10px; !* 아래쪽 여백 *!
+    border-radius: 12px; !* 테두리 둥글게 *!
+    padding: 15px; !* 내부 여백 *!
+    height: auto;
+    padding-right: 20px;
+}
+.list-group-item:nth-child(odd) {
+    background-color: #e9b9b9; !* 홀수 번째 메시지 배경색 *!
+}*/
+.list-group-item #sender {
+    font-weight: bold; /* 발신자 이름 굵게 */
+    color: black; /* 발신자 이름 색상 */
+    margin: 0;
+    padding: 0;
+}
+
+.message-receiver {
+    text-align: left;
+    display: block;
+    background-color: #e9b9b9; /* 수신자 메시지 배경색 */
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 10px;
+}
+.message-sender {
+    text-align: right;
+    display: block;
+    background-color: white; /* 발신자 메시지 배경색 */
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 10px;
+}
+
+li{
+    list-style: none;
+    margin-left: -40px;
+}
+
+
+.input-group{
+    position: fixed;
+    bottom: 120px;
+    display: inline-flex;
+}
+
+.input-group >  input{
+    width: 226px;
+    padding: 15px;
+    height: 30px;
+    border: 0;
+    border-radius: 30px;
+    background-color: white;
+}
+
+.input-group-append > button {
+    margin-left: 20px;
+    padding: 15px;
+    height: 60px;
+    background-color: #ec9090;
+    border-radius: 15px;
+    width: 75px;
+    border: 0;
+    font-weight: bold;
+    font-size: 20px;
+    color: white;
+}
+
+a{
+    text-decoration: none;
+}

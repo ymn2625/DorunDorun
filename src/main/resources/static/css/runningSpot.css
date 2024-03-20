@@ -1,22 +1,72 @@
-body{
+html{
+    width: 430px;
+}
+
+body {
+    width: 430px;
+    font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+    padding: 0;
     margin: 0;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+}
+
+input[type="button"] {
+    background-color: #ec9090;
+    color: white;
+    border: none;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+input[type="button"]:hover {
+    background-color: #e9b9b9;
+}
+
+#map {
+    width: 100%;
+    height: 300px;
+    background-color: #eee;
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+    border-bottom: 1px solid #e9b9b9;
+}
+
+.search {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.mapInfo{
     padding: 40px;
 }
 
-#map{
-    width: 350px;
-    height: 350px;
+.footer{
+    margin-left: 40px;
+}
+
+.saveSpot{
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.search{
+    padding-top: 70px;
+    margin-bottom: 30px;
 }
 
 table{
     display: none;
 }
-
-.footer{
-    position: fixed;
-    bottom: 10px;
-    width: 430px;
-}
-
-
-

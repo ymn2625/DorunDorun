@@ -1,0 +1,61 @@
+.menu-container {
+    margin-bottom: 120px;
+}
+
+.menu {
+    width: 430px;
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    justify-content: space-around;
+}
+
+.home,
+.crew,
+.placemap,
+.chat,
+.profile {
+    display: inline-table;
+}
+
+.chat {
+    width: 86px;
+    height: 80px;
+    margin: 0;
+    padding: 0;
+    background-color: white;
+    align-items: center;
+    text-align: center;
+    border: 1px solid #ec9090;
+    border-radius: 10px 10px 0 0;
+}
+
+.home,
+.placemap,
+.crew,
+.profile {
+    width: 86px;
+    height: 80px;
+    margin: 0;
+    padding: 0;
+    background-color: #e9b9b9;
+    align-items: center;
+    text-align: center;
+    border: 1px solid #ec9090;
+    border-radius: 10px 10px 0 0;
+}
+
+.menu img {
+    margin-top: 15px;
+}
+
+.menu h6 {
+    color: white;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 13px;
+}
+
+a{
+    text-decoration: none;
+}

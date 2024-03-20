@@ -26,6 +26,7 @@ public class MemberController {
     private final BoardService boardService;
     private final RunningSpotService runningSpotService;
     private final BadgeService badgeService;
+    private final RunningService runningService;
 
     @GetMapping("/join")
     public String saveForm(){
@@ -74,13 +75,14 @@ public class MemberController {
         List<CrewDTO> crewDTOList = crewService.findAll();
         List<BoardDTO> boardDTOList = boardService.findBoardTitle();
         List<RunningSpotEntity> saveRunningSpot = runningSpotService.getAllRunningSpots();
-
+        List<RunningDTO> runningDTOList = runningService.findAll();
 
 
         Boolean isFirstLogin = badgeService.getBadgeDTOByMemberDTOAndBadgeId(member,1L);
 
         int dateDifference = badgeService.dateDifference(member);
 
+        model.addAttribute("runningList", runningDTOList);
         model.addAttribute("runningSpot", saveRunningSpot);
         model.addAttribute("boardList", boardDTOList);
         model.addAttribute("crewList", crewDTOList);

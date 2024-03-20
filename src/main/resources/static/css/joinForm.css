@@ -33,23 +33,21 @@ td {
 }
 
 input[type="text"],
-input[type="email"] {
+input[type="email"],
+input[type="password"]{
     width: 100%;
     padding: 8px;
     box-sizing: border-box;
     margin-bottom: 10px;
+    border: 0;
+    border-radius: 8px;
+    height: 45px;
 }
 
 input[type="submit"]:hover {
     background-color: #eea3a3;
 }
 
-input[type="text"],
-input[type="email"]{
-    border: 0;
-    border-radius: 8px;
-    height: 45px;
-}
 
 button[type="button"]{
     background-color: white;
@@ -98,7 +96,8 @@ input[type="submit"]{
 }
 
 #checkIdResult,
-#checkNicknameResult{
+#checkNicknameResult,
+#message{
     font-size: 15px;
     padding: 8px;
     margin-top: 5px;

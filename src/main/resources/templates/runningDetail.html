@@ -2,31 +2,43 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>runDetail</title>
+    <link rel="stylesheet" href="/css/runningDetail.css">
 </head>
 <body>
 <button onclick="location.href='/running/list'">목록보기</button>
 <h3 th:text="${runningDTO.runningName}"></h3>
 
 <span th:text="${#dates.format(runningDTO.runningDate, 'yy-MM-dd HH:mm')}"></span>
-&nbsp;&nbsp;
-<span>
+&nbsp;&nbsp;<br><br>
+<span id="member">
     <span th:text="${runningMember}"></span>
     /
-    <span th:text="${runningDTO.runningLimit}"></span>
+    <span th:text="${runningDTO.runningLimit}"></span>명
 </span><br>
 
-<span th:text="${spotName}"></span>
-<p th:text="${runningDTO.runningContent}"></p>
+<div class="info">
+    <span class="title">위치</span>
+    <br><br>
+    <span th:text="${spotName}"></span>
+    <br><br>
+    <span class="title">소개</span><p th:text="${runningDTO.runningContent}"></p>
 
-<div th:each="member:${runningMemberList}">
-    <span th:text="${member.getMemberNickname()}"></span>&nbsp;<span th:if="${member.runningRole == 'RUNNING_ADMIN'}">모임장</span>
+    <p class="title">참가자</p>
+    <div th:each="member:${runningMemberList}" id="list">
+        <span th:text="${member.getMemberNickname()}"></span>&nbsp;<span th:if="${member.runningRole == 'RUNNING_ADMIN'}">모임장</span>
+    </div>
 </div>
-<button th:if="${!isMember} and ${!isAdmin}" onclick="runningJoin()">같이 달려요!</button>
-<button th:if="${isMember} and ${!isAdmin}" onclick="quitRunning()">신청취소</button>
-<button th:if="${isAdmin}" onclick="runningUpdate()">수정</button>
-<button th:if="${isAdmin}" onclick="runningDelete()">삭제</button>
+<div class="runningFinish">
+    <span th:if="${runningDTO.ended}">이미 종료된 일정입니다</span><br><br>
+    <button th:if="${!isMember and !isAdmin and !runningDTO.ended}" onclick="runningJoin()">같이 달려요!</button>
+    <button th:if="${isMember and !isAdmin and !runningDTO.ended}" onclick="quitRunning()">신청취소</button>
+    <button th:if="${isAdmin and !runningDTO.ended}" onclick="runningUpdate()">수정</button>
+    <button th:if="${isAdmin}" onclick="runningDelete()">삭제</button>
+</div>
 
+<div th:include="menuBar_home.html" class="footer"></div>
 
 </body>
 <script th:inline="javascript">
@@ -44,7 +56,7 @@
 
     const runningJoin = () =>{
         var popup = document.createElement('div');
-        popup.setAttribute('style', 'position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #ffffff; border: 1px solid #000000; padding: 20px; z-index: 9999;');
+        popup.setAttribute('style', 'position: fixed; top: 300px; left: 230px; transform: translate(-50%, -50%); width: 300px; background-color: #ffffff; border: 1px solid #000000; padding: 20px; z-index: 9999;');
         popup.textContent = "DORUNDORUN이 당신의 도전을 응원합니다!";
         document.body.appendChild(popup);
 

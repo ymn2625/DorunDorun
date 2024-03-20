@@ -1,0 +1,53 @@
+/* 기본 HTML 및 Body 스타일 */
+html {
+  width: 430px;
+}
+
+body {
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  width: 350px;
+  margin: 0;
+  padding: 40px;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+}
+
+/* 버튼 스타일 */
+button {
+  background-color: #ec9090; /* 버튼 배경색 */
+  color: white; /* 버튼 텍스트 색상 */
+  border: none;
+  padding: 10px 20px;
+  margin: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 50px;
+}
+
+button:hover {
+  background-color: #e9b9b9; /* 버튼 호버 시 배경색 */
+}
+
+/* 테이블 스타일 */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+td, th {
+  text-align: left;
+  padding: 8px;
+  border-bottom: 1px solid #e9b9b9;
+}
+
+/* 링크 스타일 */
+a {
+  color: #ec9090; /* 링크 색상 */
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+

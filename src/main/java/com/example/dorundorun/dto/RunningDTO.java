@@ -29,6 +29,8 @@ public class RunningDTO {
     //검색용
     private String searchCondition;
     private String searchKeyword;
+    // 종료 체크용 필드
+    private boolean ended;
 
 
     public static RunningDTO toRunningDTO(RunningEntity myRunningEntity) {

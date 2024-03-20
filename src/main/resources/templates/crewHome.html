@@ -26,7 +26,9 @@
 <div class="crewInfo">
     <div th:each="crew : ${crewList}" class="crewList">
         <a th:href="@{|/crew/detail/${crew.crewId}}">
-            <div class="img"></div>
+            <span th:each="fileName: ${crew.storedFileName}">
+                <img class="img" th:src="@{|/upload/${fileName}|}">
+            </span>
             <div class="side">
                 <div class="text">
                     <h3 class="crewName" th:text="${crew.crewName}" name="crewName"></h3>
@@ -36,7 +38,7 @@
                 <div class="info">
                     <div class="crewLocation">
                         <img src="/img/mapmarker.png" alt="space" />
-                        <!--<a th:text="${crew.crewLocation}"></a>-->
+                        <a th:text="${crew.crewAddress}"></a>
                     </div>
                     <div>
                         <img src="/img/people.png" alt="np" />

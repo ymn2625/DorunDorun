@@ -37,7 +37,7 @@ body{
 
 #search-button {
     border: 0;
-    background-image: url("../img/search_mint.png");
+    background-image: url("../../../../../../../../../파이널/DORUNDORUN/FINAL/src/main/resources/static/img/search_mint.png");
     width: 25px;
     height: 25px;
     background-repeat: no-repeat;
@@ -124,64 +124,6 @@ a {
     margin: 0;
 }
 
-.menu-container {
-    margin-bottom: 100px;
-}
-
-.menu {
-    width: 430px;
-    margin-top: 50px;
-    display: flex;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    justify-content: space-around;
-}
-
-.home,
-.crew,
-.placemap,
-.chat,
-.profile {
-    display: inline-table;
-}
-
-.crew {
-    width: 86px;
-    height: 80px;
-    margin: 0;
-    padding: 0;
-    background-color: white;
-    align-items: center;
-    text-align: center;
-    border: 0;
-    border-radius: 10px 10px 0 0;
-}
-
-.home,
-.placemap,
-.chat,
-.profile {
-    width: 86px;
-    height: 80px;
-    margin: 0;
-    padding: 0;
-    background-color: #31c7cf;
-    align-items: center;
-    text-align: center;
-    border: 0;
-    border-radius: 10px 10px 0 0;
-    box-shadow: 3px 3px 3px black;
-}
-
-.menu img {
-    margin-top: 15px;
-    filter: drop-shadow(2px 2px 2px #084b4e);
-}
-
-.menu h6 {
-    color: white;
-    text-shadow: 1px 1px 1px #084b4e;
-    margin-top: 5px;
-    margin-bottom: 5px;
+a{
+    text-decoration: none;
 }

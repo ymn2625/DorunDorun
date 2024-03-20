@@ -1,3 +1,7 @@
+html{
+  width: 430px;
+}
+
 body {
   width: 430px;
   font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
@@ -78,7 +82,6 @@ body {
 .crewInfo{
   margin: 0;
   padding: 40px;
-  width: 350px;
   padding-bottom: 110px;
 }
 .crewList {
@@ -166,4 +169,8 @@ a {
   position: fixed;
   bottom: 10px;
   width: 430px;
+}
+
+a{
+  text-decoration: none;
 }

@@ -2,10 +2,13 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>findPWForm</title>
+    <link rel="stylesheet" href="/css/findPWForm.css">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </head>
 <body>
+<h1>비밀번호 찾기</h1>
 <form action="/member/findPW" method="post">
     <input type="text" name="username" placeholder="아이디"><br>
     <input type="text" name="memberName" placeholder="이름"/><br>
@@ -60,16 +63,17 @@
             },
             success: function (res){
                 if(res=="인증성공"){
-                    alert('인증 성공!');
-                    let output = ' <input name="password" id="password" type="password" onkeyup="pwcheck();" placeholder="비밀번호"/><br> <input type="password" name="confirm_password" id="confirm_password" onkeyup="pwcheck();" placeholder="비밀번호확인"> <p id="message"></p>';
+                    alert('인증에 성공하였습니다.');
+                    let output = ' <input name="password" id="password" type="password" onkeyup="pwcheck();" placeholder="비밀번호"/><br> ' +
+                        '<input type="password" name="confirm_password" id="confirm_password" onkeyup="pwcheck();" placeholder="비밀번호확인"> <p id="message"></p>';
                     document.getElementById('passform').innerHTML = output;
                     document.getElementById('joinForm').disabled = false;
                 }else{
-                    alert('인증 실패!');
+                    alert('인증에 실패하였습니다. 다시 시도해주세요.');
                 }
             },
             error:function (err){
-                alert('인증 실패!');
+                alert('인증에 실패하였습니다. 다시 시도해주세요.');
             }
         });
     }

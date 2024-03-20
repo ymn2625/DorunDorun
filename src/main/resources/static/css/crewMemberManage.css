@@ -1,0 +1,66 @@
+body{
+    margin: 0;
+    padding: 40px;
+    width: 350px;
+}
+
+.footer{
+    margin-left: -40px;
+}
+
+#manage{
+    color: #ec9090;
+    font-weight: bolder;
+    width: 350px;
+}
+
+.unit{
+    width: 350px;
+    border-bottom: 1px solid lightgray;
+    height: auto;
+}
+
+.memberAuth{
+    display: inline-flex;
+}
+
+p > button{
+    border: 0;
+    width: auto;
+    background-color: #faebeb;
+    border-radius: 8px;
+    height: 40px;
+    margin: 5px;
+}
+
+#list{
+    margin-bottom: 20px;
+}
+
+h5{
+    height: auto;
+    margin: 0;
+    padding: 5px;
+}
+
+#goBack{
+    width: 100px;
+    padding: 10px;
+    font-size: 15px;
+    font-weight: bolder;
+    background-color: white;
+    border: 0;
+    border-bottom: 1px solid #ec9090;
+}
+
+#manage, #goBack{
+    display: inline;
+}
+
+#goBack{
+    margin-left: 100px;
+}
+
+.top{
+    margin-bottom: 50px;
+}

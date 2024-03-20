@@ -1,12 +1,15 @@
 body{
     padding: 0;
     margin: 0;
+
 }
 
 .indexForm{
     width: 430px;
-    background-color: #faebeb;
     height: 932px;
+    background-image: url("../img/sakura2.png");
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 #logo{
@@ -21,7 +24,7 @@ body{
     width: 260px;
     height: 33px;
     margin-left: 75px;
-    background-color: #e9b9b9;
+    background-color: white;
     border-radius: 12px;
     text-align: center;
     font-size: 25px;
@@ -34,7 +37,7 @@ body{
     width: 260px;
     height: 33px;
     margin-left: 75px;
-    background-color: #e9b9b9;
+    background-color: white;
     border-radius: 12px;
     text-align: center;
     font-size: 25px;
@@ -44,6 +47,6 @@ body{
 
 a{
     text-decoration: none;
-    color: white;
+    color: #ec9090;
     font-weight: bold;
 }

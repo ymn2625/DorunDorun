@@ -1,0 +1,73 @@
+html{
+    width: 430px;
+}
+
+body {
+    width: 350px;
+    font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+    padding: 40px;
+    margin: 0;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+}
+
+button {
+    background-color: #ec9090;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px 0;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #e9b9b9;
+}
+
+h3, span, p {
+    color: #000000;
+}
+
+
+
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff;
+    border: 1px solid #000000;
+    padding: 20px;
+    z-index: 9999;
+    color: #ec9090;
+    border-radius: 5px;
+}
+
+h3{
+    color: #e16e6e;
+}
+
+#member{
+    font-weight: bolder;
+    font-size: 15px;
+}
+
+.info{
+    margin-top: 40px;
+    width: 350px;
+}
+
+.title{
+    font-weight: bolder;
+    color: #de6868;
+}
+
+.runningFinish{
+    margin-top: 50px;
+
+}
+
+#list{
+    margin-bottom: 10px;
+}

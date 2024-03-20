@@ -1,0 +1,70 @@
+body{
+    margin: 0;
+    padding: 40px;
+    height: 852px;
+    background-image: url("../img/sakura2.png");
+    background-repeat: no-repeat;
+    background-size: 430px 932px;
+}
+
+.yourId{
+    font-weight: bolder;
+    font-size: 20px;
+}
+
+.id{
+    font-weight: bold;
+    font-size: 30px;
+    color: #ec9090;
+}
+
+.result{
+    padding: 20px;
+    background-color: white;
+    border: 0;
+    border-radius: 15px;
+    margin-top: 60px;
+    text-align: center;
+}
+
+.indexForm{
+    width: 430px;
+}
+
+.login {
+    margin-top: 130px;
+    width: 260px;
+    height: 33px;
+    background-color: white;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 25px;
+    padding: 10px;
+    box-shadow: 2px 2px 2px gray;
+    margin-left: 35px;
+}
+
+.join{
+    margin-top: 45px;
+    width: 260px;
+    height: 33px;
+    background-color: white;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 25px;
+    padding: 10px;
+    box-shadow: 2px 2px 2px gray;
+    margin-left: 35px;
+}
+
+a{
+    text-decoration: none;
+    color: #ec9090;
+    font-weight: bold;
+}
+
+.img > img{
+    width: 350px;
+    margin-top: 60px;
+    opacity: 1;
+}

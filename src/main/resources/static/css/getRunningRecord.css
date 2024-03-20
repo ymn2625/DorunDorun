@@ -1,0 +1,62 @@
+body{
+    margin: 0;
+    padding: 0;
+    width: 430px;
+}
+
+#map{
+    width: 430px;
+    height: 500px;
+}
+
+.time, .distance{
+    width: 300px;
+    padding: 20px;
+    border: 1px solid #ec9090;
+    border-radius: 12px;
+    margin-top: 30px;
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 44px;
+    margin-bottom: 30px;
+}
+
+span{
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+strong{
+    margin-right: 30px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+button{
+    background-color: #e9b9b9;
+    border: 0;
+    border-radius: 8px;
+    width: 150px;
+    height: 50px;
+    padding: 10px;
+    margin-top: 30px;
+    color: white;
+    font-weight: bolder;
+    font-size: 20px;
+    text-align: center;
+    margin-left: 40px;
+}
+
+#reset_btn, #save{
+    margin-left: 140px;
+}
+
+.footer{
+    margin-left: 40px;
+}
+
+a{
+    text-decoration: none;
+}

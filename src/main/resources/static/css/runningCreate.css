@@ -1,0 +1,78 @@
+/* runningCreateStyle.css */
+html {
+    width: 430px;
+}
+
+body {
+    width: 350px;
+    font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+    padding: 40px;
+    margin: 0;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+}
+
+form {
+    padding: 20px;
+}
+
+input[type="text"],
+input[type="number"],
+select,
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    display: inline-block;
+    border: 1px solid #e9b9b9;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: #ffffff;
+}
+
+input[type="submit"],
+button {
+    width: 100%;
+    background-color: #ec9090;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover,
+button:hover {
+    background-color: #e9b9b9;
+}
+
+/* 추가 스타일 */
+textarea {
+    height: 100px; /* 텍스트 영역의 높이 조정 */
+}
+
+p{
+    font-weight: bold;
+    padding: 15px;
+    border: 0;
+    border-radius: 25px;
+    background-color: #e9b9b9;
+}
+
+h4{
+    margin-left: 20px;
+    color: #555555;
+}
+
+/* 스크롤바 제거 (옵션) */
+body::-webkit-scrollbar {
+    display: none;
+}
+
+body {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+.f

@@ -1,0 +1,113 @@
+body{
+    margin: 0;
+    padding: 40px;
+    width: 350px;
+}
+
+#marathonForm{
+    text-align: center;
+}
+#info{
+    width: 350px;
+}
+
+#marathonForm > h2{
+    margin-bottom: 40px;
+    margin-top: 40px;
+}
+
+#marathonForm > h3 {
+    border: 0;
+    padding: 20px;
+    background-color: #faebeb;
+    width: 310px;
+    border-radius: 20px 20px 0 0;
+}
+
+#marathonForm > p {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+p > span {
+    color: #ec9090;
+}
+
+hr{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+label{
+    border: 0;
+    padding: 10px;
+    background-color: #faebeb;
+    border-radius: 20px;
+    border-bottom: 1px solid #ec9090;
+}
+
+input[type="text"]{
+    width: 230px;
+    border: 0;
+    padding: 10px;
+    border-radius: 20px;
+    background-color: white;
+    border-bottom: 1px solid #ec9090;
+}
+
+label, input{
+    display: inline-flex;
+    margin-bottom: 20px;
+}
+
+#sample6_address, #sample6_extraAddress{
+    margin-left: 90px;
+}
+
+input[type="checkbox"]{
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+#update{
+    text-decoration: none;
+    margin-top: 20px;
+    font-weight: bolder;
+    font-size: 20px;
+    color: #ec9090;
+}
+
+h3{
+  color: #ec9090;
+}
+
+.price{
+    font-size: 30px;
+    color: #de6868;
+    font-weight: bolder;
+}
+
+input[type="submit"]{
+    margin-top: 30px;
+    border: 0;
+    border-radius: 20px;
+    background-color: #e9b9b9;
+    padding: 20px;
+    text-align: center;
+    font-size: 30px;
+    color: white;
+}
+
+.priceContainer{
+    border: 1px solid #ec9090;
+    border-radius: 20px;
+    margin-top: -85px;
+    padding-top: 80px;
+    padding-bottom: 20px;
+}
+
+a{
+    text-decoration: none;
+}

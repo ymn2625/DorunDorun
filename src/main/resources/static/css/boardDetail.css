@@ -1,14 +1,8 @@
 body {
-  width: 100%; /* 기본적으로 너비를 100%로 설정 */
-  max-width: 1200px; /* 최대 너비 설정 */
-  margin: 0 auto; /* 가운데 정렬을 위해 자동 마진 사용 */
-}
-
-/* 모바일 디바이스에 대한 스타일 */
-@media (max-width: 768px) {
-  .container {
-    padding: 20px; /* 너비가 작을 때 내부 패딩 추가 */
-  }
+  width: 350px;
+  margin: 0;
+  padding: 40px;
+  overflow-y: scroll;
 }
 
 .info {
@@ -16,3 +10,149 @@ body {
   color: gray;
   margin-top: 2px;
 }
+
+a{
+  text-decoration: none;
+}
+
+#boardNum{
+  display: none;
+}
+
+#title{
+  font-size: 25px;
+  font-weight: bolder;
+  text-align: left;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #ec9090;
+  width: 350px;
+}
+
+#nickname{
+  margin-top: 30px;
+  font-size: 15px;
+  font-weight: bolder;
+}
+
+#updateTime, #createTime{
+  display: contents;
+}
+
+#imgUpload > p > img{
+  display: inline-grid;
+}
+
+#imgUpload{
+  width: 350px;
+}
+
+#count > p{
+  display: contents;
+}
+
+#content{
+  width: 320px;
+  padding: 15px;
+  border: 1px solid #ec9090;
+  border-radius: 20px;
+  background-color: white;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.likeOrHate{
+  margin-left: 20px;
+}
+
+#countHate, #countLike{
+  font-size: 25px;
+  font-weight: bolder;
+  color: black
+}
+
+.likeOrHate > img{
+  margin-right: 10px;
+}
+
+#countLike{
+  margin-right: 20px;
+}
+
+.boardMenu{
+  width: 350px;
+  margin-top: 30px;
+  padding-bottom: 30px;
+  border: 0;
+  border-bottom: 2px solid #ec9090;
+}
+
+.boardMenu > button{
+  width: 100px;
+  border: 0;
+  border-radius: 20px;
+  background-color: #faebeb;
+  padding: 15px;
+  font-weight: bolder;
+  font-size: 18px;
+}
+
+#list, #update{
+  margin-right: 15px;
+}
+
+#list{
+  margin-left: 3px;
+}
+
+#comment-list{
+  width: 350px;
+  height: 200px;
+  overflow-y: scroll;
+}
+
+.comment{
+  display: contents;
+  width: 350px;
+  padding-bottom: 20px;
+}
+
+#memberNickname{
+  font-size: 25px;
+  font-weight: bolder;
+  color: #ec9090;
+}
+
+#commentContent{
+  padding-bottom: 20px;
+  border: 0;
+  border-bottom: 2px solid gray;
+}
+
+#comment-write{
+  width: 350px;
+  margin-top: 30px;
+  display: flex;
+}
+
+#comment-write > input{
+  width: 200px;
+  border: 0;
+  border-radius: 25px;
+  background-color: #faebeb;
+  padding: 15px;
+  height: 30px;
+}
+
+#comment-write > button{
+  width: 80px;
+  border: 0;
+  border-radius: 25px;
+  background-color: #e9b9b9;
+  padding: 15px;
+  height: 60px;
+  color: white;
+  font-size: 25px;
+  font-weight: bolder;
+  margin-left: 40px;
+}
+

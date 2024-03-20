@@ -76,13 +76,16 @@
       });
 
     </script>
+ <link rel="stylesheet" href="../static/css/chat_room.css">
 </head>
 <body>
+<img src="/img/marathon_info.png" alt="marathonInfo" id="info">
 <form action="/marathon/payment" method="post" id="marathonForm">
-   <h3 th:text="${marathonName}"></h3>
-    <h4>신청정보확인</h4>
+   <h2 th:text="${marathonName}"></h2>
+    <h3>신청정보확인</h3>
     <p>마라톤 코스 : <span th:text="${course}"></span></p>
     <p>기념 티셔츠 사이즈 : <span th:text="${reward}"></span></p>
+
     <!-- hidden input으로 세션에 저장된 값들을 받아와서 폼에 포함시킴 -->
     <input type="hidden" id="marathonCourseId" name="marathonCourseId" th:value="${marathonCourseId}">
     <input type="hidden" id="course" name="course" th:value="${course}">
@@ -93,27 +96,38 @@
     <input type="hidden" id="price" name="price" th:value="${price}">
 
     <hr>
-    이름 : <input type="text" id="memberName" name="memberName" readonly><br>
-    전화번호 : <input type="text" id="memberTel" name="memberTel" readonly><br>
-    이메일 : <input type="text" id="memberEmail" name="memberEmail" readonly><br>
-    닉네임 : <input type="text" id="memberNickname" name="memberNickname" readonly><br>
-    주소<br>
-    우편번호 : <input type="text" id="sample6_postcode" name="memberPostCode" readonly><br>
-    주소 : <input type="text" id="sample6_address" name="memberAddr" readonly><br>
-    상세주소 : <input type="text" id="sample6_detailAddress" name="memberDetailAddr" readonly>
-    <input type="text" id="sample6_extraAddress" name="memberRefAddr" readonly>
+    <label>이름</label>
+       <input type="text" id="memberName" name="memberName" readonly><br>
+    <label>연락처</label>
+       <input type="text" id="memberTel" name="memberTel" readonly><br>
+    <label>이메일</label>
+       <input type="text" id="memberEmail" name="memberEmail" readonly><br>
+    <label>닉네임</label>
+       <input type="text" id="memberNickname" name="memberNickname" readonly><br>
     <br>
-    <input type="checkbox" id="agree" > 모든 내용을 확인했습니다.
+    <label>우편번호</label>
+       <input type="text" id="sample6_postcode" name="memberPostCode" readonly><br>
+       <input type="text" id="sample6_address" name="memberAddr" readonly><br>
+    <label>상세주소</label>
+        <input type="text" id="sample6_detailAddress" name="memberDetailAddr" readonly>
+        <input type="text" id="sample6_extraAddress" name="memberRefAddr" readonly>
     <br>
-    <p style="font-size: 10px; color: gray;">* 2024 DORUNDORUN 봄꽃마라톤은 ID당 1회, 본인 신청만 가능합니다.<br>
-     마라톤 기념품 제작 및 배송을 위한 개인정보는 회원정보를 기반으로 하며,<br>
-     배송지 변경 등이 필요하다면 회원정보를 변경해 주세요.</br></p>
-    <a href="/">회원정보수정</a><br>
+    <p style="font-size: 13px; color: gray;">* 2024 DORUNDORUN 봄꽃마라톤은 ID당 1회, <br>본인 신청만 가능합니다.<br>
+     마라톤 기념품 제작 및 배송을 위한 개인정보는 <br>회원정보를 기반으로 하며,
+     배송지 변경 등이 필요하다면 <br>회원정보를 변경해 주세요.</br></p>
+ <a href="/member/profileupdate" id="update">회원정보수정</a><br>
+ <input type="checkbox" id="agree" > 모든 내용을 확인하였으며, 신청 정보 제공 및 개인정보 제공에 동의합니다.
+ <br>
+
     <hr>
-    <h4>결제금액</h4>
-    <span th:text="${price}"></span><br>
+    <h3>결제금액</h3>
+    <div class="priceContainer">
+    <span th:text="${price}" class="price"></span><span class="price">원</span><br>
+    </div>
     <input type="submit" value="결제하기">
 </form>
+
+<div th:include="menuBar_home.html" class="footer"></div>
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 

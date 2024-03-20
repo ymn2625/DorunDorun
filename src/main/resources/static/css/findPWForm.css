@@ -1,0 +1,52 @@
+body{
+    margin: 0;
+    padding: 40px;
+    text-align: center;
+    width: 350px;
+}
+
+form{
+    width: 310px;
+    background-color: #faebeb;
+    border: 0;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+h1{
+    margin-bottom: 100px;
+    color: #ec9090;
+}
+
+input[type="text"], #password, #confirm_password{
+    width: 280px;
+    padding: 15px;
+    border: 0;
+    border-radius: 20px;
+    background-color: white;
+    margin-bottom: 20px;
+    height: 30px;
+    margin-top: 20px;
+}
+
+input[type="button"]{
+    width: 310px;
+    padding: 15px;
+    border: 0;
+    border-radius: 20px;
+    background-color: #e9b9b9;
+    margin-bottom: 40px;
+    height: 60px;
+    cursor: pointer;
+}
+
+input[type="submit"]{
+    width: 310px;
+    padding: 15px;
+    border: 0;
+    border-radius: 20px;
+    background-color: #e9b9b9;
+    margin-bottom: 20px;
+    height: 60px;
+    cursor: pointer;
+}

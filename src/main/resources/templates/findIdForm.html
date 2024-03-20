@@ -2,10 +2,13 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>findIdForm</title>
+    <link rel="stylesheet" href="/css/findIdForm.css">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </head>
 <body>
+<h1>아이디 찾기</h1>
 <form action="/member/findId" method="post">
     <input type="text" name="memberName" placeholder="이름"/><br>
     <input type="text" name="memberTel" id="memberTel" placeholder="연락처"/><br>
@@ -56,14 +59,14 @@
             },
             success: function (res){
                 if(res=="인증성공"){
-                    alert('인증 성공!');
+                    alert('인증에 성공하였습니다.');
                     document.getElementById('joinForm').disabled=false;
                 }else{
-                    alert('인증 실패!');
+                    alert('인증에 실패하였습니다. 다시 시도해주세요.');
                 }
             },
             error:function (err){
-                alert('인증 실패!');
+                alert('인증에 실패하였습니다. 다시 시도해주세요.');
             }
         });
     }

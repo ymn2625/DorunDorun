@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>crewRunningUpdate</title>
+    <link rel="stylesheet" href="/css/crewRunningCreate.css">
 </head>
 <body>
 <form th:action="@{'/crewRunning/update/' + ${crewId} +'/'+${crewRunningDTO.crewRunningId}}" method="post">
@@ -12,8 +13,6 @@
     <span th:text="${#dates.format(crewRunningDTO.crewRunningDate, 'yy-MM-dd HH:mm')}"></span>
     &nbsp;&nbsp;
     <span>
-    <span th:text="${crewRunningMember}"></span>
-    /
     <input type="number" min="10" max="100" step="5" name="crewRunningLimit" th:value="${crewRunningDTO.crewRunningLimit}" required>
 </span><br>
     <!--러닝스팟선택-->
@@ -28,6 +27,8 @@
     <textarea type="text" name="crewRunningContent" cols="50" rows="8" th:text="${crewRunningDTO.crewRunningContent}" required></textarea><br>
     <input type="submit" value="수정">
 </form>
+
+<div th:include="menuBar_crew.html" class="footer"></div>
 <script th:inline="javascript">
     // 현재 날짜와 시간 설정
     var now = new Date();

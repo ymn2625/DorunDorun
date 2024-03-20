@@ -2,17 +2,35 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
     <title>checkId</title>
+    <link rel="stylesheet" href="/css/checkId.css">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </head>
 <body>
-<span th:unless="${memberId}=='가입하신 계정이 없습니다.'">
-    당신의 아이디는 <span th:text="${memberId}"></span> 입니다.
-</span>
-<span th:if="${memberId}=='가입하신 계정이 없습니다.'">
-    <span th:text="${memberId}"></span>
-</span>
-<a href="/member/login">로그인하러 가기</a>
-<a href="/member/join">회원가입하러 가기</a>
+
+<div class="img">
+    <img src="/img/dorundorun.png" alt="dorundorun">
+</div>
+
+<div class="result">
+    <span th:unless="${memberId}=='가입하신 계정이 없습니다.'" class="yourId">
+        조회하신 아이디는 <br>
+        <span th:text="${memberId}" class="id"></span> 입니다.
+    </span>
+    <span th:if="${memberId}=='가입하신 계정이 없습니다.'" class="yourId">
+        <span th:text="${memberId}" class="id"></span>
+    </span>
+</div>
+
+<div class="indexForm">
+    <div class="login">
+        <a href="/member/login">로그인</a>
+    </div>
+    <div class=join>
+        <a href="/member/join">회원가입</a>
+    </div>
+</div>
 </body>
 </html>
