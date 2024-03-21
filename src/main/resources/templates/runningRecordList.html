@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>getRunningRecord</title>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+</head>
+<body>
+<table>
+    <tr>
+        <td>날짜</td>
+        <td>시간</td>
+        <td>거리</td>
+        <td>페이스</td>
+    </tr>
+    <tr th:each="runningrecord:${runningRecordList}">
+        <td th:text="${runningrecord.runningRecordCreatedTime}"></td>
+        <td>
+            <span th:text="${runningrecord.runningTimeHH}"></span>:
+            <span th:text="${runningrecord.runningTimeMM}"></span>:
+            <span th:text="${runningrecord.runningTimeSS}"></span>:
+            <span th:text="${runningrecord.runningTimeTenMillis}"></span>
+        </td>
+        <td>
+            <span th:text="${runningrecord.runningDistanceKm}"></span>Km
+            &nbsp;
+            <span th:text="${runningrecord.runningDistanceM}"></span>M
+        </td>
+        <td th:text="${runningrecord.runningPace}"></td>
+    </tr>
+</table>
+<div id="firstRunningModal" style="display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4);">
+    <div style="background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 600px; text-align: center;">
+        <span style="float: right; font-size: 28px; font-weight: bold; cursor: pointer;" onclick="closeModal()">&times;</span>
+        <h2>배지 획득!</h2>
+        <img src="/img/FirstRunning.png" alt="첫 러닝 기록 배지">
+        <p>첫 러닝 기록 배지 획득!</p>
+    </div>
+</div>
+<div id="tenRunningModal" style="display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4);">
+    <div style="background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 600px; text-align: center;">
+        <span style="float: right; font-size: 28px; font-weight: bold; cursor: pointer;" onclick="closeModal()">&times;</span>
+        <h2>배지 획득!</h2>
+        <img src="/img/10Running.png" alt="10번째 러닝 기록 배지">
+        <p>10번째 러닝 기록 배지 획득!</p>
+    </div>
+</div>
+<div id="fiftyRunningModal" style="display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4);">
+    <div style="background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 600px; text-align: center;">
+        <span style="float: right; font-size: 28px; font-weight: bold; cursor: pointer;" onclick="closeModal()">&times;</span>
+        <h2>배지 획득!</h2>
+        <img src="/img/50Running.png" alt="50번째 러닝 기록 배지">
+        <p>50번째 러닝 기록 배지 획득!</p>
+    </div>
+</div>
+<div id="hundredRunningModal" style="display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4);">
+    <div style="background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 600px; text-align: center;">
+        <span style="float: right; font-size: 28px; font-weight: bold; cursor: pointer;" onclick="closeModal()">&times;</span>
+        <h2>배지 획득!</h2>
+        <img src="/img/100Running.png" alt="100번째 러닝 기록 배지">
+        <p>100번째 러닝 기록 배지 획득!</p>
+    </div>
+</div>
+
+<div th:include="menuBar_profile.html" class="footer"></div>
+
+<script th:inline="javascript">
+    $(function (){
+        const runningBadge = [[${runningBadge}]];
+        console.log(runningBadge);
+        if(runningBadge==1){
+            $('#firstRunningModal').css('display','block');
+        }else if(runningBadge == 2){
+            $('#tenRunningModal').css('display','block');
+        }else if(runningBadge == 3){
+            $('#fiftyRunningModal').css('display','block');
+        }else if(runningBadge == 4){
+            $('#hundredRunningModal').css('display','block');
+        }
+    });
+
+    function closeModal() {
+        $('#firstRunningModal').hide();
+        $('#tenRunningModal').hide();
+        $('#fiftyRunningModal').hide();
+        $('#hundredRunningModal').hide();
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/crewRunningCreate.css">
+    <title>crewRunningCreate</title>
+</head>
+<body>
+<form th:action="@{'/crewRunning/create/' + ${crewId}}" method="post">
+    <input type="text" name="crewRunningName" placeholder="러닝 일정 제목" required><br>
+
+    <!--모임일정선택-->
+    <p>모임 일정</p>
+    <select id="year" name="year"></select><p>년</p>
+    <select id="month" name="month"></select><p>월</p>
+    <select id="day" name="day"></select><p>일</p>
+    <select id="hour" name="hour"></select><p>시</p>
+    <select id="minute" name="minute">
+        <option value="00">00</option>
+        <option value="30">30</option>
+    </select><p>분</p><br>
+
+    <!--러닝스팟선택-->
+    <select id="spotId" name="spotId" required>
+        <option th:each="spot : ${spotNames}"
+                th:value="${spot.spotId}"
+                th:text="${spot.spotName}">
+        </option>
+    </select><br>
+    <p>최대인원</p><input type="number" min="10" max="100" step="5" name="crewRunningLimit" required><br>
+    <h4>*최소인원 10명 / 5명 단위로 개설 가능</h4>
+
+    <textarea type="text" name="crewRunningContent" cols="50" rows="8" placeholder="러닝 일정에 대한 설명을 작성해주세요" required>
+
+    </textarea><br>
+
+    <input type="submit" value="일정개설">
+    <button onclick="confirmCancel()">뒤로가기</button>
+</form>
+
+<div th:include="menuBar_crew.html" class="footer"></div>
+
+<script th:inline="javascript">
+    // 현재 날짜와 시간 설정
+    var now = new Date();
+    var currentYear = now.getFullYear();
+    var currentMonth = now.getMonth() + 1;
+    var currentDay = now.getDate();
+    var currentHour = now.getHours();
+    var currentMinute = now.getMinutes();
+
+    // 년도 선택 목록 생성
+    var yearSelect = document.getElementById('year');
+    for (var i = currentYear; i <= currentYear + 1; i++) {
+        var option = document.createElement('option');
+        option.value = i;
+        option.text = i;
+        yearSelect.add(option);
+    }
+
+    // 월 선택 목록 생성
+    var monthSelect = document.getElementById('month');
+    for (var i = 1; i <= 12; i++) {
+        var option = document.createElement('option');
+        option.value = i;
+        option.text = i;
+        monthSelect.add(option);
+    }
+
+    // 일 선택 목록 생성 (선택된 월에 따라 일 수가 동적으로 변경됨)
+    var daySelect = document.getElementById('day');
+    updateDayOptions();
+    monthSelect.addEventListener('change', updateDayOptions);
+
+    // 시간 선택 목록 생성
+    var hourSelect = document.getElementById('hour');
+    for (var i = 0; i <= 23; i++) {
+        var option = document.createElement('option');
+        option.value = i;
+        option.text = i;
+        hourSelect.add(option);
+    }
+
+    // 분 선택 목록 생성
+    var minuteSelect = document.getElementById('minute');
+    for (var i = 0; i <= 59; i++) {
+        var option = document.createElement('option');
+        option.value = i;
+        option.text = i;
+        minuteSelect.add(option);
+    }
+
+    // 선택된 월에 따라 일 수를 동적으로 업데이트하는 함수
+    function updateDayOptions() {
+        var selectedYear = yearSelect.value;
+        var selectedMonth = monthSelect.value;
+        var daysInMonth = new Date(selectedYear, selectedMonth, 0).getDate();
+
+        // 일 선택 목록 초기화
+        daySelect.innerHTML = '';
+
+        // 일 선택 목록 업데이트
+        for (var i = 1; i <= daysInMonth; i++) {
+            var option = document.createElement('option');
+            option.value = i;
+            option.text = i;
+            daySelect.add(option);
+        }
+    }
+
+    // 현재 시간 설정
+    yearSelect.value = currentYear;
+    monthSelect.value = currentMonth;
+    daySelect.value = currentDay;
+    hourSelect.value = currentHour;
+    minuteSelect.value = currentMinute;
+
+
+    // 폼 제출 시 runningDate 설정
+    function setRunningDate() {
+        var year = document.getElementById('year').value;
+        var month = document.getElementById('month').value;
+        var day = document.getElementById('day').value;
+        var hour = document.getElementById('hour').value;
+        var minute = document.getElementById('minute').value;
+
+
+        var runningDate = new Date(year, month - 1, day, hour, minute);
+        document.getElementById('runningDate').value = runningDate.toISOString(); // 폼의 hidden 필드에 저장
+    }
+    // 뒤로가기 클릭 시 확인 창
+    function confirmCancel() {
+        var confirmCancel = confirm("작성을 취소하시겠습니까?");
+        if (confirmCancel) {
+            // 사용자가 확인을 누르면 이전 페이지로 이동
+            window.history.back();
+        }
+    }
+
+</script>
+</body>
+</html>

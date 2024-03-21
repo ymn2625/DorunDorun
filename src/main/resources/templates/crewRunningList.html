@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/crewRunningList.css">
+    <title>crewRunningList</title>
+</head>
+<body>
+<button onclick="createCrewRunning()">+ 러닝일정 개설</button>
+<table>
+    <tr th:each="running, idx : ${crewRunningList}">
+        <td><p th:text="${formattedDates[idx.index]}"></p></td>
+
+        <td><a th:text="${running.crewRunningName}" th:href="@{|/crewRunning/detail/${crewId}/${running.crewRunningId}}"></a></td>
+        <!--<td><a th:text="${running.runningContent}" th:href="@{|/running/detail/${running.runningId}}"></a></td>-->
+        <td>
+            <span th:text="${running.crewRunningMemberCount}"></span>/
+            <span th:text="${running.crewRunningLimit}"></span>
+        </td>
+        <td>
+            <span th:text="${spotNamesList[idx.index]}"></span>
+        </td>
+    </tr>
+
+</table>
+<button onclick="goBack()">뒤로</button>
+
+<div th:include="menuBar_crew.html" class="footer"></div>
+
+<div id="firstRunningModal" style="margin-top : 200px; display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4);">
+    <div style="background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 600px; text-align: center;">
+        <span style="float: right; font-size: 28px; font-weight: bold; cursor: pointer;" onclick="closeModal()">&times;</span>
+        <h2>배지 획득!</h2>
+        <img src="/img/FirstRunning.png" alt="첫 러닝 기록 배지" width="300px">
+        <p>첫 러닝 기록 배지 획득!</p>
+    </div>
+</div>
+<div id="tenRunningModal" style="margin-top : 200px; display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4);">
+    <div style="background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 600px; text-align: center;">
+        <span style="float: right; font-size: 28px; font-weight: bold; cursor: pointer;" onclick="closeModal()">&times;</span>
+        <h2>배지 획득!</h2>
+        <img src="/img/10Running.png" alt="10번째 러닝 기록 배지" width="300px">
+        <p>10번째 러닝 기록 배지 획득!</p>
+    </div>
+</div>
+<div id="fiftyRunningModal" style="margin-top : 200px; display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4);">
+    <div style="background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 600px; text-align: center;">
+        <span style="float: right; font-size: 28px; font-weight: bold; cursor: pointer;" onclick="closeModal()">&times;</span>
+        <h2>배지 획득!</h2>
+        <img src="/img/50Running.png" alt="50번째 러닝 기록 배지" width="300px">
+        <p>50번째 러닝 기록 배지 획득!</p>
+    </div>
+</div>
+<div id="hundredRunningModal" style="margin-top : 200px; display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4);">
+    <div style="background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 600px; text-align: center;">
+        <span style="float: right; font-size: 28px; font-weight: bold; cursor: pointer;" onclick="closeModal()">&times;</span>
+        <h2>배지 획득!</h2>
+        <img src="/img/100Running.png" alt="100번째 러닝 기록 배지" width="300px">
+        <p>100번째 러닝 기록 배지 획득!</p>
+    </div>
+</div>
+<script th:inline="javascript">
+    $(function (){
+        const runningBadge = [[${runningBadge}]];
+        console.log(runningBadge);
+        if(runningBadge==1){
+            $('#firstRunningModal').css('display','block');
+        }else if(runningBadge == 2){
+            $('#tenRunningModal').css('display','block');
+        }else if(runningBadge == 3){
+            $('#fiftyRunningModal').css('display','block');
+        }else if(runningBadge == 4){
+            $('#hundredRunningModal').css('display','block');
+        }
+    });
+
+    function closeModal() {
+        $('#firstRunningModal').hide();
+        $('#tenRunningModal').hide();
+        $('#fiftyRunningModal').hide();
+        $('#hundredRunningModal').hide();
+    }
+</script>
+<script th:inline="javascript">
+    const createCrewRunning =() =>{
+        location.href="/crewRunning/create/"+[[${crewId}]];
+    }
+
+    const goBack =() =>{
+        window.location.href='/crew/detail/'+[[${crewId}]];
+    }
+
+</script>
+</body>
+</html>
