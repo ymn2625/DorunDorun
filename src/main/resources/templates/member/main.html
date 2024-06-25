@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="UTF-8" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>dorundorun</title>
+  <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/css/main.css" />
+</head>
+<body>
+<div class="header">
+  <a href="/member/main"
+  ><img src="/img/dorundorun.png" alt="icon" id="icon"
+  /></a>
+  <div class="right">
+    <div class="map">
+      <a th:if="${#strings.isEmpty(member.memberRefAddr1)}" href="/member/select_update">선호지역설정</a>
+      <span th:if="${not #strings.isEmpty(member.memberRefAddr1)}" th:text="${member.memberRefAddr1}"></span>
+    </div>
+  </div>
+</div>
+
+<a href="/marathon/intro?marathonId=202401">
+  <img style="width: 100%; height: 100%;" src="/img/marathon_image.png" alt="marathonImg" id="marathon">
+</a>
+
+<div class="top">
+  <a href="/crew/main" class="title">지금 핫🔥한 모임</a>
+  <a href="/crew/main" class="more">더보기</a>
+
+  <div class="hotCrew">
+    <a th:each="crew,iterStat : ${crewList}" th:if="${iterStat.count <= 4 && crew.fileAttached == 1}" th:href="@{|/crew/detail/${crew.crewId}}">
+      <span th:each="fileName: ${crew.storedFileName}">
+        <img class="crewImage" th:src="@{|/upload/${fileName}|}">
+      </span>
+      <h6 th:text="${crew.crewName}" th:href="@{|/crew/detail/${crew.crewId}}"></h6>
+    </a>
+  </div>
+</div>
+<div class="top">
+  <a href="/running/list" class="title">지금 핫🔥한 번개모임</a>
+  <a href="/running/list" class="more">더보기</a>
+  <div class="oneTimeHot">
+    <a th:each="runningList,iterStat : ${runningList}" th:if="${iterStat.count <= 4}" th:href="@{|/running/detail/${runningList.runningId}}">
+      <div class="crewImage">
+        <img style="background: #faebeb" class="crewImage" src="https://png.pngtree.com/png-vector/20230822/ourmid/pngtree-an-icon-that-shows-a-lightning-bolt-vector-png-image_6846813.png">
+      </div>
+      <h6 th:text="${runningList.runningName}" th:href="@{|/running/detail/${runningList.runningId}}"></h6>
+    </a>
+  </div>
+</div>
+
+<div class="top">
+  <a href="/place/" class="title">여기 가봤어?</a>
+  <a href="/place/" class="more">더보기</a>
+  <div class="place">
+    <a th:each="runningSpot,iterStat : ${runningSpot}" th:if="${iterStat.count <= 4}" th:href="@{|/place/detail/${runningSpot.spotId}}">
+      <div class="crewImage">
+        <img style="background: #faebeb" class="crewImage" src="https://png.pngtree.com/png-vector/20230822/ourmid/pngtree-an-icon-that-shows-a-lightning-bolt-vector-png-image_6846813.png">
+      </div>
+      <h6 th:text="${runningSpot.spotName}" th:href="@{|/place/detail/${runningSpot.spotId}}"></h6>
+    </a>
+  </div>
+</div>
+
+<div class="top">
+  <a href="/board/home" class="board">커뮤니티</a>
+  <a href="/board/home" class="more">더보기</a><br>
+  <div class="boardPlace">
+    <ul>
+      <li th:each="board,iterStat : ${boardList}" th:if="${iterStat.count <= 4}">
+        <a th:href="@{|/board/detail/${board.boardId}}">
+          <span th:text="${board.boardTitle}"></span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div th:include="../menuBar/menuBar_home.html" class="footer"></div>
+
+<div id="firstLoginModal" style="margin-top : 200px; display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4);">
+  <div style="background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 600px; text-align: center;">
+    <span style="float: right; font-size: 28px; font-weight: bold; cursor: pointer;" onclick="closeFirstLoginModal()">&times;</span>
+    <h2>배지 획득!</h2>
+    <img src="/img/FisrtLoginBadge.png" alt="첫 로그인 성공 배지" width="300px">
+    <p>첫 로그인 배지 획득!</p>
+  </div>
+</div>
+<div id="sevenDays" style="margin-top : 200px; display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4);">
+  <div style="background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 600px; text-align: center;">
+    <span style="float: right; font-size: 28px; font-weight: bold; cursor: pointer;" onclick="closeFirstLoginModal()">&times;</span>
+    <h2>배지 획득!</h2>
+    <img src="/img/7Days.png" alt="회원가입 7일 경과" width="300px">
+    <p>가입 7일 경과 배지 획득!</p>
+  </div>
+</div>
+<div id="thirtyDays" style="margin-top : 200px; display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4);">
+  <div style="background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 600px; text-align: center;">
+    <span style="float: right; font-size: 28px; font-weight: bold; cursor: pointer;" onclick="closeFirstLoginModal()">&times;</span>
+    <h2>배지 획득!</h2>
+    <img src="/img/30Days.png" alt="회원가입 30일 경과 배지" width="300px">
+    <p>가입 30일 경과 배지 획득!</p>
+  </div>
+</div>
+<div id="sixMonth" style="margin-top : 200px; display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4);">
+  <div style="background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 600px; text-align: center;">
+    <span style="float: right; font-size: 28px; font-weight: bold; cursor: pointer;" onclick="closeFirstLoginModal()">&times;</span>
+    <h2>배지 획득!</h2>
+    <img src="/img/180Days.png" alt="회원가입 180일 경과 배지" width="300px">
+    <p>가입 180일 경과 배지 획득!</p>
+  </div>
+</div>
+<div id="oneYear" style="margin-top : 200px; display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4);">
+  <div style="background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 600px; text-align: center;">
+    <span style="float: right; font-size: 28px; font-weight: bold; cursor: pointer;" onclick="closeFirstLoginModal()">&times;</span>
+    <h2>배지 획득!</h2>
+    <img src="/img/365Days.png" alt="회원가입 365일 경과 배지" width="300px">
+    <p>가입 365일 경과 배지 획득!</p>
+  </div>
+</div>
+
+<script th:inline="javascript">
+
+  $(function (){
+    const isFirstLogin = [[${isFirstLogin}]];
+    console.log(isFirstLogin);
+    if(isFirstLogin){
+      console.log(isFirstLogin);
+      $('#firstLoginModal').css('display','block');
+    }
+  });
+
+  $(function (){
+    const dateDiffer = [[${dateDiffer}]];
+    console.log(dateDiffer);
+    if(dateDiffer==1){
+      $('#sevenDays').css('display','block');
+    }else if(dateDiffer == 2){
+      $('#thirtyDays').css('display','block');
+    }else if(dateDiffer == 3){
+      $('#sixMonth').css('display','block');
+    }else if(dateDiffer == 4){
+      $('#oneYear').css('display','block');
+    }
+  });
+
+  function closeFirstLoginModal() {
+    $('#firstLoginModal').hide();
+    $('#sevenDays').hide();
+    $('#thirtyDays').hide();
+    $('#sixMonth').hide();
+    $('#oneYear').hide();
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    var h6Elements = document.querySelectorAll(
+            ".hotCrew a h6, .oneTimeHot a h6, .place a h6"
+    );
+
+    h6Elements.forEach(function (h6Element) {
+      var elementWidth = h6Element.offsetWidth;
+
+      // 현재 단어를 포함한 줄의 너비를 계산하는 함수
+      function calculateLineWidth(text) {
+        var canvas = document.createElement("canvas");
+        var context = canvas.getContext("2d");
+        context.font = window.getComputedStyle(h6Element).font;
+        return context.measureText(text).width;
+      }
+
+      var words = h6Element.innerText.split(" ");
+      var result = "";
+      var currentLineWidth = 0;
+
+      words.forEach(function (word, index) {
+        var lineWithWord = currentLineWidth + calculateLineWidth(word);
+
+        if (index > 0 && lineWithWord > elementWidth) {
+          result += "";
+          currentLineWidth = 0;
+        }
+
+        result += "<span>" + word + "</span> ";
+        currentLineWidth += calculateLineWidth(word) + 5; // 5는 간격
+      });
+
+      h6Element.innerHTML = result.trim();
+    });
+  });
+
+</script>
+
+
+</body>
+</html>

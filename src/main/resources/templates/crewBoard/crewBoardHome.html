@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>boardHome</title>
+    <link rel="stylesheet" href="/css/crewBoardHome.css">
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<!--<div class="image-upload-box">-->
+<!--    <img-->
+<!--            id="inputImage"-->
+<!--            src="/img/crewimage.png"-->
+<!--            alt="inputImage"-->
+<!--    />-->
+<!--</div>-->
+
+<div class="crewInfo">
+    <h3 th:text="${crewDTO.crewName}"></h3>
+<!--    <div class="under">-->
+<!--        <img src="/img/people.png" alt="peopleImg">-->
+<!--    </div>-->
+</div>
+
+<!--<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">menu</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page">홈</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:if="${isMember}" th:href="@{|/crewBoard/home/${crewDTO.crewId}|}">게시판</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:if="${isMember}">일정</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>-->
+
+<button onclick="writeForm()" id="write">글 작성</button>
+<form th:action="@{/crewBoard/home/{crewId}(crewId=${crewId})}" method="get">
+    <input type="hidden" name="page" value="1">
+    <select name="crewBoardSearchCondition" id="searchCondition">
+        <option th:each="entry : ${conditionMap.entrySet()}"
+                th:value="${entry.value}"
+                th:text="${entry.key}">
+        </option>
+    </select>
+    <input name="crewBoardSearchKeyword" type="text" id="searchKeyword" th:value="${keyword}">
+    <input type="submit" value="검색">
+</form>
+<div class="menuBar">
+<button onclick="showAll()">전체</button>
+<button onclick="showNotice()">공지</button>
+<button onclick="showFreeBoard()">자유</button>
+<button onclick="showReview()">후기</button>
+</div>
+<div id="categoryTable">
+    <table>
+        <tr>
+            <th>글 번호</th>
+            <th>글 제목</th>
+            <th>작성자</th>
+            <th>작성시간</th>
+            <th>조회수</th>
+        </tr>
+        <tr th:each="crewBoard: ${crewBoardList}" id="mmmmmm">
+            <td th:text="${crewBoard.crewBoardId}"></td>
+            <td>
+                <a th:href="@{|/crewBoard/detail/${crewId}/${crewBoard.crewBoardId}|(page=${crewBoardList.number + 1})}">
+                    [<span th:text="${crewBoard.crewBoardCategory}"></span>]
+                    <span th:text="${crewBoard.crewBoardTitle}"></span>
+                </a>
+            </td>
+            <td th:text="${crewBoard.memberNickname}"></td>
+            <td th:text="*{#temporals.format(crewBoard.crewBoardCreatedTime, 'yyyy-MM-dd HH:mm')}"></td>
+            <td th:text="${crewBoard.crewBoardHits}"></td>
+        </tr>
+    </table>
+    <!-- 첫번째 페이지로 이동 page=1을 소괄호 안에 작성(query-string으로 변경해주는 thymeleaf 문법) -->
+    <!-- /board/paging?page=1 -->
+    <a th:href="@{/crewBoard/home/${crewId}(page=1, searchKeyword=${keyword}, searchCondition=${condition}, crewBoardCategory=${category})}" th:if="${not #strings.isEmpty(keyword)}">&lt;&lt;</a>
+    <a th:href="@{/crewBoard/home/${crewId}(page=1, crewBoardCategory=${category})}" th:if="${#strings.isEmpty(keyword)} and ${not #strings.isEmpty(category)}">&lt;&lt;</a>
+    <a th:href="@{/crewBoard/home/${crewId}(page=1)}" th:if="${#strings.isEmpty(keyword)} and ${#strings.isEmpty(category)}">&lt;&lt;</a>
+    <!-- boardList.getNumber() 사용자:2페이지 getNumber()=1 -->
+    <!--boardList.getNumber를 호출한 것이 boardList.number/ 아까 설정해준 page = number-->
+    <a th:href="${crewBoardList.first} ? '#' : @{/crewBoard/home/${crewId}(page=${crewBoardList.number}, searchKeyword=${keyword}, searchCondition=${condition}, crewBoardCategory=${category})}" th:if="${not #strings.isEmpty(keyword)}">&lt;</a>
+    <a th:href="${crewBoardList.first} ? '#' : @{/crewBoard/home/${crewId}(page=${crewBoardList.number}, crewBoardCategory=${category})}" th:if="${#strings.isEmpty(keyword)} and ${not #strings.isEmpty(category)}">&lt;</a>
+    <a th:href="${crewBoardList.first} ? '#' : @{/crewBoard/home/${crewId}(page=${crewBoardList.number})}" th:if="${#strings.isEmpty(keyword)} and ${#strings.isEmpty(category)}">&lt;</a>
+    <!-- 페이지 번호 링크(현재 페이지는 숫자만)
+            for(int page=startPage; page<=endPage; page++)-->
+    <span th:each="page: ${#numbers.sequence(startPage, endPage)}">
+        <!-- 현재페이지는 링크 없이 숫자만 -->
+        <!--그 안에서 페이지가 number 세팅 +1(number는 -1된 값이므로)이라면 page는 span처리-->
+        <span th:if="${page == crewBoardList.number + 1}" th:text="${page}"></span>
+        <!-- 현재페이지 번호가 아닌 다른 페이지번호에는 링크를 보여줌 -->
+        <span th:if="${page != crewBoardList.number + 1 && page !=0}">
+            <a th:href="@{/crewBoard/home/${crewId}(page=${page}, searchKeyword=${keyword}, searchCondition=${condition}, crewBoardCategory=${category})}" th:text="${page}" th:if="${not #strings.isEmpty(keyword)}"></a>
+            <a th:href="@{/crewBoard/home/${crewId}(page=${page}, crewBoardCategory=${category})}" th:if="${#strings.isEmpty(keyword)} and ${not #strings.isEmpty(category)}" th:text="${page}"></a>
+            <a th:href="@{/crewBoard/home/${crewId}(page=${page})}" th:if="${#strings.isEmpty(keyword)} and ${#strings.isEmpty(category)}" th:text="${page}"></a>
+        </span>
+    </span>
+    <!--prev의 반대이며, number가 +1 해줘야 현재 페이지이므로 +2로 다음페이지로 넘긴다-->
+    <a th:href="${crewBoardList.last} ? '#' : @{/crewBoard/home/${crewId}(page=${crewBoardList.number + 2}, searchKeyword=${keyword}, searchCondition=${condition}, crewBoardCategory=${category})}" th:if="${not #strings.isEmpty(keyword)}">&gt;</a>
+    <a th:href="${crewBoardList.last} ? '#' : @{/crewBoard/home/${crewId}(page=${crewBoardList.number + 2}, crewBoardCategory=${category})}" th:if="${#strings.isEmpty(keyword)} and ${not #strings.isEmpty(category)}">&gt;</a>
+    <a th:href="${crewBoardList.last} ? '#' : @{/crewBoard/home/${crewId}(page=${crewBoardList.number + 2})}" th:if="${#strings.isEmpty(keyword)} and ${#strings.isEmpty(category)}">&gt;</a>
+    <!-- 마지막 페이지로 이동 -->
+    <a th:href="@{/crewBoard/home/${crewId}(page=${crewBoardList.totalPages}, searchKeyword=${keyword}, searchCondition=${condition}, crewBoardCategory=${category})}" th:if="${not #strings.isEmpty(keyword)}">&gt;&gt;</a>
+    <a th:href="@{/crewBoard/home/${crewId}(page=${crewBoardList.totalPages}, searchKeyword=${keyword}, crewBoardCategory=${category})}" th:if="${#strings.isEmpty(keyword)} and ${not #strings.isEmpty(category)}">&gt;&gt;</a>
+    <a th:href="@{/crewBoard/home/${crewId}(page=${crewBoardList.totalPages}, searchKeyword=${keyword})}" th:if="${#strings.isEmpty(keyword)} and ${#strings.isEmpty(category)}">&gt;&gt;</a>
+</div>
+
+<div style="margin: 0; padding: 0" th:include="menuBar_crew.html" class="footer"></div>
+<script th:inline="javascript">
+    const crewId = [[${crewId}]];
+    const writeForm = () => {
+        window.location.href = '/crewBoard/write/' +crewId;
+    }
+    const showAll = () =>{
+        let query = "/crewBoard/home/"+crewId;
+        let keyword = [[${keyword}]];
+        let condition = [[${condition}]];
+        if(keyword != null){
+            query += "?searchKeyword=" + keyword + "&searchCondition=" + condition;
+        }
+        window.location.href = query;
+    }
+    const showNotice = ()=>{
+        let query = "/crewBoard/home/"+crewId;
+        let keyword = [[${keyword}]];
+        let condition = [[${condition}]];
+        if(keyword != null){
+            query += "?searchKeyword=" + keyword + "&searchCondition=" + condition + "&";
+        }
+        query += "crewBoardCategory=공지"
+        window.location.href = query;
+    }
+    const showFreeBoard = () =>{
+        let query = "/crewBoard/home/"+crewId;
+        let keyword = [[${keyword}]];
+        let condition = [[${condition}]];
+        if(keyword != null){
+            query += "?searchKeyword=" + keyword + "&searchCondition=" + condition + "&";
+        }
+        query += "crewBoardCategory=자유"
+        window.location.href = query;
+    }
+    const showReview = () =>{
+        let query = "/crewBoard/home/"+crewId;
+        let keyword = [[${keyword}]];
+        let condition = [[${condition}]];
+        if(keyword != null){
+            query += "?searchKeyword=" + keyword + "&searchCondition=" + condition + "&";
+        }
+        query += "crewBoardCategory=후기"
+        window.location.href = query;
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>runList</title>
+    <link rel="stylesheet" href="/css/runningList.css">
+    <script>
+        // 날짜를 상대적인 용어로 변환하는 함수
+        function formatDate(dateString) {
+
+        }
+    </script>
+
+</head>
+<body>
+    <button onclick="location.href='/running/create'">+ 러닝일정 개설</button>
+    <table>
+    <tr th:each="running, idx : ${runningList}">
+        <td>
+            <p th:if="${running.ended}">종료</p>
+            <p th:unless="${running.ended}" th:text="${formattedDates[idx.index]}"></p></td>
+        <td><a th:text="${running.runningName}" th:href="@{|/running/detail/${running.runningId}}"></a></td>
+        <!--<td><a th:text="${running.runningContent}" th:href="@{|/running/detail/${running.runningId}}"></a></td>-->
+        <td>
+            <span th:text="${running.runningMemberCount}"></span>/
+            <span th:text="${running.runningLimit}"></span>
+        </td>
+        <td>
+            <span th:text="${spotNamesList[idx.index]}"></span>
+        </td>
+    </tr>
+
+    </table>
+    <button onclick="window.location.href='/member/main'">뒤로</button>
+
+    <div style="margin: 0; padding: 0;" th:include="menuBar_home.html" class="footer"></div>
+</body>
+</html>
